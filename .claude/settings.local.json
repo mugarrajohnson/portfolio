@@ -40,7 +40,11 @@
       "WebFetch(domain:rauchg.com)",
       "WebFetch(domain:leerob.com)",
       "Bash(git *)",
-      "PowerShell(head *)"
+      "PowerShell(head *)",
+      "Skill(impeccable)",
+      "Bash(node *)",
+      "WebFetch(domain:www.mdpi.com)",
+      "WebFetch(domain:proceedings.scipy.org)"
     ]
   }
 }
