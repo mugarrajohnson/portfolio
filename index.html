@@ -16,7 +16,7 @@
 <meta content="Johnson Mugarra - Data Scientist &amp; AI/ML Specialist" name="twitter:title"/>
 <meta content="6+ years deploying ML solutions, predictive models, and automated ETL pipelines across East Africa." name="twitter:description"/>
 <link href="manifest.json" rel="manifest"/>
-<meta content="#06091A" name="theme-color"/>
+<meta content="#0C0B0A" name="theme-color"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
 <link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
@@ -25,7 +25,7 @@
 <title>Johnson Mugarra - Data Scientist &amp; AI/ML Specialist</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Syne:wght@700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'"/><noscript><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=swap" rel="stylesheet"/></noscript>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-T9LR8Q6B');</script>
@@ -36,45 +36,45 @@ tailwind.config = {
   theme: {
     extend: {
       colors: {
-        "surface-container-lowest": "#0b0e15",
-        "surface-container-high": "#262a32",
-        "outline-variant": "#414754",
-        "surface": "#10131b",
-        "surface-container-highest": "#31353d",
-        "surface-variant": "#31353d",
-        "on-secondary-container": "#2a1600",
-        "primary-fixed": "#d6e3ff",
-        "outline": "#8b91a0",
-        "tertiary": "#D4870A",
-        "error": "#ffb4ab",
-        "tertiary-container": "#b8720a",
-        "error-container": "#93000a",
-        "on-primary": "#001240",
-        "on-background": "#E8E6EC",
-        "background": "#06091A",
-        "on-secondary": "#1a0800",
-        "secondary": "#E8A020",
-        "secondary-container": "#b8720a",
-        "surface-container-low": "#181c23",
-        "primary-container": "#4a8bff",
-        "on-surface": "#E8E6EC",
-        "primary": "#1C6EF2",
-        "surface-container": "#1c2027",
-        "surface-dim": "#10131b",
-        "on-surface-variant": "#c0c6d6",
-        "on-tertiary": "#510074",
-        "surface-bright": "#363941",
-        "inverse-surface": "#E8E6EC",
-        "on-error": "#690005",
-        "primary-fixed-dim": "#aac7ff"
+        "background": "#0C0B0A",
+        "surface": "#141210",
+        "surface-container-lowest": "#0F0E0C",
+        "surface-container-low": "#141210",
+        "surface-container": "#181613",
+        "surface-container-high": "#201D19",
+        "surface-container-highest": "#2A2621",
+        "surface-variant": "#201D19",
+        "surface-dim": "#0F0E0C",
+        "surface-bright": "#2A2621",
+        "outline": "#8A8275",
+        "outline-variant": "#3A352E",
+        "primary": "#E8A020",
+        "primary-container": "#C77B25",
+        "primary-fixed": "#F4C871",
+        "primary-fixed-dim": "#E8A020",
+        "on-primary": "#1A1206",
+        "secondary": "#C8763A",
+        "secondary-container": "#9C5526",
+        "on-secondary": "#1A0E04",
+        "on-secondary-container": "#2A1600",
+        "tertiary": "#7FA663",
+        "tertiary-container": "#5C8044",
+        "on-tertiary": "#10210A",
+        "error": "#E5683C",
+        "error-container": "#7A2A12",
+        "on-error": "#FFFFFF",
+        "on-background": "#EDE6D8",
+        "on-surface": "#EDE6D8",
+        "on-surface-variant": "#B5AC9C",
+        "inverse-surface": "#EDE6D8"
       },
       fontFamily: {
         "body-md": ["Plus Jakarta Sans"],
-        "label-mono": ["JetBrains Mono"],
-        "headline-lg": ["Syne"],
-        "headline-xl": ["Syne"],
         "body-lg": ["Plus Jakarta Sans"],
-        "headline-md": ["Syne"]
+        "label-mono": ["JetBrains Mono"],
+        "headline-lg": ["Space Grotesk"],
+        "headline-xl": ["Space Grotesk"],
+        "headline-md": ["Space Grotesk"]
       },
       animation: {
         'blob': 'blob 15s infinite',
@@ -95,25 +95,28 @@ tailwind.config = {
 </script>
 <style type="text/tailwindcss">
 @layer utilities {
-  .glass-card { @apply backdrop-blur-[14px] backdrop-saturate-[180%] border border-white/[0.08] rounded-[16px]; }
-  .glass-nav  { @apply bg-[#06091A]/[0.55] backdrop-blur-2xl backdrop-saturate-[200%]; }
+  /* Instrument plate - flat machined surface, hairline frame. No glass. */
+  .glass-card { @apply bg-surface border border-[#EDE6D8]/[0.085] rounded-[7px]; }
+  .glass-nav  { @apply bg-[#0C0B0A]/[0.90] backdrop-blur-[7px] border-[#EDE6D8]/[0.10]; }
 }
 html { scroll-behavior: smooth; scroll-padding-top: 90px; }
-body { @apply bg-[#06091A] text-on-background font-body-md relative overflow-x-hidden; }
-.bg-orbs { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; overflow: hidden; pointer-events: none; contain: strict; }
-.orb { position: absolute; border-radius: 50%; filter: blur(110px); opacity: 0.32; will-change: transform; }
-.orb-1 { top: -10%; left: -10%; width: 55vw; height: 55vw; background: radial-gradient(circle, #2070FF, transparent 70%); animation: blob 36s infinite; }
-.orb-2 { bottom: -10%; right: -10%; width: 65vw; height: 65vw; background: radial-gradient(circle, #F0A820, transparent 70%); animation: blob-delayed 48s infinite; }
-.orb-3 { top: 40%; left: 30%; width: 40vw; height: 40vw; background: radial-gradient(circle, #D4870A, transparent 70%); animation: blob-slow 60s infinite; opacity: 0.20; }
-.orb-4 { top: 15%; right: 10%; width: 45vw; height: 45vw; background: radial-gradient(circle, #7C3AED, transparent 70%); animation: blob-slow 50s infinite 8s; opacity: 0.20; }
-.btn-primary { @apply inline-flex items-center justify-center px-6 py-3 rounded-full bg-primary text-white font-medium transition-all hover:bg-primary/90 hover:shadow-[0_0_20px_rgba(10,132,255,0.4)] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background; }
-.btn-secondary { @apply inline-flex items-center justify-center px-6 py-3 rounded-full glass-card text-on-background font-medium transition-all hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background; }
-.btn-ghost { @apply inline-flex items-center justify-center px-4 py-2 rounded-full text-on-background/70 font-medium transition-all hover:text-on-background hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-primary/60 focus:ring-offset-2 focus:ring-offset-background; }
+body { @apply bg-[#0C0B0A] text-on-background font-body-md relative overflow-x-hidden; }
+/* Field texture — faint cartographic warmth + paper grain. No glow blobs. */
+.bg-orbs { position: fixed; inset: 0; z-index: -1; pointer-events: none; contain: strict;
+  background:
+    radial-gradient(115% 75% at 50% -12%, rgba(232,160,32,0.055), transparent 60%),
+    radial-gradient(90% 90% at 100% 102%, rgba(200,118,58,0.045), transparent 55%); }
+.bg-orbs::after { content: ''; position: absolute; inset: 0; opacity: 0.45;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); }
+.orb { display: none !important; }
+.btn-primary { @apply inline-flex items-center justify-center px-6 py-3 rounded-[3px] bg-primary text-on-primary font-semibold tracking-[-0.01em] transition-colors hover:bg-primary-fixed focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background; }
+.btn-secondary { @apply inline-flex items-center justify-center px-6 py-3 rounded-[3px] border border-[#EDE6D8]/25 text-on-background font-medium transition-colors hover:border-primary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background; }
+.btn-ghost { @apply inline-flex items-center justify-center px-4 py-2 rounded-[3px] text-on-background/65 font-medium transition-colors hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/60 focus:ring-offset-2 focus:ring-offset-background; }
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #06091A; }
+::-webkit-scrollbar-track { background: #0C0B0A; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
-#progress-bar { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(to right, #1C6EF2, #E8A020); z-index: 9999; transition: width 0.1s linear; }
+#progress-bar { position: fixed; top: 0; left: 0; height: 2px; width: 0%; background: linear-gradient(to right, #E8A020, #C8763A); z-index: 9999; transition: width 0.1s linear; }
 #mob-menu.open { opacity: 1 !important; }
 .fade-in-up { animation: fadeInUp 0.38s cubic-bezier(0.23, 1, 0.32, 1) calc(var(--stagger, 0) * 60ms) both; }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -121,15 +124,15 @@ body { @apply bg-[#06091A] text-on-background font-body-md relative overflow-x-h
 .f-msg.show { display: block; }
 .f-msg.success { background: rgba(48,209,88,0.15); color: #30D158; border: 1px solid rgba(48,209,88,0.3); }
 .f-msg.error { background: rgba(255,69,58,0.15); color: #FF453A; border: 1px solid rgba(255,69,58,0.3); }
-#page-loader { position: fixed; inset: 0; z-index: 9999; background: #06091A; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s; }
-.loader-spinner { width: 40px; height: 40px; border: 3px solid rgba(28,110,242,0.2); border-top-color: #1C6EF2; border-radius: 50%; animation: spin 0.8s linear infinite; }
+#page-loader { position: fixed; inset: 0; z-index: 9999; background: #0C0B0A; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s; }
+.loader-spinner { width: 36px; height: 36px; border: 2px solid rgba(232,160,32,0.18); border-top-color: #E8A020; border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .proj-card.hidden { display: none; }
 .proj-card.hiding { opacity: 0; transform: scale(0.96); transition: opacity 0.22s ease-out, transform 0.22s ease-out; }
 .filt.active { @apply bg-primary/20 text-primary border-primary/30 border; }
 .fraud-tooltip, .vanilla-tooltip { position: absolute; pointer-events: none; display: none; background: rgba(15,18,28,0.92); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 10px 13px; font-size: 12px; line-height: 1.55; color: rgba(232,232,232,0.92); min-width: 180px; max-width: 240px; z-index: 10; }
 .vanilla-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
-.vdot-west { background: #1C6EF2; }
+.vdot-west { background: #5BA3A8; }
 .vdot-central { background: #E8A020; }
 .vdot-east { background: #D4870A; }
 </style>
@@ -142,7 +145,7 @@ body, nav, footer, section, .glass-card, input, textarea, button {
 
 /* ── Nav active link indicator ─────────────────────────────── */
 .nav-links a { position: relative; border-radius: 4px; }
-.nav-links a:focus-visible { outline: 2px solid #1C6EF2; outline-offset: 4px; }
+.nav-links a:focus-visible { outline: 2px solid #E8A020; outline-offset: 4px; }
 .nav-links a.active { color: #ffffff; }
 .nav-links a.active::after {
   content: '';
@@ -152,13 +155,13 @@ body, nav, footer, section, .glass-card, input, textarea, button {
   transform: translateX(-50%);
   width: 18px;
   height: 2px;
-  background: #1C6EF2;
+  background: #E8A020;
   border-radius: 9999px;
 }
 
 /* Floating pill nav — shadow deepens on scroll */
 #navbar.scrolled > div {
-  box-shadow: 0 12px 48px rgba(10,18,60,0.42), 0 4px 12px rgba(10,18,60,0.22) !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.32) !important;
 }
 [data-theme="light"] #navbar.scrolled > div {
   box-shadow: 0 12px 48px rgba(13,17,38,0.14), 0 4px 12px rgba(13,17,38,0.07) !important;
@@ -167,100 +170,93 @@ body, nav, footer, section, .glass-card, input, textarea, button {
 /* ═══════════════════════════════════════════════════
    LIGHT MODE OVERRIDES  [data-theme="light"]
 ═══════════════════════════════════════════════════ */
-[data-theme="light"] body { background-color: #f4f7ff !important; color: #0d1126 !important; }
-[data-theme="light"] #page-loader { background-color: #f4f7ff !important; }
-[data-theme="light"] .orb-1 { background: radial-gradient(circle, rgba(28,110,242,0.18), transparent 70%) !important; }
-[data-theme="light"] .orb-2 { background: radial-gradient(circle, rgba(232,160,32,0.13), transparent 70%) !important; }
-[data-theme="light"] .orb-3 { background: radial-gradient(circle, rgba(212,135,10,0.08), transparent 70%) !important; }
-[data-theme="light"] .orb-4 { background: radial-gradient(circle, rgba(124,58,237,0.08), transparent 70%) !important; }
+[data-theme="light"] body { background-color: #F1ECE1 !important; color: #1A1712 !important; }
+[data-theme="light"] #page-loader { background-color: #F1ECE1 !important; }
+[data-theme="light"] .bg-orbs {
+  background:
+    radial-gradient(115% 75% at 50% -12%, rgba(232,160,32,0.06), transparent 60%),
+    radial-gradient(90% 90% at 100% 102%, rgba(200,118,58,0.05), transparent 55%) !important;
+}
 
-/* Nav */
-[data-theme="light"] .glass-nav { background: rgba(244,247,255,0.88) !important; border-color: rgba(0,0,0,0.09) !important; }
-[data-theme="light"] #ham, [data-theme="light"] #mob-close { color: #0d1126 !important; }
-[data-theme="light"] #theme-toggle { background-color: rgba(0,0,0,0.06) !important; color: #0d1126 !important; }
-[data-theme="light"] #theme-toggle:hover { background-color: rgba(0,0,0,0.11) !important; }
-[data-theme="light"] .nav-links a.active { color: #0d1126 !important; }
-
-/* Mobile menu */
-[data-theme="light"] #mob-menu { background-color: rgba(244,247,255,0.98) !important; }
-[data-theme="light"] #mob-menu a { color: #0d1126 !important; }
-[data-theme="light"] #mob-menu a.text-primary { color: #1C6EF2 !important; }
-
-/* Mobile bottom nav */
+/* Nav + menus */
+[data-theme="light"] .glass-nav { background: rgba(241,236,225,0.90) !important; border-color: rgba(26,23,18,0.10) !important; }
+[data-theme="light"] #ham, [data-theme="light"] #mob-close { color: #1A1712 !important; }
+[data-theme="light"] #theme-toggle { background-color: rgba(26,23,18,0.06) !important; color: #1A1712 !important; }
+[data-theme="light"] #theme-toggle:hover { background-color: rgba(26,23,18,0.11) !important; }
+[data-theme="light"] .nav-links a.active { color: #1A1712 !important; }
+[data-theme="light"] #mob-menu { background-color: rgba(241,236,225,0.98) !important; }
+[data-theme="light"] #mob-menu a { color: #1A1712 !important; }
+[data-theme="light"] #mob-menu a.text-primary { color: #9A6411 !important; }
 [data-theme="light"] nav[aria-label="Mobile navigation"] > div {
-  background-color: rgba(244,247,255,0.95) !important;
-  border-top-color: rgba(0,0,0,0.08) !important;
+  background-color: rgba(241,236,225,0.95) !important;
+  border-top-color: rgba(26,23,18,0.10) !important;
 }
 
-/* Cards */
+/* Instrument plate */
 [data-theme="light"] .glass-card {
-  background: linear-gradient(135deg, rgba(255,255,255,0.90) 0%, rgba(255,255,255,0.74) 100%) !important;
-  border-color: rgba(0,0,0,0.07) !important;
-  box-shadow: 0 8px 32px rgba(13,17,38,0.08), 0 2px 8px rgba(13,17,38,0.05),
-              inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(0,0,0,0.02) !important;
+  background: #FBF8F1 !important;
+  border-color: rgba(26,23,18,0.10) !important;
+  box-shadow: 0 1px 2px rgba(60,50,30,0.06),
+              0 12px 30px -18px rgba(60,50,30,0.20),
+              inset 0 1px 0 rgba(255,255,255,0.6) !important;
 }
+[data-theme="light"] footer { background-color: #E9E2D4 !important; border-top-color: rgba(26,23,18,0.10) !important; }
 
-/* Footer */
-[data-theme="light"] footer { background-color: #e8ecf8 !important; border-top-color: rgba(0,0,0,0.08) !important; }
+/* Text - warm ink */
+[data-theme="light"] .text-white,
+[data-theme="light"] .text-on-background { color: #1A1712 !important; }
+[data-theme="light"] .text-white\/80 { color: rgba(26,23,18,0.80) !important; }
+[data-theme="light"] .text-white\/70 { color: rgba(26,23,18,0.72) !important; }
+[data-theme="light"] .text-white\/60 { color: rgba(26,23,18,0.64) !important; }
+[data-theme="light"] .text-white\/55 { color: rgba(26,23,18,0.58) !important; }
+[data-theme="light"] .text-white\/50 { color: rgba(26,23,18,0.52) !important; }
+[data-theme="light"] .text-white\/40 { color: rgba(26,23,18,0.44) !important; }
+[data-theme="light"] .text-white\/30 { color: rgba(26,23,18,0.34) !important; }
+[data-theme="light"] .hover\:text-white:hover { color: #1A1712 !important; }
 
-/* Text colors */
-[data-theme="light"] .text-white    { color: #0d1126 !important; }
-[data-theme="light"] .text-white\/80 { color: rgba(13,17,38,0.8) !important; }
-[data-theme="light"] .text-white\/70 { color: rgba(13,17,38,0.7) !important; }
-[data-theme="light"] .text-white\/60 { color: rgba(13,17,38,0.6) !important; }
-[data-theme="light"] .text-white\/50 { color: rgba(13,17,38,0.5) !important; }
-[data-theme="light"] .text-white\/55 { color: rgba(13,17,38,0.55) !important; }
-[data-theme="light"] .text-white\/40 { color: rgba(13,17,38,0.4) !important; }
-[data-theme="light"] .text-white\/30 { color: rgba(13,17,38,0.3) !important; }
-[data-theme="light"] .text-on-background { color: #0d1126 !important; }
-[data-theme="light"] .hover\:text-white:hover { color: #0d1126 !important; }
+/* Hero sits on a dark photograph in BOTH themes - keep its content light */
+[data-theme="light"] #hero .text-on-background,
+[data-theme="light"] #hero .text-white { color: #EDE6D8 !important; }
 
-/* Background colors */
-[data-theme="light"] .bg-\[\#06091A\]    { background-color: #f4f7ff !important; }
-[data-theme="light"] .bg-\[\#0b0e15\]   { background-color: #e8ecf8 !important; }
-[data-theme="light"] .bg-\[\#10131b\]   { background-color: #eef1fb !important; }
-[data-theme="light"] .bg-white\/5       { background-color: rgba(0,0,0,0.04) !important; }
-[data-theme="light"] .bg-white\/10      { background-color: rgba(0,0,0,0.07) !important; }
-[data-theme="light"] .bg-white\/\[0\.045\] { background-color: rgba(255,255,255,0.9) !important; }
-[data-theme="light"] .bg-white\/\[0\.02\]  { background-color: rgba(0,0,0,0.02) !important; }
-[data-theme="light"] .bg-\[\#06091A\]\/95 { background-color: rgba(244,247,255,0.97) !important; }
-[data-theme="light"] .bg-\[\#06091A\]\/90 { background-color: rgba(244,247,255,0.92) !important; }
-/* Chart containers follow theme */
-[data-theme="light"] .bg-\[\#0b0e15\]\/50 { background-color: rgba(236,241,255,0.70) !important; border-color: rgba(0,0,0,0.06) !important; }
-/* Chart tooltips follow theme */
+/* Surfaces, chips, borders */
+[data-theme="light"] .bg-\[\#0C0B0A\] { background-color: #F1ECE1 !important; }
+[data-theme="light"] .bg-\[\#0b0e15\]\/50 { background-color: #F6F2E9 !important; border-color: rgba(26,23,18,0.07) !important; }
+[data-theme="light"] .bg-white\/5 { background-color: rgba(26,23,18,0.04) !important; }
+[data-theme="light"] .bg-white\/10 { background-color: rgba(26,23,18,0.07) !important; }
+[data-theme="light"] .bg-white\/\[0\.02\] { background-color: rgba(26,23,18,0.025) !important; }
+[data-theme="light"] .border-white\/10 { border-color: rgba(26,23,18,0.10) !important; }
+[data-theme="light"] .border-white\/5 { border-color: rgba(26,23,18,0.06) !important; }
+[data-theme="light"] .divide-white\/5 > * + * { border-color: rgba(26,23,18,0.06) !important; }
+[data-theme="light"] .hover\:bg-white\/10:hover { background-color: rgba(26,23,18,0.07) !important; }
+[data-theme="light"] .hover\:bg-white\/5:hover { background-color: rgba(26,23,18,0.04) !important; }
+
+/* Chart tooltips */
 [data-theme="light"] .fraud-tooltip,
 [data-theme="light"] .vanilla-tooltip {
-  background: rgba(255,255,255,0.97) !important;
-  border-color: rgba(0,0,0,0.10) !important;
-  color: rgba(13,17,38,0.88) !important;
+  background: rgba(251,248,241,0.98) !important;
+  border-color: rgba(26,23,18,0.12) !important;
+  color: rgba(26,23,18,0.88) !important;
 }
-[data-theme="light"] .hover\:bg-white\/10:hover { background-color: rgba(0,0,0,0.06) !important; }
-[data-theme="light"] .hover\:bg-white\/5:hover  { background-color: rgba(0,0,0,0.04) !important; }
 
-/* Border colors */
-[data-theme="light"] .border-white\/10  { border-color: rgba(0,0,0,0.08) !important; }
-[data-theme="light"] .border-white\/5   { border-color: rgba(0,0,0,0.05) !important; }
-[data-theme="light"] .divide-white\/5 > * + * { border-color: rgba(0,0,0,0.05) !important; }
-
-/* Filter buttons */
-[data-theme="light"] .filt { color: rgba(13,17,38,0.6) !important; border-color: rgba(0,0,0,0.1) !important; }
-[data-theme="light"] .filt.active { color: #1C6EF2 !important; background-color: rgba(28,110,242,0.1) !important; border-color: rgba(28,110,242,0.3) !important; }
+/* Filter buttons - ochre active */
+[data-theme="light"] .filt { color: rgba(26,23,18,0.62) !important; border-color: rgba(26,23,18,0.12) !important; }
+[data-theme="light"] .filt.active { color: #8A5A14 !important; background-color: rgba(232,160,32,0.16) !important; border-color: rgba(232,160,32,0.38) !important; }
 
 /* Form inputs */
 [data-theme="light"] input[type="text"],
 [data-theme="light"] input[type="email"],
 [data-theme="light"] textarea {
-  background-color: rgba(0,0,0,0.04) !important;
-  border-color: rgba(0,0,0,0.10) !important;
-  color: #0d1126 !important;
+  background-color: rgba(26,23,18,0.035) !important;
+  border-color: rgba(26,23,18,0.12) !important;
+  color: #1A1712 !important;
 }
 [data-theme="light"] input::placeholder,
-[data-theme="light"] textarea::placeholder { color: rgba(13,17,38,0.35) !important; }
+[data-theme="light"] textarea::placeholder { color: rgba(26,23,18,0.40) !important; }
 
 /* Scrollbar */
-[data-theme="light"] ::-webkit-scrollbar-track { background: #f4f7ff !important; }
-[data-theme="light"] ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15) !important; }
-[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25) !important; }
+[data-theme="light"] ::-webkit-scrollbar-track { background: #F1ECE1 !important; }
+[data-theme="light"] ::-webkit-scrollbar-thumb { background: rgba(26,23,18,0.18) !important; }
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: rgba(26,23,18,0.28) !important; }
 
 /* ── Skill bars ─────────────────────────────────────────────── */
 .sk-fill { width: 0%; transition: width 0.7s cubic-bezier(0.23, 1, 0.32, 1); }
@@ -288,7 +284,7 @@ p               { text-wrap: pretty; }
 
 /* Hero name accent — gradient shimmer on the blue span */
 #hero h1 span {
-  background: linear-gradient(118deg, #1C6EF2 20%, #5BABFF 75%);
+  background: linear-gradient(118deg, #F4C871 8%, #E8A020 52%, #C8763A 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -309,9 +305,10 @@ section h2 { letter-spacing: -0.03em; }
 
 /* ── iOS Glass material ─────────────────────────────────────── */
 .glass-card {
-  background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.03) 100%);
-  box-shadow: 0 8px 32px rgba(10,18,60,0.30), 0 2px 8px rgba(10,18,60,0.14),
-              inset 0 1px 0 rgba(255,255,255,0.24), inset 0 -1px 0 rgba(0,0,0,0.06);
+  background: #141210;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.45),
+              0 14px 34px -20px rgba(0,0,0,0.6),
+              inset 0 1px 0 rgba(237,230,216,0.05);
 }
 
 /* ── Animation system ──────────────────────────────────────── */
@@ -424,8 +421,8 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 <a class="flex items-center gap-2.5" href="#hero">
 <svg class="w-9 h-9 flex-shrink-0" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 <defs>
-<linearGradient id="logo-bg-n" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#1A55D4"/><stop offset="100%" stop-color="#0C3496"/></linearGradient>
-<linearGradient id="logo-bar-n" x1="7" y1="0" x2="33" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#5BABFF"/><stop offset="100%" stop-color="#E8A020"/></linearGradient>
+<linearGradient id="logo-bg-n" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#201D19"/><stop offset="100%" stop-color="#0C0B0A"/></linearGradient>
+<linearGradient id="logo-bar-n" x1="7" y1="0" x2="33" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#E8A020"/><stop offset="100%" stop-color="#C8763A"/></linearGradient>
 </defs>
 <rect width="40" height="40" rx="10" fill="url(#logo-bg-n)"/>
 <rect x="0.75" y="0.75" width="38.5" height="38.5" rx="9.25" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" fill="none"/>
@@ -445,7 +442,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 <button aria-label="Toggle theme" class="p-2 rounded-full bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors" id="theme-toggle">
 <svg fill="none" height="16" id="theme-icon" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
 </button>
-<a class="btn-primary py-2 px-5 text-sm" href="#contact">Hire me</a>
+<a class="btn-primary py-2 px-5 text-sm" href="#contact">Let's talk</a>
 </div>
 <button aria-label="Open menu" class="md:hidden text-white p-2" id="ham">
 <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24"><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
@@ -453,7 +450,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 </div>
 </nav>
 <!-- Mobile Menu -->
-<div aria-labelledby="mob-menu-title" aria-modal="true" class="fixed inset-0 z-50 bg-[#06091A]/88 backdrop-blur-2xl backdrop-saturate-[180%] flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300" id="mob-menu" role="dialog">
+<div aria-labelledby="mob-menu-title" aria-modal="true" class="fixed inset-0 z-50 bg-[#0C0B0A]/88 backdrop-blur-2xl backdrop-saturate-[180%] flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300" id="mob-menu" role="dialog">
 <span class="sr-only" id="mob-menu-title">Navigation menu</span>
 <button aria-label="Close menu" class="absolute top-6 right-6 text-white p-2" id="mob-close">
 <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
@@ -473,62 +470,48 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 </div>
 <!-- HERO -->
 <main id="main-content">
-<section class="pt-32 pb-20 lg:pt-48 lg:pb-32 px-6" id="hero">
-<div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-<div class="space-y-8">
-<div class="inline-flex items-center px-3 py-1 rounded-full glass-card text-xs font-medium text-secondary">
-<span class="w-2 h-2 rounded-full bg-secondary mr-2 animate-pulse"></span>Available for opportunities
+<section class="relative min-h-[94vh] flex items-end overflow-hidden" id="hero">
+<!-- Full-bleed documentary photograph: presenting forecasting findings to MAAIF officials -->
+<div class="absolute inset-0 z-0">
+<img alt="Johnson Mugarra presenting vanilla forecasting findings to a senior MAAIF official at the National Vanilla Workshop, Kampala" class="w-full h-full object-cover object-center" decoding="async" fetchpriority="high" src="img/Vanilla Workshop.JPG"/>
+<div class="absolute inset-0" style="background:linear-gradient(90deg, rgba(12,11,10,0.97) 0%, rgba(12,11,10,0.86) 30%, rgba(12,11,10,0.46) 62%, rgba(12,11,10,0.30) 100%);"></div>
+<div class="absolute inset-0" style="background:linear-gradient(0deg, rgba(12,11,10,0.97) 0%, rgba(12,11,10,0.42) 42%, rgba(12,11,10,0) 78%);"></div>
 </div>
-<div class="space-y-4">
-<h1 class="text-5xl lg:text-7xl font-headline-xl text-white">Johnson <br/><span class="text-primary">Mugarra</span></h1>
-<p class="text-xl lg:text-2xl font-medium text-white/80">Data Scientist <span class="text-white/30 mx-2">/</span> AI/ML Specialist <span class="text-white/30 mx-2">/</span> Research &amp; MEAL Expert</p>
+<!-- Dispatch header strip -->
+<div class="absolute inset-x-0 top-0 z-10 px-6 pt-24 lg:pt-28">
+<div class="max-w-7xl mx-auto flex items-center justify-between gap-4 font-label-mono text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-on-background/45">
+<span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>0&deg;19&prime;N&nbsp;&nbsp;32&deg;35&prime;E</span>
+<span class="hidden md:block">Field Dispatch — Kampala · Uganda</span>
+<span class="text-on-background/35">&#8470;&nbsp;001</span>
 </div>
-<p class="text-lg text-white/60 leading-relaxed max-w-xl font-body-lg">Results-driven Data Scientist with <strong class="text-white">6+ years</strong> deploying ML solutions, predictive models, and automated ETL pipelines across agriculture, finance, health and climate resilience initiatives in East Africa. Turning complex data into strategies that move governments and international partners to act.</p>
-<div class="flex flex-wrap gap-4 pt-4">
-<a class="btn-primary" href="#projects">View my work →</a>
-<a class="btn-secondary" href="#contact">Get in touch</a>
+</div>
+<!-- Hero copy, lower-left -->
+<div class="relative z-10 w-full px-6 pb-16 lg:pb-24 pt-44">
+<div class="max-w-7xl mx-auto">
+<div class="space-y-7 max-w-3xl">
+<div class="flex items-center gap-3 font-label-mono text-[11px] sm:text-xs uppercase tracking-[0.22em] text-primary">
+<span class="w-8 h-px bg-primary"></span>Data Scientist &amp; ML Engineer
+</div>
+<h1 class="font-headline-xl font-bold text-on-background leading-[0.94] tracking-[-0.025em] text-5xl sm:text-6xl lg:text-[5.25rem]">I go where the<br/><span class="text-primary">data lives.</span></h1>
+<p class="text-lg lg:text-xl text-on-background/75 leading-relaxed max-w-2xl font-body-lg">Six years turning satellite passes, farmer surveys, and causal inference into models that East African governments and international partners act on — from the vanilla farms of the west to a presentation at the national policy table.</p>
+<div class="flex flex-wrap gap-4 pt-1">
+<a class="btn-primary" href="#contact">Start a conversation &rarr;</a>
+<a class="btn-secondary" href="#projects">See the field record</a>
 <a aria-label="Download CV as PDF" class="btn-ghost group" download="" href="CV_Johnson_Mugarra.pdf">
-<svg class="mr-2 w-4 h-4 text-white/50 group-hover:text-white transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Download CV</a>
+<svg class="mr-2 w-4 h-4 text-on-background/50 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Download CV</a>
 </div>
-<div class="grid grid-cols-3 gap-6 pt-8 border-t border-white/10">
-<div class="trust-item"><div class="text-2xl font-headline-md text-white">6+</div><div class="text-sm text-white/50">Years Experience</div></div>
-<div class="trust-item"><div class="text-2xl font-headline-md text-white">15+</div><div class="text-sm text-white/50">Projects Delivered</div></div>
-<div class="trust-item"><div class="text-2xl font-headline-md text-white">95%+</div><div class="text-sm text-white/50">Data Reliability</div></div>
-</div>
-</div>
-<!-- Profile card -->
-<div class="relative max-w-md mx-auto lg:ml-auto w-full">
-<div class="glass-card p-6 flex flex-col items-center text-center">
-<div class="relative w-48 h-48 mb-6 rounded-full p-1 bg-gradient-to-tr from-primary to-secondary">
-<a class="block w-full h-full rounded-full overflow-hidden border-4 border-[#06091A]" href="https://linkedin.com/in/johnsonmugarra" rel="noopener noreferrer" target="_blank">
-<img alt="Johnson Mugarra" class="w-full h-full object-cover" decoding="async" fetchpriority="high" onerror="this.style.display='none';document.getElementById('pic-ph').style.display='flex'" src="img/photo.jpg"/>
-<div class="w-full h-full bg-[#10131b] flex-col items-center justify-center text-white/30 hidden" id="pic-ph">
-<svg class="mb-2" fill="none" height="36" stroke="currentColor" stroke-width="1.2" viewbox="0 0 24 24" width="36"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-</div>
-</a>
-</div>
-<h3 class="text-2xl font-headline-md text-white mb-1">Johnson Mugarra</h3>
-<p class="text-primary font-medium mb-3">Data Scientist</p>
-<p class="text-sm text-white/50 flex items-center justify-center mb-6">
-<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Kampala, Uganda</p>
-<div class="flex flex-wrap justify-center gap-2 mb-6">
-<span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-white/80">Python</span>
-<span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-white/80">R</span>
-<span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-white/80">ML / AI</span>
-<span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-white/80">Tableau</span>
-<span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-white/80">Power BI</span>
-<span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-white/80">SQL</span>
-</div>
-<div class="flex space-x-4">
-<a aria-label="LinkedIn" class="p-2 rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors" href="https://linkedin.com/in/johnsonmugarra" rel="noopener noreferrer" target="_blank">
-<svg fill="currentColor" height="20" viewbox="0 0 24 24" width="20"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
-</a>
-<a aria-label="GitHub" class="p-2 rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors" href="https://github.com/MugarraJohnson" rel="noopener noreferrer" target="_blank">
-<svg fill="currentColor" height="20" viewbox="0 0 24 24" width="20"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
-</a>
+<dl class="grid grid-cols-3 gap-6 max-w-xl pt-7 border-t border-[#EDE6D8]/[0.14]">
+<div class="trust-item"><dt class="font-label-mono text-[10px] uppercase tracking-[0.16em] text-on-background/45">Field years</dt><dd class="text-2xl lg:text-3xl font-headline-md text-on-background mt-1.5">6+</dd></div>
+<div class="trust-item"><dt class="font-label-mono text-[10px] uppercase tracking-[0.16em] text-on-background/45">Projects delivered</dt><dd class="text-2xl lg:text-3xl font-headline-md text-on-background mt-1.5">15+</dd></div>
+<div class="trust-item"><dt class="font-label-mono text-[10px] uppercase tracking-[0.16em] text-on-background/45">Data reliability</dt><dd class="text-2xl lg:text-3xl font-headline-md text-on-background mt-1.5">95%+</dd></div>
+</dl>
 </div>
 </div>
 </div>
+<!-- Scroll cue -->
+<div class="absolute bottom-5 right-6 z-10 hidden lg:flex flex-col items-center gap-2 font-label-mono text-[10px] uppercase tracking-[0.2em] text-on-background/40">
+<span style="writing-mode:vertical-rl">Scroll — the record</span>
+<span class="w-px h-10 bg-gradient-to-b from-primary/70 to-transparent"></span>
 </div>
 </section>
 <!-- METRICS -->
@@ -597,7 +580,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 <!-- Project 1: Vanilla Supply Chain -->
 <div class="glass-card overflow-hidden group proj-card" data-cat="ml forecasting">
 <div class="relative h-64 overflow-hidden border-b border-white/10">
-<div class="absolute inset-0 bg-gradient-to-t from-[#06091A] to-transparent z-10"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#0C0B0A] to-transparent z-10"></div>
 <img alt="National Vanilla Workshop — Johnson Mugarra presenting to MAAIF" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" decoding="async" loading="lazy" src="img/Vanilla Workshop.JPG"/>
 <div class="absolute top-4 left-4 z-20 px-3 py-1 bg-primary/20 backdrop-blur-md border border-primary/30 rounded-full text-xs text-primary font-medium">Featured</div>
 </div>
@@ -623,7 +606,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 <!-- Project 2: Automated ML Pipeline -->
 <div class="glass-card overflow-hidden group proj-card" data-cat="ml automation">
 <div class="relative h-64 overflow-hidden border-b border-white/10">
-<div class="absolute inset-0 bg-gradient-to-t from-[#06091A] to-transparent z-10"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#0C0B0A] to-transparent z-10"></div>
 <img alt="Python code on screen — Automated Impact Evaluation Pipeline" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" decoding="async" loading="lazy" src="img/img_pipeline.jpg"/>
 </div>
 <div class="p-8">
@@ -646,7 +629,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 <!-- Project 3: Real-Time Analytics Dashboard -->
 <div class="glass-card overflow-hidden group proj-card" data-cat="dashboard">
 <div class="relative h-64 overflow-hidden border-b border-white/10">
-<div class="absolute inset-0 bg-gradient-to-t from-[#06091A] to-transparent z-10"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#0C0B0A] to-transparent z-10"></div>
 <img alt="Vanilla Harvest Dashboard" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" decoding="async" loading="lazy" src="img/demo_dashboard.png"/>
 </div>
 <div class="p-8">
@@ -669,7 +652,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 <!-- Project 4: Scalable ETL Data Warehouse -->
 <div class="glass-card overflow-hidden group proj-card" data-cat="automation">
 <div class="relative h-64 overflow-hidden border-b border-white/10">
-<div class="absolute inset-0 bg-gradient-to-t from-[#06091A] to-transparent z-10"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#0C0B0A] to-transparent z-10"></div>
 <img alt="Data center server rack — Scalable ETL Data Warehouse" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" decoding="async" loading="lazy" src="img/img_etl.jpg"/>
 </div>
 <div class="p-8">
@@ -692,7 +675,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 <!-- Project 5: Advanced Time-Series Forecasting -->
 <div class="glass-card overflow-hidden group proj-card" data-cat="ml forecasting">
 <div class="relative h-64 overflow-hidden border-b border-white/10">
-<div class="absolute inset-0 bg-gradient-to-t from-[#06091A] to-transparent z-10"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#0C0B0A] to-transparent z-10"></div>
 <img alt="Data analytics chart visualization — Advanced Time-Series Forecasting" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" decoding="async" loading="lazy" src="img/img_forecast.jpg"/>
 </div>
 <div class="p-8">
@@ -717,7 +700,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 <div class="glass-card p-8 mt-10 text-center">
 <h3 class="text-xl font-headline-md text-white mb-2">GitHub Activity</h3>
 <p class="text-white/50 text-sm mb-6">Active development and open-source contributions</p>
-<div class="overflow-x-auto"><img alt="GitHub contribution chart" class="mx-auto rounded-lg max-w-full" loading="lazy" src="https://ghchart.rshah.org/1C6EF2/MugarraJohnson"/></div>
+<div class="overflow-x-auto"><img alt="GitHub contribution chart" class="mx-auto rounded-lg max-w-full" loading="lazy" src="https://ghchart.rshah.org/E8A020/MugarraJohnson"/></div>
 <a class="btn-ghost mt-6 inline-flex" href="https://github.com/MugarraJohnson" rel="noopener noreferrer" target="_blank">View GitHub Profile →</a>
 </div>
 </div>
@@ -733,7 +716,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 <div class="flex flex-wrap items-center gap-4 mb-8">
 <span class="text-sm text-white/50">Channel:</span>
 <button class="fraud-btn active px-4 py-2 rounded-full bg-white/10 text-white text-sm" data-cat="All">All Channels</button>
-<button class="fraud-btn px-4 py-2 rounded-full border border-white/10 text-white/70 hover:bg-white/5 text-sm flex items-center" data-cat="Online"><span class="w-2 h-2 rounded-full bg-[#1C6EF2] mr-2"></span>Online</button>
+<button class="fraud-btn px-4 py-2 rounded-full border border-white/10 text-white/70 hover:bg-white/5 text-sm flex items-center" data-cat="Online"><span class="w-2 h-2 rounded-full bg-[#5BA3A8] mr-2"></span>Online</button>
 <button class="fraud-btn px-4 py-2 rounded-full border border-white/10 text-white/70 hover:bg-white/5 text-sm flex items-center" data-cat="ATM"><span class="w-2 h-2 rounded-full bg-[#E8A020] mr-2"></span>ATM</button>
 <button class="fraud-btn px-4 py-2 rounded-full border border-white/10 text-white/70 hover:bg-white/5 text-sm flex items-center" data-cat="POS"><span class="w-2 h-2 rounded-full bg-[#D4870A] mr-2"></span>Point of Sale</button>
 <button class="fraud-btn px-4 py-2 rounded-full border border-white/10 text-white/70 hover:bg-white/5 text-sm flex items-center" data-cat="Wire"><span class="w-2 h-2 rounded-full bg-[#FF9F0A] mr-2"></span>Wire Transfer</button>
@@ -771,7 +754,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 <div class="flex flex-wrap gap-6 text-sm text-white/60 justify-center">
 <div class="flex items-center"><span class="inline-block w-4 h-4 rounded mr-2" style="background:rgba(46,160,67,0.22);border:1.5px solid rgba(46,160,67,0.65)"></span>Main Harvest Window (Jun–Jul)</div>
 <div class="flex items-center"><span class="inline-block w-4 h-4 rounded mr-2" style="background:rgba(160,110,50,0.22);border:1.5px solid rgba(160,110,50,0.6)"></span>Secondary Harvest (Dec–Jan)</div>
-<div class="flex items-center"><svg height="5" style="flex-shrink:0;margin-right:6px" width="26"><line stroke="#1C6EF2" stroke-width="2.5" x1="0" x2="26" y1="2.5" y2="2.5"/></svg>Pollination Activity</div>
+<div class="flex items-center"><svg height="5" style="flex-shrink:0;margin-right:6px" width="26"><line stroke="#5BA3A8" stroke-width="2.5" x1="0" x2="26" y1="2.5" y2="2.5"/></svg>Pollination Activity</div>
 <div class="flex items-center"><svg height="5" style="flex-shrink:0;margin-right:6px" width="26"><line stroke="#E8A020" stroke-dasharray="7,3" stroke-width="2.5" x1="0" x2="26" y1="2.5" y2="2.5"/></svg>Projected Harvest (t+9 mo)</div>
 </div>
 </div>
@@ -818,26 +801,26 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 <div class="max-w-7xl mx-auto">
 <div class="mb-16 text-center">
 <span class="text-primary font-label-mono text-sm uppercase tracking-widest mb-2 block">Get in touch</span>
-<h2 class="text-4xl font-headline-lg text-white">Let's work together</h2>
+<h2 class="text-4xl font-headline-lg text-white">Let's talk about a project</h2>
 </div>
 <div class="grid lg:grid-cols-2 gap-16">
 <div class="space-y-6">
-<p class="text-lg text-white/70 font-body-lg">Open to Data Science roles, ML/AI projects, research collaborations, consulting engagements, and conversations about predictive analytics, impact evaluation, and development data. Based in Kampala, available remotely worldwide.</p>
+<p class="text-lg text-white/70 font-body-lg">If you're weighing a data problem where the uncertainty is real and the stakes are concrete — an evaluation, a forecast, a model that has to hold up in the field — I'd like to hear about it. Based in Kampala; I work with partners across East Africa and remotely worldwide.</p>
 <div class="space-y-4">
 <a class="flex items-center p-4 glass-card hover:bg-white/10 transition-colors group" href="mailto:johnsonmugarra@yahoo.com">
 <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors mr-4"><svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
 <div><div class="text-sm text-white/50">Email</div><div class="text-white font-medium">johnsonmugarra@yahoo.com</div></div>
 </a>
 <a class="flex items-center p-4 glass-card hover:bg-white/10 transition-colors group" href="tel:+256777108405">
-<div class="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-[#06091A] transition-colors mr-4"><svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.29h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.9 5.9l1.42-1.42a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 15.31v1.61z"/></svg></div>
+<div class="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-[#0C0B0A] transition-colors mr-4"><svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.29h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.9 5.9l1.42-1.42a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 15.31v1.61z"/></svg></div>
 <div><div class="text-sm text-white/50">Phone</div><div class="text-white font-medium">+256 777 108 405</div></div>
 </a>
 <a class="flex items-center p-4 glass-card hover:bg-white/10 transition-colors group" href="https://linkedin.com/in/johnsonmugarra" rel="noopener noreferrer" target="_blank">
-<div class="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-[#06091A] transition-colors mr-4 font-bold">in</div>
+<div class="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-[#0C0B0A] transition-colors mr-4 font-bold">in</div>
 <div><div class="text-sm text-white/50">LinkedIn</div><div class="text-white font-medium">linkedin.com/in/johnsonmugarra</div></div>
 </a>
 <a class="flex items-center p-4 glass-card hover:bg-white/10 transition-colors group" href="https://github.com/MugarraJohnson" rel="noopener noreferrer" target="_blank">
-<div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#06091A] transition-colors mr-4">
+<div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#0C0B0A] transition-colors mr-4">
 <svg fill="currentColor" height="20" viewbox="0 0 24 24" width="20"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
 </div>
 <div><div class="text-sm text-white/50">GitHub</div><div class="text-white font-medium">github.com/MugarraJohnson</div></div>
@@ -1008,13 +991,13 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 </section>
 </main>
 <!-- FOOTER -->
-<footer class="py-8 px-6 border-t border-white/10 bg-[#06091A] relative z-10">
+<footer class="py-8 px-6 border-t border-white/10 bg-[#0C0B0A] relative z-10">
 <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/40">
 <div class="flex items-center gap-2">
 <svg class="w-7 h-7 opacity-60" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 <defs>
-<linearGradient id="logo-bg-f" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#1A55D4"/><stop offset="100%" stop-color="#0C3496"/></linearGradient>
-<linearGradient id="logo-bar-f" x1="7" y1="0" x2="33" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#5BABFF"/><stop offset="100%" stop-color="#E8A020"/></linearGradient>
+<linearGradient id="logo-bg-f" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#201D19"/><stop offset="100%" stop-color="#0C0B0A"/></linearGradient>
+<linearGradient id="logo-bar-f" x1="7" y1="0" x2="33" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#E8A020"/><stop offset="100%" stop-color="#C8763A"/></linearGradient>
 </defs>
 <rect width="40" height="40" rx="10" fill="url(#logo-bg-f)"/>
 <rect x="0.75" y="0.75" width="38.5" height="38.5" rx="9.25" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" fill="none"/>
@@ -1034,7 +1017,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 </footer>
 <!-- Mobile Bottom Nav -->
 <nav aria-label="Mobile navigation" class="fixed bottom-0 left-0 right-0 z-50 md:hidden">
-<div class="flex gap-2 border-t border-white/[0.12] bg-[#06091A]/75 backdrop-blur-2xl backdrop-saturate-[180%] px-4 pb-3 pt-2">
+<div class="flex gap-2 border-t border-white/[0.12] bg-[#0C0B0A]/75 backdrop-blur-2xl backdrop-saturate-[180%] px-4 pb-3 pt-2">
 <a class="flex flex-1 flex-col items-center justify-end gap-1 text-primary" href="#hero"><span class="material-symbols-outlined text-2xl" style="font-variation-settings:'FILL' 1">house</span><p class="text-xs font-medium">Home</p></a>
 <a class="flex flex-1 flex-col items-center justify-end gap-1 text-white/50 hover:text-white transition-colors" href="#projects"><span class="material-symbols-outlined text-2xl">work</span><p class="text-xs font-medium">Projects</p></a>
 <a class="flex flex-1 flex-col items-center justify-end gap-1 text-white/50 hover:text-white transition-colors" href="#skills"><span class="material-symbols-outlined text-2xl">star</span><p class="text-xs font-medium">Skills</p></a>
@@ -1200,7 +1183,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
   var globalYMax=d3.max(allVals);
   var BSTYLE={main:{fill:'rgba(46,160,67,0.13)',stroke:'rgba(46,160,67,0.45)',lbl:'#1e7a32',txt:'Main Harvest'},secondary:{fill:'rgba(160,110,50,0.13)',stroke:'rgba(160,110,50,0.40)',lbl:'#7a5020',txt:'2nd Harvest'}};
   var bands=[{s:new Date(2024,5,1),e:new Date(2024,7,1),t:'main'},{s:new Date(2024,11,1),e:new Date(2025,1,1),t:'secondary'},{s:new Date(2025,5,1),e:new Date(2025,7,1),t:'main'},{s:new Date(2025,11,1),e:new Date(2026,1,1),t:'secondary'},{s:new Date(2026,5,1),e:new Date(2026,7,1),t:'main'}];
-  var PCOL='#1C6EF2', HCOL='#E8A020';
+  var PCOL='#5BA3A8', HCOL='#E8A020';
   var MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   function draw() {
     var container=document.getElementById('vanilla-chart');
