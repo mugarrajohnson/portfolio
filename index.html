@@ -118,8 +118,8 @@ body { @apply bg-[#0C0B0A] text-on-background font-body-md relative overflow-x-h
 ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
 #progress-bar { position: fixed; top: 0; left: 0; height: 2px; width: 0%; background: linear-gradient(to right, #E8A020, #C8763A); z-index: 9999; transition: width 0.1s linear; }
 #mob-menu.open { opacity: 1 !important; }
-.fade-in-up { animation: fadeInUp 0.38s cubic-bezier(0.23, 1, 0.32, 1) calc(var(--stagger, 0) * 60ms) both; }
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.fade-in-up { animation: fadeInUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) calc(var(--stagger, 0) * 70ms) both; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); filter: blur(7px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
 .f-msg { display: none; padding: 0.75rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; }
 .f-msg.show { display: block; }
 .f-msg.success { background: rgba(48,209,88,0.15); color: #30D158; border: 1px solid rgba(48,209,88,0.3); }
@@ -261,6 +261,26 @@ body, nav, footer, section, .glass-card, input, textarea, button {
 /* ── Skill bars ─────────────────────────────────────────────── */
 .sk-fill { width: 0%; transition: width 0.7s cubic-bezier(0.23, 1, 0.32, 1); }
 
+/* Instrument tray - D3 readouts seated in ochre registration brackets (TL + BR) */
+.instrument-tray::before, .instrument-tray::after {
+  content: ''; position: absolute; width: 13px; height: 13px; pointer-events: none; z-index: 2;
+  border: 0 solid rgba(232,160,32,0.55);
+}
+.instrument-tray::before { top: 7px; left: 7px; border-top-width: 1.5px; border-left-width: 1.5px; }
+.instrument-tray::after  { bottom: 7px; right: 7px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+
+/* Registration ticks on record cards (faint hairline, TL + BR) */
+.highlight-card, .pub-item, .testimonial-card { position: relative; }
+.highlight-card::before, .pub-item::before, .testimonial-card::before,
+.highlight-card::after,  .pub-item::after,  .testimonial-card::after {
+  content: ''; position: absolute; width: 10px; height: 10px; pointer-events: none;
+  border: 0 solid rgba(237,230,216,0.20);
+}
+.highlight-card::before, .pub-item::before, .testimonial-card::before { top: 10px; left: 10px; border-top-width: 1px; border-left-width: 1px; }
+.highlight-card::after,  .pub-item::after,  .testimonial-card::after  { bottom: 10px; right: 10px; border-bottom-width: 1px; border-right-width: 1px; }
+[data-theme="light"] .highlight-card::before, [data-theme="light"] .pub-item::before, [data-theme="light"] .testimonial-card::before,
+[data-theme="light"] .highlight-card::after,  [data-theme="light"] .pub-item::after,  [data-theme="light"] .testimonial-card::after { border-color: rgba(26,23,18,0.18); }
+
 /* ── Typography system refinements ─────────────────────────── */
 body {
   font-optical-sizing: auto;
@@ -391,7 +411,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .fade-in-up { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .fade-in-up { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
   #hero.hero-ready .space-y-8 > *, #hero.hero-ready .relative.max-w-md { animation: none !important; opacity: 1 !important; }
   #mob-menu, #mob-menu .flex-col > * { transition: opacity 0ms !important; transform: none !important; }
 }
@@ -442,7 +462,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 <button aria-label="Toggle theme" class="p-2 rounded-full bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors" id="theme-toggle">
 <svg fill="none" height="16" id="theme-icon" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
 </button>
-<a class="btn-primary py-2 px-5 text-sm" href="#contact">Let's talk</a>
+<a class="btn-primary group py-2 pl-5 pr-2 text-sm" href="#contact">Let's talk<span class="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-black/15 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true">&rarr;</span></a>
 </div>
 <button aria-label="Open menu" class="md:hidden text-white p-2" id="ham">
 <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24"><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
@@ -495,7 +515,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 <h1 class="font-headline-xl font-bold text-on-background leading-[0.94] tracking-[-0.025em] text-5xl sm:text-6xl lg:text-[5.25rem]">I go where the<br/><span class="text-primary">data lives.</span></h1>
 <p class="text-lg lg:text-xl text-on-background/75 leading-relaxed max-w-2xl font-body-lg">Six years turning satellite passes, farmer surveys, and causal inference into models that East African governments and international partners act on — from the vanilla farms of the west to a presentation at the national policy table.</p>
 <div class="flex flex-wrap gap-4 pt-1">
-<a class="btn-primary" href="#contact">Start a conversation &rarr;</a>
+<a class="btn-primary group pr-2" href="#contact">Start a conversation<span class="ml-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/15 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true">&rarr;</span></a>
 <a class="btn-secondary" href="#projects">See the field record</a>
 <a aria-label="Download CV as PDF" class="btn-ghost group" download="" href="CV_Johnson_Mugarra.pdf">
 <svg class="mr-2 w-4 h-4 text-on-background/50 group-hover:text-primary transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Download CV</a>
@@ -552,7 +572,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 <p>The more rigorous the questions got, the more I wanted the mathematical tools to match them. That's what drove me to the <strong class="text-white">M.Sc. in Data Science</strong> — not a pivot, a deliberate deepening. I wanted to work across the full stack: <strong class="text-white">machine learning, natural language processing, computer vision, and Bayesian statistical inference</strong> — not just apply packaged methods, but understand what's happening inside them.</p>
 <p>That depth has shaped the systems I've built since: a predictive analytics platform for Uganda's vanilla export sector at <a class="text-primary hover:underline" href="https://agriculture.go.ug/" target="_blank"><strong>MAAIF</strong></a> and <a class="text-primary hover:underline" href="https://mak.ac.ug" target="_blank"><strong>Makerere University</strong></a>, fusing <strong class="text-white">NASA POWER satellite data</strong> with ground measurements to cut forecast error by <strong class="text-white">18%</strong> — findings that reached a national forum attended by the Head of State. And automated evaluation pipelines at <a class="text-primary hover:underline" href="https://www.usaid.gov" target="_blank"><strong>USAID SITES</strong></a> that compressed six-week assessment cycles to under ten days.</p>
 <p>I'm drawn to problems where the uncertainty is real, the data is difficult, and getting it right actually changes something. Certified in PMP, Power BI, SAS, and Tableau. Based in Kampala — open to remote and international engagements.</p>
-<div class="pt-6"><a class="btn-primary" href="#contact">Let's connect →</a></div>
+<div class="pt-6"><a class="btn-primary group pr-2" href="#contact">Let's connect<span class="ml-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/15 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true">&rarr;</span></a></div>
 </div>
 <div class="lg:col-span-5 space-y-6">
 <div class="glass-card p-6 highlight-card"><h3 class="text-xl font-headline-md text-white mb-2">Depth</h3><p class="text-white/60">ML · NLP · Computer Vision · Bayesian Inference — across the full stack, from statistical foundations through production deployment.</p></div>
@@ -722,7 +742,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 <button class="fraud-btn px-4 py-2 rounded-full border border-white/10 text-white/70 hover:bg-white/5 text-sm flex items-center" data-cat="Wire"><span class="w-2 h-2 rounded-full bg-[#FF9F0A] mr-2"></span>Wire Transfer</button>
 </div>
 <div class="text-sm text-white/60 mb-6" id="fraud-stats"></div>
-<div class="bg-[#0b0e15]/50 border border-white/5 rounded-xl p-4 mb-6 relative">
+<div class="bg-[#0b0e15]/50 border border-white/5 rounded-xl p-4 mb-6 relative instrument-tray">
 <div class="w-full h-[480px]" id="fraud-chart"></div>
 </div>
 <div class="flex flex-wrap gap-6 text-sm text-white/60 justify-center">
@@ -748,7 +768,7 @@ nav .btn-primary:active { transform: scale(0.97) !important; }
 <button class="vanilla-btn px-4 py-2 rounded-full border border-white/10 text-white/70 hover:bg-white/5 text-sm flex items-center" data-region="Central"><span class="vanilla-dot vdot-central"></span>Central</button>
 <button class="vanilla-btn px-4 py-2 rounded-full border border-white/10 text-white/70 hover:bg-white/5 text-sm flex items-center" data-region="East"><span class="vanilla-dot vdot-east"></span>East</button>
 </div>
-<div class="bg-[#0b0e15]/50 border border-white/5 rounded-xl p-4 mb-6 relative">
+<div class="bg-[#0b0e15]/50 border border-white/5 rounded-xl p-4 mb-6 relative instrument-tray">
 <div aria-label="Vanilla harvest season time series chart" id="vanilla-chart"></div>
 </div>
 <div class="flex flex-wrap gap-6 text-sm text-white/60 justify-center">
