@@ -1,0 +1,16 @@
+*.docx
+.git
+.github
+.gitignore
+scripts
+Dockerfile
+.dockerignore
+PRODUCT.md
+IMPROVEMENTS.md
+PROJECTS_DRAFT.md
+README.md
+build_cv.js
+New Folder
+*.rar
+*.zip
+img/Vanilla Workshop.JPG

@@ -1,0 +1,19 @@
+# Private source material — never commit or deploy
+New Folder/
+*.rar
+*.zip
+
+# Working/draft files
+PROJECTS_DRAFT.md
+build_cv.js
+
+# Old / superseded CVs — only the standard CV is public
+CV_Johnson_Mugarra.pdf
+Johnson_Mugarra.pdf
+
+# Large original hero (optimized versions are committed)
+img/Vanilla Workshop.JPG
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db

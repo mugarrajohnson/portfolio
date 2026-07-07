@@ -1,0 +1,33 @@
+{
+  "name": "Johnson Mugarra — Data Scientist & AI/ML Specialist",
+  "short_name": "Johnson Mugarra",
+  "description": "Portfolio of Johnson Mugarra: Data Scientist, AI/ML Specialist, and Research & MEAL Expert based in Kampala, Uganda.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0C0B0A",
+  "theme_color": "#0C0B0A",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "img/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["portfolio", "business", "productivity"]
+}
