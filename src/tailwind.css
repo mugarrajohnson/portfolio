@@ -611,6 +611,7 @@
   background: rgb(var(--c-surface) / 0.92);
   border: 1px solid rgb(var(--c-line) / 0.18);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 10px 28px rgb(0 0 0 / 0.45);
   transition:
     background-color 200ms ease,
@@ -680,6 +681,7 @@
   border: 1px solid var(--chart-tip-border);
   color: var(--chart-tip-ink);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
 }
 
@@ -733,11 +735,15 @@
   flex: none;
   border: 1.5px solid;
 }
+/* The flat rgba first, so browsers without color-mix (Safari < 16.2)
+   still get a tinted swatch rather than a transparent one. */
 .band-main {
+  background: rgba(46, 160, 67, 0.22);
   background: color-mix(in srgb, var(--chart-band-main) 22%, transparent);
   border-color: var(--chart-band-main);
 }
 .band-second {
+  background: rgba(160, 110, 50, 0.22);
   background: color-mix(in srgb, var(--chart-band-second) 22%, transparent);
   border-color: var(--chart-band-second);
 }
@@ -746,11 +752,14 @@
    7. Motion
    ============================================================ */
 
-.reveal {
+/* Gated on .js, which the head bootstrap sets. Without scripting the
+   content stays visible instead of being hidden by an animation that
+   will never run. */
+.js .reveal {
   opacity: 0;
   transform: translateY(16px);
 }
-.reveal.is-visible {
+.js .reveal.is-visible {
   animation: revealUp 0.6s var(--ease-out) calc(var(--stagger, 0) * 70ms) both;
 }
 @keyframes revealUp {
@@ -883,9 +892,11 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .reveal {
+  .js .reveal,
+  .js .reveal.is-visible {
     opacity: 1;
     transform: none;
+    animation: none;
   }
   .hero-copy > * {
     animation: none;

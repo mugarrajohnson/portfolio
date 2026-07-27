@@ -244,14 +244,11 @@
       requestAnimationFrame(step);
     };
 
-    if (prefersReducedMotion) {
-      targets.forEach((el) => {
-        el.textContent = el.dataset.countTo;
-      });
-    } else {
-      targets.forEach((el) => {
-        el.textContent = '0';
-      });
+    /* The real figures stay in the markup and are only overwritten once
+       the animation actually begins, so a counter that never runs (no
+       scripting, reduced motion, an observer that never fires in a
+       background tab) shows the number rather than a zero. */
+    if (!prefersReducedMotion && 'IntersectionObserver' in window) {
       const observer = new IntersectionObserver(
         (entries, obs) => {
           if (!entries[0].isIntersecting) return;
@@ -603,13 +600,17 @@
   /* ── Scroll reveal ─────────────────────────────────────────── */
   const revealTargets = $$('.reveal');
   if (revealTargets.length) {
-    if (prefersReducedMotion) {
+    /* These start at opacity 0 under .js, so anything that stops the
+       observer running has to reveal them instead of leaving them hidden. */
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
       revealTargets.forEach((el) => el.classList.add('is-visible'));
     } else {
+      let anyRevealed = false;
       const revealObserver = new IntersectionObserver(
         (entries, obs) => {
           entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
+            anyRevealed = true;
             entry.target.classList.add('is-visible');
             obs.unobserve(entry.target);
           });
@@ -620,6 +621,15 @@
         el.style.setProperty('--stagger', String(i % 4));
         revealObserver.observe(el);
       });
+
+      /* If nothing at all has revealed once the page has been visible for
+         a few seconds, the observer is not doing its job. Show everything
+         rather than leave the section blank. */
+      setTimeout(() => {
+        if (anyRevealed || document.visibilityState !== 'visible') return;
+        revealObserver.disconnect();
+        revealTargets.forEach((el) => el.classList.add('is-visible'));
+      }, 4000);
     }
   }
 

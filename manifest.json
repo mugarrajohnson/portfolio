@@ -2,6 +2,7 @@
   "name": "Johnson Mugarra — Data Scientist & AI/ML Specialist",
   "short_name": "Johnson Mugarra",
   "description": "Portfolio of Johnson Mugarra: Data Scientist, AI/ML Specialist, and Research & MEAL Expert based in Kampala, Uganda.",
+  "id": "/",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

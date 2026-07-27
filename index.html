@@ -13,6 +13,9 @@
 <script>
 (function () {
   var root = document.documentElement;
+  /* Anything that JS hides until it can reveal it is gated on .js, so the
+     page stays readable when scripting is off or a script fails to load. */
+  root.className += (root.className ? ' ' : '') + 'js';
   var theme = 'dark';
   try {
     var saved = localStorage.getItem('jm-theme');
@@ -30,6 +33,7 @@
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
 <link href="manifest.json" rel="manifest"/>
+<link href="img/favicon.ico" rel="icon" sizes="any"/>
 <link href="img/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
 <link href="img/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
 <link href="img/apple-touch-icon.png" rel="apple-touch-icon"/>
@@ -230,27 +234,27 @@
 
 <h1 class="font-bold text-ink text-display" id="hero-title">I go where the<br/><span class="hero-accent">data lives.</span></h1>
 
-<p class="text-lg lg:text-xl text-ink/80 leading-relaxed max-w-2xl">Six years turning satellite data, farmer surveys and causal inference into forecasts that East African governments and international partners act on. Most of that work is in agriculture and humanitarian programmes, where good data is hard to come by.</p>
+<p class="text-lg lg:text-xl text-ink/80 leading-relaxed max-w-2xl">Six years turning satellite data, farmer surveys and causal inference into forecasts and evaluations for government agencies and international partners across East Africa. Most of that work is in agriculture and humanitarian programmes, where good data is hard to come by.</p>
 
 <div class="flex flex-wrap items-center gap-x-5 gap-y-4 pt-1">
 <a class="btn-primary group pr-2" href="#contact">Start a conversation<span aria-hidden="true" class="ml-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/15 transition-transform duration-300 ease-out group-hover:translate-x-0.5">&rarr;</span></a>
-<a class="btn-secondary" href="#projects">See the field record</a>
+<a class="btn-secondary" href="#projects">See the work</a>
 <a class="link-action gap-1.5 text-ink/70 hover:text-primary underline underline-offset-4 decoration-ink/25 transition-colors" download="" href="CV_Johnson_Mugarra_Standard.pdf">
 <svg aria-hidden="true" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
 Download CV <span class="sr-only">(PDF)</span></a>
 </div>
 
 <dl class="grid grid-cols-3 gap-6 max-w-xl pt-7 border-t border-line/[0.14]">
-<div class="reveal"><dt class="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">Field years</dt><dd class="stat-value text-2xl lg:text-3xl font-headline text-ink mt-1.5">6+</dd></div>
-<div class="reveal"><dt class="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">Projects delivered</dt><dd class="stat-value text-2xl lg:text-3xl font-headline text-ink mt-1.5">15+</dd></div>
-<div class="reveal"><dt class="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">Pipeline data quality</dt><dd class="stat-value text-2xl lg:text-3xl font-headline text-ink mt-1.5">95%+</dd></div>
+<div class="reveal"><dt class="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">In the field</dt><dd class="stat-value text-2xl lg:text-3xl font-headline text-ink mt-1.5">6+ yrs</dd></div>
+<div class="reveal"><dt class="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">Organisations served</dt><dd class="stat-value text-2xl lg:text-3xl font-headline text-ink mt-1.5">15+</dd></div>
+<div class="reveal"><dt class="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">Peer-reviewed papers</dt><dd class="stat-value text-2xl lg:text-3xl font-headline text-ink mt-1.5">2</dd></div>
 </dl>
 </div>
 </div>
 </div>
 
 <p aria-hidden="true" class="absolute bottom-5 right-6 z-10 hidden lg:flex flex-col items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-faint">
-<span style="writing-mode:vertical-rl">Scroll, the record</span>
+<span style="writing-mode:vertical-rl">Scroll</span>
 <span class="w-px h-10 bg-gradient-to-b from-brand/70 to-transparent"></span>
 </p>
 </section>
@@ -259,20 +263,20 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <section aria-label="Headline results" class="py-12 plate mx-6 max-w-7xl lg:mx-auto" id="metrics">
 <dl class="grid grid-cols-2 lg:grid-cols-4 gap-8 divide-y sm:divide-y-0 lg:divide-x divide-line/5">
 <div class="text-center px-4 metric">
-<dd class="metric-value text-4xl font-headline text-secondary mb-2"><span data-count-to="95" id="m1">95</span>%+</dd>
-<dt class="text-sm text-ink/65">Pipeline data quality</dt>
+<dd class="metric-value text-4xl font-headline text-secondary mb-2"><span data-count-to="18">18</span>%</dd>
+<dt class="text-sm text-ink/65">Forecast error cut on the MAAIF vanilla model</dt>
 </div>
 <div class="text-center px-4 metric">
-<dd class="metric-value text-4xl font-headline text-primary mb-2"><span data-count-to="85" id="m2">85</span>%</dd>
-<dt class="text-sm text-ink/65">Faster evaluation cycles</dt>
+<dd class="metric-value text-4xl font-headline text-primary mb-2"><span data-count-to="10">10</span><span class="text-xl ml-1">days</span></dd>
+<dt class="text-sm text-ink/65">USAID SITES evaluation cycle, down from 6 weeks</dt>
 </div>
 <div class="text-center px-4 metric">
-<dd class="metric-value text-4xl font-headline text-secondary mb-2"><span data-count-to="80" id="m3">80</span>%+</dd>
-<dt class="text-sm text-ink/65">Forecast accuracy</dt>
+<dd class="metric-value text-4xl font-headline text-secondary mb-2"><span data-count-to="95">95</span>%+</dd>
+<dt class="text-sm text-ink/65">Data reliability across SITES quality audits</dt>
 </div>
 <div class="text-center px-4 metric">
-<dd class="metric-value text-4xl font-headline text-primary mb-2"><span data-count-to="6" id="m4">6</span><sup class="text-lg">+ yrs</sup></dd>
-<dt class="text-sm text-ink/65">Data &amp; analytics experience</dt>
+<dd class="metric-value text-4xl font-headline text-primary mb-2"><span data-count-to="7">7</span></dd>
+<dt class="text-sm text-ink/65">Automated pipelines running at Enimiro</dt>
 </div>
 </dl>
 </section>
@@ -302,11 +306,11 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <p class="eyebrow mb-4">About me</p>
 <div class="grid lg:grid-cols-12 gap-16">
 <div class="lg:col-span-7 space-y-6 text-lg text-ink/75 leading-[1.78]">
-<h2 class="text-4xl text-ink mb-8" id="about-title">I came to the mathematics the long way round.</h2>
+<h2 class="text-4xl text-ink mb-8" id="about-title">I came to data science the long way round.</h2>
 
 <p>I started in management consulting at <strong class="text-ink font-semibold">Bronkar Uganda</strong>. The useful thing I learned there was how organisations actually frame a decision, and what kind of evidence moves them. From there I went into M&amp;E research for international non-profits, running evaluations and impact assessments for <a class="text-primary hover:underline" href="https://www.usaid.gov" rel="noopener noreferrer" target="_blank">USAID</a>, <strong class="text-ink font-semibold">UNDP</strong>, <strong class="text-ink font-semibold">IRC</strong> and others across East Africa.</p>
 
-<p>The questions kept getting harder than my tools. That is why I did the <strong class="text-ink font-semibold">M.Sc. in Data Science</strong>: machine learning, natural language processing, computer vision and Bayesian inference, with enough time on each to understand what the packaged methods are doing inside.</p>
+<p>I kept running into questions my tools couldn't answer. That's why I did the <strong class="text-ink font-semibold">M.Sc. in Data Science</strong>: machine learning, natural language processing, computer vision and Bayesian inference, with enough time on each to understand what the standard implementations are actually doing.</p>
 
 <p>Since then I built a predictive analytics platform for Uganda's vanilla export sector at <a class="text-primary hover:underline" href="https://agriculture.go.ug/" rel="noopener noreferrer" target="_blank">MAAIF</a> and <a class="text-primary hover:underline" href="https://mak.ac.ug" rel="noopener noreferrer" target="_blank">Makerere University</a>, fusing <strong class="text-ink font-semibold">NASA POWER satellite data</strong> with ground measurements to cut forecast error by <strong class="text-ink font-semibold">18%</strong>. Those findings went to a national forum attended by the Head of State. At <a class="text-primary hover:underline" href="https://www.usaid.gov" rel="noopener noreferrer" target="_blank">USAID SITES</a> I built evaluation pipelines that took a 6-week assessment cycle down to under 10 days.</p>
 
@@ -316,9 +320,9 @@ Download CV <span class="sr-only">(PDF)</span></a>
 </div>
 
 <div class="lg:col-span-5 space-y-6">
-<div class="plate ticked lift p-6 reveal"><h3 class="text-xl text-ink mb-2">Depth</h3><p class="text-ink/65">ML, NLP, computer vision and Bayesian inference, from the statistical foundations through to production deployment.</p></div>
-<div class="plate ticked lift p-6 reveal"><h3 class="text-xl text-ink mb-2">Impact</h3><p class="text-ink/65">18% less forecast error. Evaluation cycles 85% faster. Evidence that reached Uganda's national policy table and changed programme decisions.</p></div>
-<div class="plate ticked lift p-6 reveal"><h3 class="text-xl text-ink mb-2">Recognition</h3><p class="text-ink/65">Co-author on peer-reviewed agronomy research in Agronomy (MDPI) and Advances in Agriculture (Wiley). Presented findings at a national forum attended by President Museveni.</p></div>
+<div class="plate ticked lift p-6 reveal"><h3 class="text-xl text-ink mb-2">Depth</h3><p class="text-ink/65">ML, NLP, computer vision and Bayesian inference, from the statistics underneath to running a model in production.</p></div>
+<div class="plate ticked lift p-6 reveal"><h3 class="text-xl text-ink mb-2">Impact</h3><p class="text-ink/65">18% less forecast error. Evaluation cycles cut from 6 weeks to under 10 days. Data-quality audits held at 95%+.</p></div>
+<div class="plate ticked lift p-6 reveal"><h3 class="text-xl text-ink mb-2">Recognition</h3><p class="text-ink/65">Co-author on peer-reviewed agronomy research in Agronomy (MDPI) and Advances in Agriculture (Wiley). Presented the vanilla forecasting work at a national policy forum in Kampala.</p></div>
 </div>
 </div>
 </div>
@@ -346,7 +350,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <p class="font-mono text-xs uppercase tracking-widest text-primary mb-1">Jan 2025 to present</p>
 <h3 class="text-xl text-ink">Research &amp; MEAL Specialist</h3>
 <p class="text-muted text-sm mb-3">Center for Research &amp; Communication (CRC)</p>
-<p class="text-ink/70">Lead the data and analytics behind evaluation consultancies for UN agencies and international NGOs, including IRC, UNICEF, World Vision, Save the Children, Danish Refugee Council, Oxfam, GIZ and ADRA, across Somalia and the Horn of Africa. Run impact and endline evaluations, KAP surveys and needs assessments end to end: tool design, SurveyCTO data collection, data-quality assurance, analysis, and the final reports clients deliver to donors. I also write the technical proposals that win new evaluation contracts, and run workshops on ML, statistical modelling, Python, R and Power BI.</p>
+<p class="text-ink/70">Lead the data and analytics behind evaluation consultancies for UN agencies and international NGOs, including IRC, UNICEF, World Vision, Save the Children, Danish Refugee Council, Oxfam, GIZ and ADRA, across Somalia and the Horn of Africa. Run impact and endline evaluations, KAP surveys and needs assessments end to end: tool design, SurveyCTO data collection, data-quality assurance, analysis, and the final reports clients deliver to donors. I also write the technical proposals for new evaluation bids, and run workshops on ML, statistical modelling, Python, R and Power BI.</p>
 </li>
 
 <li class="ml-8 relative reveal">
@@ -354,7 +358,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <p class="font-mono text-xs uppercase tracking-widest text-secondary mb-1">Jan 2024 to May 2025</p>
 <h3 class="text-xl text-ink">Data Scientist</h3>
 <p class="text-muted text-sm mb-3">MAAIF, VANEX, Makerere University, CRS</p>
-<p class="text-ink/70">Built an end-to-end forecasting system fusing API, satellite and ground data, cutting MAE by 18% at over 80% accuracy. Automated the ETL with Python and Airflow, and presented the findings to a national forum attended by the Head of State.</p>
+<p class="text-ink/70">Built an end-to-end forecasting system combining API, satellite and ground data, cutting mean absolute error by 18% against the previous model. Automated the ETL with Python and Airflow, and presented the findings at the national vanilla forum.</p>
 </li>
 
 <li class="ml-8 relative reveal">
@@ -409,12 +413,11 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <div class="proj-body p-8">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Python</li><li class="chip">Prophet</li><li class="chip">NASA POWER API</li></ul>
 <h3 class="text-2xl text-ink mb-4">Vanilla supply chain predictive analytics</h3>
-<dl class="grid grid-cols-3 gap-4 mb-6 pb-6 border-b border-line/10">
+<dl class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-line/10">
 <div><dd class="stat-value text-lg font-bold text-secondary">18%</dd><dt class="text-xs text-faint">MAE reduction</dt></div>
-<div><dd class="stat-value text-lg font-bold text-primary">80%+</dd><dt class="text-xs text-faint">Accuracy</dt></div>
-<div><dd class="stat-value text-lg font-bold text-ink">6 wks</dd><dt class="text-xs text-faint">Time saved</dt></div>
+<div><dd class="stat-value text-lg font-bold text-primary">3</dd><dt class="text-xs text-faint">Data sources combined</dt></div>
 </dl>
-<p class="text-ink/65 mb-6">Forecasting system fusing NASA POWER satellite data, ground measurements and market prices. Cut forecast MAE by 18%, and the findings went to MAAIF at the national workshop.</p>
+<p class="text-ink/65 mb-6">Forecasting system built on NASA POWER satellite data, ground measurements and market prices. Cut forecast MAE by 18%, and the findings went to MAAIF at the national workshop.</p>
 <p class="flex flex-wrap gap-4">
 <a class="link-action text-primary hover:underline" href="#vanilla-harvest">Interactive harvest model <span aria-hidden="true" class="ml-1">&rarr;</span></a>
 <a class="link-action text-faint hover:text-ink transition-colors" href="https://github.com/MugarraJohnson" rel="noopener noreferrer" target="_blank">GitHub <span aria-hidden="true" class="ml-1">&rarr;</span></a>
@@ -431,7 +434,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Python</li><li class="chip">Airflow</li><li class="chip">PostgreSQL</li></ul>
 <h3 class="text-2xl text-ink mb-4">Automated impact evaluation pipeline</h3>
 <dl class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-line/10">
-<div><dd class="stat-value text-lg font-bold text-secondary">85%</dd><dt class="text-xs text-faint">Time reduction</dt></div>
+<div><dd class="stat-value text-lg font-bold text-secondary">10 days</dd><dt class="text-xs text-faint">Cycle time, from 6 weeks</dt></div>
 <div><dd class="stat-value text-lg font-bold text-primary">95%+</dd><dt class="text-xs text-faint">Data quality</dt></div>
 </dl>
 <p class="text-ink/65 mb-6">Python and Airflow pipeline covering ingestion, causal inference modelling and report generation. Evaluation cycles went from 6 weeks to under 10 days.</p>
@@ -446,11 +449,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <div class="proj-body p-8">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Prophet</li><li class="chip">ARIMA</li><li class="chip">R</li></ul>
 <h3 class="text-2xl text-ink mb-4">Hierarchical time-series forecasting</h3>
-<dl class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-line/10">
-<div><dd class="stat-value text-lg font-bold text-secondary">30%</dd><dt class="text-xs text-faint">Accuracy gain</dt></div>
-<div><dd class="text-lg font-bold text-primary">Prophet + ARIMA</dd><dt class="text-xs text-faint">Method</dt></div>
-</dl>
-<p class="text-ink/65 mb-6">Hierarchical forecasting with Prophet and ARIMA for Ugandan vanilla yields. This is the method behind the 30% accuracy gain presented at the national forum.</p>
+<p class="text-ink/65 mb-6">Hierarchical forecasting with Prophet and ARIMA for Ugandan vanilla yields. This is the method underneath the MAAIF harvest model, and what I presented at the national forum.</p>
 <p><a class="link-action text-primary hover:underline" href="#vanilla-harvest">Interactive harvest model <span aria-hidden="true" class="ml-1">&rarr;</span></a></p>
 </div>
 </li>
@@ -465,7 +464,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">SurveyCTO</li><li class="chip">R</li><li class="chip">Power BI</li></ul>
 <h3 class="text-2xl text-ink mb-4">M&amp;E evaluations for humanitarian clients</h3>
 <dl class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-line/10">
-<div><dd class="stat-value text-lg font-bold text-secondary">10+</dd><dt class="text-xs text-faint">Organisations served</dt></div>
+<div><dd class="stat-value text-lg font-bold text-secondary">8</dd><dt class="text-xs text-faint">UN agencies &amp; NGOs served</dt></div>
 <div><dd class="text-lg font-bold text-primary">Full lifecycle</dd><dt class="text-xs text-faint">Inception to reporting</dt></div>
 </dl>
 <p class="text-ink/65 mb-6">The data side of impact and endline evaluations, KAP surveys and needs assessments for UN agencies and international NGOs (IRC, UNICEF, World Vision, Save the Children, Danish Refugee Council, Oxfam, GIZ) across Somalia and the Horn of Africa: tool design, SurveyCTO collection, data-quality checks, analysis, and the final reports that go to donors. Recent delivery includes the IRC MERP endline survey funded by the German Federal Foreign Office.</p>
@@ -483,7 +482,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <h3 class="text-2xl text-ink mb-4">Health data quality &amp; HIE readiness</h3>
 <dl class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-line/10">
 <div><dd class="stat-value text-lg font-bold text-secondary">95%+</dd><dt class="text-xs text-faint">Data reliability</dt></div>
-<div><dd class="text-lg font-bold text-primary">Multi-region</dd><dt class="text-xs text-faint">Field coverage</dt></div>
+<div><dd class="stat-value text-lg font-bold text-primary">3</dd><dt class="text-xs text-faint">Regions: Lango, Kigezi, Busoga</dt></div>
 </dl>
 <p class="text-ink/65 mb-6">With USAID/SITES and the Ministry of Health, ran facility readiness assessments for the move to Health Information Exchange and built data-quality audits across health facilities in the Lango, Kigezi and Busoga regions.</p>
 <p><a class="link-action text-faint hover:text-ink transition-colors" href="#contact">Ask about this work <span aria-hidden="true" class="ml-1">&rarr;</span></a></p>
@@ -513,7 +512,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <div class="proj-body p-8">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Python</li><li class="chip">Computer vision</li><li class="chip">Deep learning</li></ul>
 <h3 class="text-2xl text-ink mb-4">Gesture &amp; object recognition</h3>
-<p class="text-ink/65 mb-6">MSc Data Science capstone at MAHE. Machine perception for robotics: reading hand gestures such as a thumbs-up and recognising objects from a camera feed, so a machine can interpret what is in front of it.</p>
+<p class="text-ink/65 mb-6">MSc Data Science capstone at MAHE. Machine perception for robotics: reading hand gestures such as a thumbs-up and recognising objects from a camera feed, so a machine can work out what's in front of it.</p>
 <p><a class="link-action text-faint hover:text-ink transition-colors" href="#contact">Ask about this work <span aria-hidden="true" class="ml-1">&rarr;</span></a></p>
 </div>
 </li>
@@ -632,6 +631,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <button aria-controls="vanilla-harvest" aria-selected="true" class="seg-tab" id="tab-vanilla" role="tab" tabindex="0" type="button">Vanilla harvest</button>
 <button aria-controls="fraud-analytics" aria-selected="false" class="seg-tab" id="tab-fraud" role="tab" tabindex="-1" type="button">Fraud detection</button>
 </div>
+<noscript><p class="mt-6 text-sm text-muted max-w-xl mx-auto">Both charts are drawn in the browser with D3, so they need JavaScript. Everything else on this page works without it.</p></noscript>
 </div>
 
 <!-- Vanilla harvest -->
@@ -712,7 +712,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <div class="mb-16 text-center">
 <p class="eyebrow mb-2">Expertise</p>
 <h2 class="text-4xl text-ink mb-4" id="skills-title">What I work with</h2>
-<p class="text-ink/65 max-w-2xl mx-auto">Each of these earned its place on a specific project. Where it did the work is in the second column.</p>
+<p class="text-ink/65 max-w-2xl mx-auto">Each of these earned its place on a real project. Here's where each one did the work.</p>
 </div>
 
 <div class="grid lg:grid-cols-2 gap-12 lg:gap-16">
@@ -782,7 +782,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 
 <div class="grid lg:grid-cols-2 gap-12 lg:gap-16">
 <div class="space-y-6">
-<p class="text-lg text-ink/75 leading-[1.78]">If you have an evaluation to run, a forecast to build, or a model that has to survive contact with field data, I'd like to hear about it. Tell me what decision it feeds and what you already know. I'm in Kampala and work with partners across East Africa and remotely.</p>
+<p class="text-lg text-ink/75 leading-[1.78]">If you have an evaluation to run, a forecast to build, or a model that has to hold up in the field, I'd like to hear about it. Tell me what the decision is and what you already know. I'm in Kampala and work with partners across East Africa and remotely.</p>
 
 <ul class="space-y-4">
 <li class="flex items-center gap-2 p-4 plate">
@@ -912,7 +912,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <div>
 <h3 class="text-xl text-ink mb-2">National forum presentation on agricultural analytics</h3>
 <p class="text-sm text-primary mb-3">National forum attended by H.E. President Yoweri Kaguta Museveni · April 2025 · Makerere University</p>
-<p class="text-ink/65 mb-4">Presented the vanilla supply-chain forecasting research: ML models fusing satellite and ground data, a 30% gain in forecast accuracy, and specific recommendations for agricultural policy.</p>
+<p class="text-ink/65 mb-4">Presented the vanilla supply-chain forecasting research: ML models combining satellite and ground data, a 30% gain in forecast accuracy, and specific recommendations for agricultural policy.</p>
 <ul class="flex flex-wrap gap-2"><li class="px-2 py-1 rounded bg-brand/10 border border-brand/20 text-xs text-primary">ML / AI</li><li class="px-2 py-1 rounded bg-brand/10 border border-brand/20 text-xs text-primary">Policy impact</li><li class="px-2 py-1 rounded bg-brand/10 border border-brand/20 text-xs text-primary">Agriculture</li></ul>
 </div>
 </li>
