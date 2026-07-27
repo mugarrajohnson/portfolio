@@ -1,3 +1,7 @@
+# Dependencies. Note assets/styles.css IS committed: the site deploys
+# as plain static files and must work without a build step on the host.
+node_modules/
+
 # Private source material — never commit or deploy
 New Folder/
 *.rar

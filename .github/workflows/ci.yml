@@ -14,11 +14,23 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
-      - name: Internal references, assets, and JS syntax
-        run: node scripts/check-refs.mjs
+      - run: npm ci
 
-      - name: External link check (non-blocking)
+      # The compiled stylesheet is committed so the site stays a plain
+      # static deploy. Rebuild it and fail if the result differs, which
+      # catches a change to src/tailwind.css that was never rebuilt.
+      - name: Stylesheet is up to date
+        run: |
+          npm run build
+          git diff --exit-code -- assets/styles.css \
+            || (echo "::error::assets/styles.css is stale — run 'npm run build' and commit the result" && exit 1)
+
+      - name: References, assets, accessibility attributes, JS syntax
+        run: npm run check
+
+      - name: External links (non-blocking)
         uses: lycheeverse/lychee-action@v2
         continue-on-error: true
         with:

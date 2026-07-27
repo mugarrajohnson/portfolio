@@ -1,0 +1,941 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   1. Palette
+   ------------------------------------------------------------
+   Every colour is a channel triple so Tailwind's alpha modifiers
+   (text-ink/70, border-line/10) keep working. Light mode swaps the
+   triples; nothing downstream needs an override.
+   ============================================================ */
+
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --c-bg: 12 11 10;
+  --c-surface: 20 18 16;
+  --c-surface-2: 24 22 19;
+  --c-surface-3: 32 29 25;
+
+  --c-ink: 237 230 216;
+  --c-line: 237 230 216;
+
+  /* Secondary and tertiary text are their own tokens, not ink at low
+     alpha. Light mode needs noticeably more contrast than dark mode to
+     clear 4.5:1, so a single alpha ramp cannot serve both. */
+  --c-muted: 165 158 146;
+  --c-faint: 143 136 126;
+
+  --c-primary: 232 160 32;
+  --c-secondary: 200 118 58;
+  --c-tertiary: 127 166 99;
+
+  --c-positive: 48 209 88;
+  --c-warn: 255 159 10;
+  --c-danger: 255 69 58;
+
+  /* Chart series colours. Read by charts.js and by the legend swatches,
+     so a dot, its line, its tooltip and its stats figure always agree. */
+  --s-legit: #30d158;
+  --s-suspicious: #ff9f0a;
+  --s-fraud: #ff453a;
+  --s-pollination: #5ba3a8;
+  --s-harvest: #e8a020;
+  --s-east: #d4870a;
+
+  /* Chart ink, read by charts.js */
+  --chart-text: rgba(237, 230, 216, 0.72);
+  --chart-axis: rgba(237, 230, 216, 0.2);
+  --chart-grid: rgba(237, 230, 216, 0.07);
+  --chart-label: rgba(237, 230, 216, 0.55);
+  --chart-tip-bg: rgba(20, 18, 16, 0.96);
+  --chart-tip-border: rgba(237, 230, 216, 0.14);
+  --chart-tip-ink: rgba(237, 230, 216, 0.92);
+  --chart-tip-dim: rgba(237, 230, 216, 0.55);
+  --chart-band-main: #6fbf82;
+  --chart-band-second: #c99a5e;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  --c-bg: 241 236 225;
+  --c-surface: 251 248 241;
+  --c-surface-2: 246 242 233;
+  --c-surface-3: 236 230 218;
+
+  --c-ink: 26 23 18;
+  --c-line: 26 23 18;
+
+  --c-muted: 82 74 62;
+  --c-faint: 110 100 85;
+
+  /* Deepened so accent text clears 4.5:1 on cream */
+  --c-primary: 138 90 20;
+  --c-secondary: 150 78 34;
+  --c-tertiary: 71 100 48;
+
+  --c-positive: 22 138 61;
+  --c-warn: 176 98 6;
+  --c-danger: 194 42 32;
+
+  /* Darkened so each series clears 4.5:1 on cream. The bright dark-mode
+     values sit at roughly 2:1 there and were unreadable as text. */
+  --s-legit: #157a33;
+  --s-suspicious: #8a5200;
+  --s-fraud: #c2261c;
+  --s-pollination: #2e7b80;
+  --s-harvest: #8a5a14;
+  --s-east: #7a4a08;
+
+  --chart-text: rgba(26, 23, 18, 0.78);
+  --chart-axis: rgba(26, 23, 18, 0.26);
+  --chart-grid: rgba(26, 23, 18, 0.09);
+  --chart-label: rgba(26, 23, 18, 0.6);
+  --chart-tip-bg: rgba(251, 248, 241, 0.98);
+  --chart-tip-border: rgba(26, 23, 18, 0.14);
+  --chart-tip-ink: rgba(26, 23, 18, 0.9);
+  --chart-tip-dim: rgba(26, 23, 18, 0.6);
+  --chart-band-main: #1e7a32;
+  --chart-band-second: #7a5020;
+}
+
+/* Fills that carry dark text on top stay ochre in both themes,
+   otherwise buttons would go muddy brown on the cream background. */
+:root {
+  --c-brand: 232 160 32;
+  --c-brand-bright: 244 200 113;
+  --c-on-brand: 26 18 6;
+  --c-secondary-fill: 200 118 58;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --nav-h: 90px;
+}
+
+/* Regions that sit on dark photography in BOTH themes keep dark-mode ink. */
+#hero,
+.on-dark {
+  --c-ink: 237 230 216;
+  --c-line: 237 230 216;
+  --c-muted: 165 158 146;
+  --c-faint: 143 136 126;
+  --c-primary: 232 160 32;
+}
+
+/* ============================================================
+   2. Base
+   ============================================================ */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--nav-h);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-ink font-body antialiased relative overflow-x-hidden;
+    font-optical-sizing: auto;
+    font-kerning: normal;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+    line-height: 1.68;
+    letter-spacing: 0.011em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-headline;
+    text-wrap: balance;
+  }
+
+  h2 {
+    letter-spacing: -0.03em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    text-underline-offset: 4px;
+  }
+
+  /* One visible focus treatment for the whole site. */
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-brand));
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: rgb(var(--c-brand) / 0.28);
+    color: rgb(var(--c-ink));
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--c-bg));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--c-line) / 0.18);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--c-line) / 0.3);
+  }
+
+  /* Tabular figures wherever a number is meant to be read, not decorated. */
+  .tnum,
+  .metric-value,
+  .stat-value,
+  .proj-counter {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ============================================================
+   3. Components
+   ============================================================ */
+
+@layer components {
+  /* Instrument plate: flat machined surface, hairline frame. Not glass. */
+  .plate {
+    @apply bg-surface border border-line/[0.085] rounded-plate;
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.45),
+      0 14px 34px -20px rgb(0 0 0 / 0.6),
+      inset 0 1px 0 rgb(var(--c-ink) / 0.05);
+  }
+
+  [data-theme='light'] .plate {
+    @apply border-line/10;
+    box-shadow:
+      0 1px 2px rgb(60 50 30 / 0.06),
+      0 12px 30px -18px rgb(60 50 30 / 0.2),
+      inset 0 1px 0 rgb(255 255 255 / 0.6);
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-control font-semibold tracking-[-0.01em] px-6 py-3;
+    transition:
+      transform 160ms var(--ease-spring),
+      background-color 160ms ease-out,
+      border-color 160ms ease-out,
+      color 160ms ease-out,
+      opacity 160ms ease-out;
+  }
+
+  .btn-primary {
+    @apply btn bg-brand text-on-brand;
+  }
+  .btn-primary:hover {
+    @apply bg-brand-bright;
+  }
+
+  .btn-secondary {
+    @apply btn border border-line/25 text-ink font-medium;
+  }
+  .btn-secondary:hover {
+    @apply border-brand text-primary;
+  }
+
+  .btn-ghost {
+    @apply btn px-4 py-2 text-ink/65 font-medium;
+  }
+  .btn-ghost:hover {
+    @apply text-primary;
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+    transition-duration: 100ms;
+  }
+
+  /* Chip used for stack tags and filter pills. */
+  .chip {
+    @apply inline-flex items-center rounded px-2 py-1 text-xs bg-ink/5 text-ink/65;
+  }
+
+  .filt {
+    @apply rounded-full border border-line/10 px-4 py-2 text-sm font-medium text-muted;
+    transition:
+      background-color 180ms ease-out,
+      color 180ms ease-out,
+      border-color 180ms ease-out;
+  }
+  .filt:hover {
+    @apply bg-ink/5;
+  }
+  .filt[aria-pressed='true'] {
+    @apply border-brand/40 bg-brand/20 text-primary;
+  }
+  .filt:active {
+    transform: scale(0.97);
+  }
+
+  /* Segmented tab used by the analytics demos. */
+  .seg-tab {
+    @apply rounded-full px-5 py-2 text-sm font-medium text-muted;
+    transition:
+      background-color 200ms ease-out,
+      color 200ms ease-out;
+  }
+  .seg-tab[aria-selected='true'] {
+    @apply bg-brand text-on-brand;
+  }
+
+  .nav-shell {
+    background: rgb(var(--c-bg) / 0.9);
+    backdrop-filter: blur(7px) saturate(160%);
+    -webkit-backdrop-filter: blur(7px) saturate(160%);
+    @apply border border-line/10;
+  }
+
+  .field-label {
+    @apply block text-sm text-muted mb-2;
+  }
+
+  .field {
+    @apply w-full rounded-lg border border-line/10 bg-ink/5 px-4 py-3 text-ink;
+    transition:
+      border-color 160ms ease-out,
+      box-shadow 160ms ease-out;
+  }
+  .field::placeholder {
+    color: rgb(var(--c-faint));
+  }
+  .field:focus {
+    outline: none;
+    border-color: rgb(var(--c-brand));
+    box-shadow: 0 0 0 1px rgb(var(--c-brand));
+  }
+  .field[aria-invalid='true'] {
+    border-color: rgb(var(--c-danger));
+  }
+
+  /* Section eyebrow: the small mono label above every heading. */
+  .eyebrow {
+    @apply block font-mono text-xs uppercase tracking-[0.18em] text-primary;
+  }
+
+  /* A standalone link that acts as a control ("Ask about this work →").
+     Held at 24px tall for WCAG 2.5.8; links inline in a sentence are
+     exempt and keep their natural height. */
+  .link-action {
+    @apply inline-flex items-center text-sm;
+    min-height: 1.5rem;
+  }
+}
+
+/* ============================================================
+   4. Page furniture
+   ============================================================ */
+
+/* Faint cartographic warmth plus paper grain. No glow blobs. */
+.page-wash {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  contain: strict;
+  background:
+    radial-gradient(115% 75% at 50% -12%, rgb(var(--c-brand) / 0.055), transparent 60%),
+    radial-gradient(90% 90% at 100% 102%, rgb(var(--c-secondary-fill) / 0.045), transparent 55%);
+}
+
+.page-wash::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.45;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* Driven by transform, not width, so scrolling never triggers layout. */
+#progress-bar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  z-index: 60;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  will-change: transform;
+  background: linear-gradient(to right, rgb(var(--c-brand)), rgb(var(--c-secondary-fill)));
+}
+
+/* Nav ------------------------------------------------------- */
+
+#navbar.scrolled .nav-shell {
+  box-shadow:
+    0 12px 40px rgb(0 0 0 / 0.5),
+    0 4px 12px rgb(0 0 0 / 0.32);
+}
+[data-theme='light'] #navbar.scrolled .nav-shell {
+  box-shadow:
+    0 12px 48px rgb(13 17 38 / 0.14),
+    0 4px 12px rgb(13 17 38 / 0.07);
+}
+
+.nav-links a {
+  position: relative;
+  border-radius: 4px;
+}
+.nav-links a[aria-current] {
+  color: rgb(var(--c-ink));
+}
+.nav-links a[aria-current]::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 2px;
+  border-radius: 9999px;
+  background: rgb(var(--c-brand));
+}
+
+/* visibility is switched instantly on open and held until the fade
+   finishes on close. Transitioning it instead would leave the panel
+   computing as `hidden` on the frame it opens, so the first link
+   could not take focus. */
+#mob-menu {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-12px);
+  transition:
+    opacity 250ms var(--ease-out),
+    transform 250ms var(--ease-out),
+    visibility 0s linear 250ms;
+}
+#mob-menu.open {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 250ms var(--ease-out),
+    transform 250ms var(--ease-out),
+    visibility 0s;
+}
+
+#mob-menu .mob-links > * {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 260ms ease-out,
+    transform 260ms var(--ease-out);
+}
+#mob-menu.open .mob-links > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Stagger the links in: 50ms, 90ms, 130ms … */
+#mob-menu.open .mob-links > *:nth-child(1) { transition-delay: 50ms; }
+#mob-menu.open .mob-links > *:nth-child(2) { transition-delay: 90ms; }
+#mob-menu.open .mob-links > *:nth-child(3) { transition-delay: 130ms; }
+#mob-menu.open .mob-links > *:nth-child(4) { transition-delay: 170ms; }
+#mob-menu.open .mob-links > *:nth-child(5) { transition-delay: 210ms; }
+#mob-menu.open .mob-links > *:nth-child(6) { transition-delay: 250ms; }
+#mob-menu.open .mob-links > *:nth-child(7) { transition-delay: 290ms; }
+
+/* Hero ------------------------------------------------------ */
+
+.hero-scrim-x {
+  background: linear-gradient(
+    90deg,
+    rgb(12 11 10 / 0.86) 0%,
+    rgb(12 11 10 / 0.58) 34%,
+    rgb(12 11 10 / 0.22) 66%,
+    rgb(12 11 10 / 0.03) 100%
+  );
+}
+.hero-scrim-y {
+  background: linear-gradient(0deg, rgb(12 11 10 / 0.88) 0%, rgb(12 11 10 / 0.24) 46%, transparent 80%);
+}
+[data-theme='light'] .hero-scrim-x {
+  background: linear-gradient(
+    90deg,
+    rgb(30 21 10 / 0.78) 0%,
+    rgb(30 21 10 / 0.48) 36%,
+    rgb(30 21 10 / 0.14) 68%,
+    transparent 100%
+  );
+}
+[data-theme='light'] .hero-scrim-y {
+  background: linear-gradient(0deg, rgb(30 21 10 / 0.76) 0%, rgb(30 21 10 / 0.16) 48%, transparent 82%);
+}
+
+/* Ochre shimmer across the accented words of the headline. */
+.hero-accent {
+  background: linear-gradient(110deg, #f4c871 16%, #e8a020 38%, #fff0ce 50%, #e8a020 62%, #c8763a 86%);
+  background-size: 220% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: heroShimmer 7s linear infinite;
+}
+@keyframes heroShimmer {
+  to {
+    background-position: 220% center;
+  }
+}
+
+/* Registration ticks: a hairline corner bracket, top-left and bottom-right. */
+.ticked {
+  position: relative;
+}
+.ticked::before,
+.ticked::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  border: 0 solid rgb(var(--c-line) / 0.22);
+}
+.ticked::before {
+  top: 10px;
+  left: 10px;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+.ticked::after {
+  bottom: 10px;
+  right: 10px;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+}
+
+/* Same idea, ochre and slightly larger, for the D3 readouts. */
+.instrument-tray::before,
+.instrument-tray::after {
+  content: '';
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  pointer-events: none;
+  z-index: 2;
+  border: 0 solid rgb(var(--c-brand) / 0.55);
+}
+.instrument-tray::before {
+  top: 7px;
+  left: 7px;
+  border-top-width: 1.5px;
+  border-left-width: 1.5px;
+}
+.instrument-tray::after {
+  bottom: 7px;
+  right: 7px;
+  border-bottom-width: 1.5px;
+  border-right-width: 1.5px;
+}
+
+/* Badges laid over dark cover photography stay bright in both themes. */
+.chip-media {
+  color: #f4c871;
+}
+
+/* ============================================================
+   5. Carousels
+   ============================================================ */
+
+.scroller {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+}
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+.scroller > * {
+  flex: 0 0 100%;
+  width: 100%;
+  scroll-snap-align: center;
+}
+
+/* Desktop: one project fills the width as image | detail. */
+@media (min-width: 768px) {
+  .proj-scroller > .proj-card {
+    display: flex;
+    align-items: stretch;
+  }
+  .proj-scroller > .proj-card > .proj-media {
+    width: 46%;
+    height: auto;
+    min-height: 420px;
+    border-bottom: 0;
+    border-right: 1px solid rgb(var(--c-line) / 0.1);
+  }
+  .proj-scroller > .proj-card > .proj-body {
+    width: 54%;
+    align-self: center;
+    padding: 2.75rem 3rem;
+  }
+}
+
+/* Chart covers are drawings: show them whole, never cropped. The plate
+   behind them stays dark in both themes because the artwork itself is
+   dark, and the overlaid badges are only legible against it. */
+.proj-media img[data-fit='contain'] {
+  object-fit: contain;
+  background: #0f0d0a;
+  padding: 16px;
+}
+@media (min-width: 768px) {
+  .proj-media img[data-fit='contain'] {
+    padding: 22px;
+  }
+}
+
+.carousel-nav {
+  position: absolute;
+  top: 128px;
+  z-index: 20;
+  display: flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  cursor: pointer;
+  color: rgb(var(--c-ink));
+  background: rgb(var(--c-surface) / 0.92);
+  border: 1px solid rgb(var(--c-line) / 0.18);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.45);
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    opacity 200ms ease,
+    transform 150ms ease;
+}
+.carousel-nav:hover {
+  background: rgb(var(--c-brand));
+  color: rgb(var(--c-on-brand));
+  border-color: rgb(var(--c-brand));
+}
+.carousel-nav:active {
+  transform: scale(0.9);
+}
+.carousel-nav[disabled] {
+  opacity: 0;
+  pointer-events: none;
+}
+.carousel-nav-prev {
+  left: 10px;
+}
+.carousel-nav-next {
+  right: 10px;
+}
+@media (min-width: 768px) {
+  .carousel-nav {
+    top: 50%;
+    width: 52px;
+    height: 52px;
+    transform: translateY(-50%);
+  }
+  .carousel-nav:active {
+    transform: translateY(-50%) scale(0.9);
+  }
+  .carousel-nav-prev {
+    left: 14px;
+  }
+  .carousel-nav-next {
+    right: 14px;
+  }
+}
+.pub-carousel .carousel-nav {
+  top: 50%;
+  transform: translateY(-50%);
+}
+.pub-carousel .carousel-nav:active {
+  transform: translateY(-50%) scale(0.9);
+}
+
+/* ============================================================
+   6. Charts
+   ============================================================ */
+
+.chart-tooltip {
+  position: absolute;
+  z-index: 10;
+  display: none;
+  pointer-events: none;
+  min-width: 180px;
+  max-width: 240px;
+  padding: 10px 13px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.55;
+  background: var(--chart-tip-bg);
+  border: 1px solid var(--chart-tip-border);
+  color: var(--chart-tip-ink);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
+}
+
+.chart-surface {
+  position: relative;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+  margin-right: 0.5rem;
+  flex: none;
+}
+
+.dot-legit { background: var(--s-legit); }
+.dot-suspicious { background: var(--s-suspicious); }
+.dot-fraud { background: var(--s-fraud); }
+.dot-pollination { background: var(--s-pollination); }
+.dot-harvest { background: var(--s-harvest); }
+.dot-east { background: var(--s-east); }
+
+/* Legend key drawn as a rule rather than a dot. */
+.legend-rule {
+  display: inline-block;
+  width: 26px;
+  height: 0;
+  margin-right: 0.5rem;
+  flex: none;
+  border-top: 2.5px solid currentColor;
+}
+.legend-rule.is-dashed {
+  border-top-style: dashed;
+}
+.rule-pollination { color: var(--s-pollination); }
+.rule-harvest { color: var(--s-harvest); }
+.rule-threshold {
+  color: var(--s-fraud);
+  border-top-width: 1.5px;
+  border-top-style: dashed;
+}
+
+/* Harvest window swatches. */
+.legend-band {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.25rem;
+  margin-right: 0.5rem;
+  flex: none;
+  border: 1.5px solid;
+}
+.band-main {
+  background: color-mix(in srgb, var(--chart-band-main) 22%, transparent);
+  border-color: var(--chart-band-main);
+}
+.band-second {
+  background: color-mix(in srgb, var(--chart-band-second) 22%, transparent);
+  border-color: var(--chart-band-second);
+}
+
+/* ============================================================
+   7. Motion
+   ============================================================ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.reveal.is-visible {
+  animation: revealUp 0.6s var(--ease-out) calc(var(--stagger, 0) * 70ms) both;
+}
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-copy > * {
+  animation: heroEntry 0.55s var(--ease-out) both;
+}
+.hero-copy > *:nth-child(1) { animation-delay: 60ms; }
+.hero-copy > *:nth-child(2) { animation-delay: 150ms; }
+.hero-copy > *:nth-child(3) { animation-delay: 240ms; }
+.hero-copy > *:nth-child(4) { animation-delay: 330ms; }
+.hero-copy > *:nth-child(5) { animation-delay: 420ms; }
+@keyframes heroEntry {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lift {
+    transition: transform 220ms var(--ease-out);
+  }
+  .lift:hover {
+    transform: translateY(-3px);
+  }
+}
+
+/* Form status message. */
+.f-msg {
+  display: none;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  border: 1px solid transparent;
+}
+.f-msg.is-shown {
+  display: block;
+  animation: msgIn 0.22s var(--ease-out) both;
+}
+.f-msg.is-success {
+  background: rgb(var(--c-positive) / 0.14);
+  border-color: rgb(var(--c-positive) / 0.34);
+  color: rgb(var(--c-positive));
+}
+.f-msg.is-error {
+  background: rgb(var(--c-danger) / 0.14);
+  border-color: rgb(var(--c-danger) / 0.34);
+  color: rgb(var(--c-danger));
+}
+@keyframes msgIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Copy-to-clipboard button; swaps to a tick for a moment after a copy. */
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex: none;
+  border-radius: 0.375rem;
+  color: rgb(var(--c-muted));
+  transition:
+    background-color 160ms ease-out,
+    color 160ms ease-out;
+}
+.copy-btn:hover {
+  background: rgb(var(--c-ink) / 0.08);
+  color: rgb(var(--c-ink));
+}
+.copy-btn .icon-copied {
+  display: none;
+}
+.copy-btn.is-copied {
+  color: rgb(var(--c-positive));
+}
+.copy-btn.is-copied .icon-copy {
+  display: none;
+}
+.copy-btn.is-copied .icon-copied {
+  display: block;
+}
+
+/* Honeypot: off-screen, never announced, never tab-reachable. */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ============================================================
+   8. Reduced motion
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .scroller {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .hero-copy > * {
+    animation: none;
+    opacity: 1;
+  }
+  .hero-accent {
+    animation: none;
+    background: none;
+    color: rgb(var(--c-brand));
+    -webkit-text-fill-color: rgb(var(--c-brand));
+  }
+}
+
+/* Touch devices get no transform-based hover states. */
+@media (hover: none) {
+  .btn:hover {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   9. Print
+   ============================================================ */
+
+@media print {
+  #navbar,
+  #mob-menu,
+  #progress-bar,
+  .page-wash,
+  .carousel-nav,
+  #mobile-tabbar,
+  #analytics,
+  form {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+  .scroller {
+    display: block;
+    overflow: visible;
+  }
+  .scroller > * {
+    width: 100%;
+    page-break-inside: avoid;
+  }
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.8em;
+    word-break: break-all;
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "johnsonmugarra-portfolio",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Portfolio of Johnson Mugarra — data scientist and ML engineer in Kampala, working on forecasting, impact evaluation, and data pipelines across East Africa.",
+  "license": "UNLICENSED",
+  "author": "Johnson Mugarra",
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mugarrajohnson/portfolio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mugarrajohnson/portfolio/issues"
+  },
+  "homepage": "https://johnsonmugarra.com",
+  "scripts": {
+    "build": "tailwindcss -i src/tailwind.css -o assets/styles.css --minify",
+    "dev": "tailwindcss -i src/tailwind.css -o assets/styles.css --watch",
+    "check": "node scripts/check-refs.mjs",
+    "verify": "npm run build && npm run check"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}

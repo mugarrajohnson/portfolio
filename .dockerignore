@@ -1,7 +1,16 @@
+# Only the static site ships. Build tooling and source stay out of the image.
+node_modules
+package.json
+package-lock.json
+tailwind.config.js
+src
+.claude
+
 *.docx
 .git
 .github
 .gitignore
+.gitattributes
 scripts
 Dockerfile
 .dockerignore
