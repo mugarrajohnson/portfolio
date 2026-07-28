@@ -131,7 +131,7 @@
 
     const markCurrent = () => {
       /* Lowest section still on screen wins, so the highlight moves
-         forward as you scroll rather than jumping around. */
+         forward as you scroll. */
       const current = sections.find((s) => visible.has(s.id))?.id || '';
 
       navLinks.forEach((link) => {
@@ -247,7 +247,7 @@
     /* The real figures stay in the markup and are only overwritten once
        the animation actually begins, so a counter that never runs (no
        scripting, reduced motion, an observer that never fires in a
-       background tab) shows the number rather than a zero. */
+       background tab) still shows the real figure. */
     if (!prefersReducedMotion && 'IntersectionObserver' in window) {
       const observer = new IntersectionObserver(
         (entries, obs) => {
@@ -601,16 +601,14 @@
   const revealTargets = $$('.reveal');
   if (revealTargets.length) {
     /* These start at opacity 0 under .js, so anything that stops the
-       observer running has to reveal them instead of leaving them hidden. */
+       observer running must also reveal them. */
     if (prefersReducedMotion || !('IntersectionObserver' in window)) {
       revealTargets.forEach((el) => el.classList.add('is-visible'));
     } else {
-      let anyRevealed = false;
       const revealObserver = new IntersectionObserver(
         (entries, obs) => {
           entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
-            anyRevealed = true;
             entry.target.classList.add('is-visible');
             obs.unobserve(entry.target);
           });
@@ -619,17 +617,11 @@
       );
       revealTargets.forEach((el, i) => {
         el.style.setProperty('--stagger', String(i % 4));
+        /* Arm and observe in the same breath. Anything that stops this
+           line running also stops the element being hidden. */
+        el.classList.add('is-armed');
         revealObserver.observe(el);
       });
-
-      /* If nothing at all has revealed once the page has been visible for
-         a few seconds, the observer is not doing its job. Show everything
-         rather than leave the section blank. */
-      setTimeout(() => {
-        if (anyRevealed || document.visibilityState !== 'visible') return;
-        revealObserver.disconnect();
-        revealTargets.forEach((el) => el.classList.add('is-visible'));
-      }, 4000);
     }
   }
 

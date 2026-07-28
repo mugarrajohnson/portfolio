@@ -468,8 +468,8 @@
       const fraud = visible.filter((t) => t.status === 'Fraud').length;
       const suspicious = visible.filter((t) => t.status === 'Suspicious').length;
       const pct = (n) => ((n / total) * 100).toFixed(1);
-      /* var() rather than a resolved value: the figures then follow a
-         theme flip on their own, with no redraw. */
+      /* var() keeps these live: the figures follow a theme flip on
+         their own, with no redraw. */
       statsEl.innerHTML =
         `<strong>${total.toLocaleString('en-GB')}</strong> transactions &nbsp;·&nbsp; ` +
         `<span style="color:var(--s-fraud)"><strong>${fraud}</strong> fraud (${pct(fraud)}%)</span> &nbsp;·&nbsp; ` +

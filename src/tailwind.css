@@ -705,7 +705,7 @@
 .dot-harvest { background: var(--s-harvest); }
 .dot-east { background: var(--s-east); }
 
-/* Legend key drawn as a rule rather than a dot. */
+/* Legend key drawn as a rule. */
 .legend-rule {
   display: inline-block;
   width: 26px;
@@ -736,7 +736,7 @@
   border: 1.5px solid;
 }
 /* The flat rgba first, so browsers without color-mix (Safari < 16.2)
-   still get a tinted swatch rather than a transparent one. */
+   still get a tinted swatch. */
 .band-main {
   background: rgba(46, 160, 67, 0.22);
   background: color-mix(in srgb, var(--chart-band-main) 22%, transparent);
@@ -752,23 +752,31 @@
    7. Motion
    ============================================================ */
 
-/* Gated on .js, which the head bootstrap sets. Without scripting the
-   content stays visible instead of being hidden by an animation that
-   will never run. */
-.js .reveal {
-  opacity: 0;
-  transform: translateY(16px);
+/* `is-armed` is added by script.js in the same loop that starts the
+   observer, so the hidden state and the code that clears it always ship
+   together. A stale cached script, a blocked script or an observer that
+   never fires still leaves the content visible. Never hide
+   this from markup or from a separate file. */
+/* The reveal moves elements, it never hides them.
+ *
+ * An earlier version faded in from opacity 0, which meant a section was
+ * blank until JS said otherwise. A stale cached script was enough to
+ * leave Experience empty. Animating transform alone removes that whole
+ * class of failure: the worst case is content sitting 14px low, which
+ * nobody will notice.
+ *
+ * Do not reintroduce opacity here. */
+.reveal.is-armed {
+  transform: translateY(14px);
 }
-.js .reveal.is-visible {
-  animation: revealUp 0.6s var(--ease-out) calc(var(--stagger, 0) * 70ms) both;
+.reveal.is-armed.is-visible {
+  animation: revealUp 0.55s var(--ease-out) calc(var(--stagger, 0) * 70ms) both;
 }
 @keyframes revealUp {
   from {
-    opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(14px);
   }
   to {
-    opacity: 1;
     transform: translateY(0);
   }
 }
@@ -892,9 +900,8 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .js .reveal,
-  .js .reveal.is-visible {
-    opacity: 1;
+  .reveal.is-armed,
+  .reveal.is-armed.is-visible {
     transform: none;
     animation: none;
   }

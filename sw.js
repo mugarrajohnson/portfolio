@@ -18,7 +18,7 @@
    ============================================================ */
 'use strict';
 
-const CACHE_NAME = 'jm-portfolio-v6';
+const CACHE_NAME = 'jm-portfolio-v7';
 
 const PRECACHE_URLS = [
   './',
