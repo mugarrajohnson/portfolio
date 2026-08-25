@@ -444,6 +444,7 @@
 #mob-menu.open .mob-links > *:nth-child(5) { transition-delay: 210ms; }
 #mob-menu.open .mob-links > *:nth-child(6) { transition-delay: 250ms; }
 #mob-menu.open .mob-links > *:nth-child(7) { transition-delay: 290ms; }
+#mob-menu.open .mob-links > *:nth-child(8) { transition-delay: 330ms; }
 
 /* Hero ------------------------------------------------------ */
 

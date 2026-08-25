@@ -8,6 +8,8 @@ Portfolio of Johnson Mugarra, data scientist and ML engineer in Kampala, working
 
 A single static page. No framework and no runtime dependencies of its own: HTML, a compiled Tailwind stylesheet, vanilla JS, and two D3 charts (a fraud-detection scatter on synthetic data, and a simulated vanilla harvest model). The contact form falls back through EmailJS, then Formspree, then mailto. Ships as a PWA with a service worker.
 
+The **Now** section is a dated log of current work. To post an update, copy one `<li>` in the `#now` section of `index.html`, set the month, write two or three sentences, and place it at the top of the list. Keep entries younger than about six months.
+
 The one build step compiles Tailwind. Its output, `assets/styles.css`, is committed, so the site deploys as plain static files and the host needs no toolchain.
 
 ## Run it locally

@@ -6,6 +6,9 @@ tailwind.config.js
 src
 .claude
 
+# Private job-application documents — never in the image, never on the site
+applications
+
 *.docx
 .git
 .github
@@ -22,4 +25,5 @@ build_cv.js
 New Folder
 *.rar
 *.zip
+.DS_Store
 img/Vanilla Workshop.JPG

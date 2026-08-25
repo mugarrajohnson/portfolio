@@ -175,6 +175,7 @@
 <ul class="hidden md:flex gap-8 items-center nav-links">
 <li><a class="text-sm font-medium text-ink/70 hover:text-ink transition-colors" href="#about">About</a></li>
 <li><a class="text-sm font-medium text-ink/70 hover:text-ink transition-colors" href="#experience">Experience</a></li>
+<li><a class="text-sm font-medium text-ink/70 hover:text-ink transition-colors" href="#now">Now</a></li>
 <li><a class="text-sm font-medium text-ink/70 hover:text-ink transition-colors" href="#projects">Projects</a></li>
 <li><a class="text-sm font-medium text-ink/70 hover:text-ink transition-colors" href="#skills">Skills</a></li>
 <li><a class="text-sm font-medium text-ink/70 hover:text-ink transition-colors" href="#publications">Research</a></li>
@@ -203,6 +204,7 @@
 <nav aria-label="Mobile" class="mob-links flex flex-col gap-6 text-center text-2xl font-headline">
 <a class="text-ink hover:text-primary transition-colors" href="#about">About</a>
 <a class="text-ink hover:text-primary transition-colors" href="#experience">Experience</a>
+<a class="text-ink hover:text-primary transition-colors" href="#now">Now</a>
 <a class="text-ink hover:text-primary transition-colors" href="#projects">Projects</a>
 <a class="text-ink hover:text-primary transition-colors" href="#skills">Skills</a>
 <a class="text-ink hover:text-primary transition-colors" href="#publications">Research</a>
@@ -316,7 +318,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <div class="lg:col-span-7 space-y-6 text-lg text-ink/75 leading-[1.78]">
 <h2 class="text-4xl text-ink mb-8" id="about-title">Background</h2>
 
-<p>I began in management consulting at <strong class="text-ink font-semibold">Bronkar Uganda</strong>, designing M&E frameworks and the digital collection tools that fed them. From there I moved into evaluation research for international non-profits, working on assessments for <a class="text-primary hover:underline" href="https://www.usaid.gov" rel="noopener noreferrer" target="_blank">USAID</a>, <strong class="text-ink font-semibold">UNDP</strong>, <strong class="text-ink font-semibold">IRC</strong> and others across East Africa.</p>
+<p>I began in management consulting at <strong class="text-ink font-semibold">Bronkar Uganda</strong>, designing the frameworks programmes used to measure their own results, plus the digital collection tools that fed them. From there I moved into evaluation research for international non-profits, working on assessments for <a class="text-primary hover:underline" href="https://www.usaid.gov" rel="noopener noreferrer" target="_blank">USAID</a>, <strong class="text-ink font-semibold">UNDP</strong>, <strong class="text-ink font-semibold">IRC</strong> and others across East Africa.</p>
 
 <p>The questions that mattered most in that work were causal ones: whether a programme changed an outcome, or whether the outcome would have moved anyway. Answering that properly needs more than descriptive statistics, which is what took me to the M.Sc. in Data Science: machine learning, natural language processing, computer vision and Bayesian inference, with enough time on each to understand what the standard implementations are doing underneath.</p>
 
@@ -351,7 +353,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <p class="font-mono text-xs uppercase tracking-widest text-primary mb-1">Nov 2025 to present</p>
 <h3 class="text-xl text-ink">Research and Data Consultant</h3>
 <p class="text-muted text-sm mb-3">Enimiro, remote</p>
-<p class="text-ink/70">Consult on the data system for a vanilla and coffee agribusiness. Designed and put in place 7 automated pipelines covering SurveyCTO-to-PostgreSQL ETL, purchase and pollination analysis, and inspection follow-ups. I mentor the data management team so they can run it without me, and lead standalone studies.</p>
+<p class="text-ink/70">Built and handed over the farmer-data system of a vanilla and coffee exporter: seven automated pipelines that move field-form records into a central database with no manual handling — purchases, pollination, harvests and quality inspections among them — so reports that once took days arrive on their own. The in-house team runs the system daily following structured training, and standalone studies on farmer income and yields continue.</p>
 </li>
 
 <li class="ml-8 relative reveal">
@@ -359,7 +361,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <p class="font-mono text-xs uppercase tracking-widest text-primary mb-1">Jan 2025 to present</p>
 <h3 class="text-xl text-ink">Research and MEAL Specialist</h3>
 <p class="text-muted text-sm mb-3">Center for Research and Communication (CRC)</p>
-<p class="text-ink/70">Lead the data and analytics behind evaluation consultancies for UN agencies and international NGOs, including IRC, UNICEF, World Vision, Save the Children, Danish Refugee Council, Oxfam, GIZ and ADRA, across Somalia and the Horn of Africa. The portfolio spans health, education and teaching practice, child protection, gender-based violence and SRHR, food security and livelihoods. Run impact and endline evaluations, KAP surveys and needs assessments end to end: tool design, SurveyCTO data collection, data-quality assurance, analysis, and the final reports clients deliver to donors. I also write the technical proposals for new evaluation bids.</p>
+<p class="text-ink/70">Lead the data and analytics behind programme evaluations across Somalia and the Horn of Africa, carried out for UN agencies and international NGOs — IRC, UNICEF, World Vision, Save the Children, Danish Refugee Council, Oxfam, GIZ and ADRA among them. Take each study from first design to the report a donor reads: survey tools, field data collection, quality checks, analysis and writing. The portfolio spans health, education, child protection, gender-based violence, food security and livelihoods. Recent delivery: the IRC MERP endline survey, funded by the German Federal Foreign Office. Also write the technical proposals that win new evaluation work.</p>
 </li>
 
 <li class="ml-8 relative reveal">
@@ -367,7 +369,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <p class="font-mono text-xs uppercase tracking-widest text-secondary mb-1">Jan 2024 to May 2025</p>
 <h3 class="text-xl text-ink">Data Scientist</h3>
 <p class="text-muted text-sm mb-3">MAAIF, VANEX, Makerere University, CRS</p>
-<p class="text-ink/70">Built an end-to-end forecasting system combining NASA POWER climate data with ground measurements, using random forest, neural network, logistic regression and sometimes Prophet models. Cut mean absolute error by 18% against previous forecasts, which relied largely on intuition and informal reports. Automated the ETL with Python and Airflow, and presented the findings at the national vanilla forum.</p>
+<p class="text-ink/70">Built the vanilla harvest forecasting model for Uganda's Ministry of Agriculture, blending satellite weather records with measurements collected from farmers' fields. The machine-learning approach cut forecast error by 18% against what it replaced — expert intuition and informal reports. Findings were presented at the national vanilla forum, and the data pipeline ran on schedule without a dedicated engineer.</p>
 </li>
 
 <li class="ml-8 relative reveal">
@@ -375,7 +377,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <p class="font-mono text-xs uppercase tracking-widest text-secondary mb-1">Jun 2023 to May 2025</p>
 <h3 class="text-xl text-ink">Research Associate</h3>
 <p class="text-muted text-sm mb-3">USAID-SITES, SSS Inc., DLH Corporation</p>
-<p class="text-ink/70">Programme evaluation and auditing across USAID-funded health projects in Uganda: President's Malaria Initiative activities, and the DHIS2 and electronic medical records transition for HIV care. Supervised digital data collection and ran SQL and Python data-quality audits holding 95%+ reliability, with stakeholder dashboards and automated reporting across SurveyCTO, Power BI and PostgreSQL. Worked with hospitals in the Eastern, Central and Northern regions, alongside Makerere University.</p>
+<p class="text-ink/70">Evaluated and audited USAID-funded health programmes across Uganda: malaria prevention under the President's Malaria Initiative, and the switch of HIV patient records from paper registers to digital systems. Supervised digital data collection in hospitals across the Eastern, Central and Northern regions alongside Makerere University, ran the audits that held data reliability above 95%, and built dashboards that let programme managers see problems while there was still time to fix them.</p>
 </li>
 
 <li class="ml-8 relative reveal">
@@ -383,7 +385,46 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <p class="font-mono text-xs uppercase tracking-widest text-tertiary mb-1">Jul 2021 to Jun 2023</p>
 <h3 class="text-xl text-ink">Data Analyst / Research Associate</h3>
 <p class="text-muted text-sm mb-3">Bronkar (U) Limited</p>
-<p class="text-ink/70">Designed M&E frameworks and digital data-collection tools that cut field operations time by 25%, ran mixed-methods statistical analysis, and led staff training on analytics tools across East Africa.</p>
+<p class="text-ink/70">Designed the measurement frameworks behind client programmes and built the digital survey tools that fed them, cutting field operations time by 25%. Ran statistical analysis that paired numbers with interviews and field observation, and trained staff across East Africa on the analytics tools their teams still use daily.</p>
+</li>
+
+</ol>
+</div>
+</section>
+
+<!-- ══════════════════════════════════ NOW ══════════════════════════════════
+     To post an update: copy one <li>, set the month, write two or three
+     sentences, and place it at the top. Keep the newest entry first, and
+     delete entries older than roughly six months.
+     ══════════════════════════════════════════════════════════════════════ -->
+<section aria-labelledby="now-title" class="py-20 px-6" id="now">
+<div class="max-w-7xl mx-auto">
+<div class="mb-12 max-w-2xl">
+
+<h2 class="text-4xl text-ink" id="now-title">Now</h2>
+</div>
+
+<ol class="relative border-l border-line/10 ml-3 space-y-10">
+
+<li class="ml-8 relative reveal">
+<span aria-hidden="true" class="absolute -left-[41px] top-1 w-3.5 h-3.5 rounded-full bg-brand ring-4 ring-background"></span>
+<p class="font-mono text-xs uppercase tracking-widest text-primary mb-1">August 2026</p>
+<h3 class="text-xl text-ink">Delivery season at CRC</h3>
+<p class="text-ink/70">I delivered the IRC MERP endline to its donor — funded by the German Federal Foreign Office — and the autumn evaluation bids are written. At Enimiro my seven pipelines run unattended, which is the point of them.</p>
+</li>
+
+<li class="ml-8 relative reveal">
+<span aria-hidden="true" class="absolute -left-[41px] top-1 w-3.5 h-3.5 rounded-full bg-secondary-fill ring-4 ring-background"></span>
+<p class="font-mono text-xs uppercase tracking-widest text-secondary mb-1">July 2026</p>
+<h3 class="text-xl text-ink">Vanilla main harvest, closed</h3>
+<p class="text-ink/70">The June and July window shut on schedule. I am turning this season's purchase and pollination data into the next round of yield forecasts for the export programme.</p>
+</li>
+
+<li class="ml-8 relative reveal">
+<span aria-hidden="true" class="absolute -left-[41px] top-1 w-3.5 h-3.5 rounded-full bg-tertiary ring-4 ring-background"></span>
+<p class="font-mono text-xs uppercase tracking-widest text-tertiary mb-1">June 2026</p>
+<h3 class="text-xl text-ink">Living income study moves indoors</h3>
+<p class="text-ink/70">Fieldwork done: we surveyed 212 vanilla farmers across the Enimiro network, and I cleaned 485 variables into an analysis-ready dataset. The write-up against Anker and Fairtrade benchmarks is under way.</p>
 </li>
 
 </ol>
@@ -471,12 +512,12 @@ Download CV <span class="sr-only">(PDF)</span></a>
 </div>
 <div class="proj-body p-8">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">SurveyCTO</li><li class="chip">R</li><li class="chip">Power BI</li></ul>
-<h3 class="text-2xl text-ink mb-4">M&E evaluations for humanitarian clients</h3>
+<h3 class="text-2xl text-ink mb-4">Programme evaluations for humanitarian clients</h3>
 <dl class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-line/10">
 <div><dd class="stat-value text-lg font-bold text-secondary">8</dd><dt class="text-xs text-faint">UN agencies and NGOs served</dt></div>
 <div><dd class="text-lg font-bold text-primary">Full lifecycle</dd><dt class="text-xs text-faint">Inception to reporting</dt></div>
 </dl>
-<p class="text-ink/65 mb-6">The data side of impact and endline evaluations, KAP surveys and needs assessments for UN agencies and international NGOs (IRC, UNICEF, World Vision, Save the Children, Danish Refugee Council, Oxfam, GIZ) across Somalia and the Horn of Africa: tool design, SurveyCTO collection, data-quality checks, analysis, and the final reports that go to donors. Recent delivery includes the IRC MERP endline survey funded by the German Federal Foreign Office.</p>
+<p class="text-ink/65 mb-6">The data side of impact and endline evaluations, knowledge-attitude-practice surveys and needs assessments for UN agencies and international NGOs (IRC, UNICEF, World Vision, Save the Children, Danish Refugee Council, Oxfam, GIZ) across Somalia and the Horn of Africa: tool design, field data collection, quality checks, analysis, and the final reports that go to donors. Recent delivery includes the IRC MERP endline survey funded by the German Federal Foreign Office.</p>
 <p><a class="link-action text-faint hover:text-ink transition-colors" href="#contact">Ask about this work <span aria-hidden="true" class="ml-1">&rarr;</span></a></p>
 </div>
 </li>
@@ -557,7 +598,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <div><dd class="stat-value text-lg font-bold text-secondary">7</dd><dt class="text-xs text-faint">Automated pipelines</dt></div>
 <div><dd class="text-lg font-bold text-primary">Python + R</dd><dt class="text-xs text-faint">Orchestrated</dt></div>
 </dl>
-<p class="text-ink/65 mb-6">The platform runs 7 scheduled pipelines: SurveyCTO-to-PostgreSQL ETL, NASA POWER climate scraping, Prophet harvest forecasts, purchase-loyalty analysis, pollination monitoring and inspection follow-ups, feeding Power BI and Looker dashboards.</p>
+<p class="text-ink/65 mb-6">Seven scheduled jobs keep it running: moving field forms into a central database, pulling satellite weather records, refreshing harvest forecasts, and tracking purchases, pollination and quality inspections — all feeding Power BI and Looker dashboards.</p>
 <p><a class="link-action text-faint hover:text-ink transition-colors" href="#contact">Ask about this work <span aria-hidden="true" class="ml-1">&rarr;</span></a></p>
 </div>
 </li>
@@ -726,19 +767,16 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <div class="plate p-8 mb-12">
 <h3 class="text-xl text-ink mb-5">Sectors</h3>
 <ul class="flex flex-wrap gap-2">
-<li class="chip">Agriculture</li>
 <li class="chip">Agriculture and food security</li>
 <li class="chip">Education</li>
-<li class="chip">Public Health</li>
-<li class="chip">Malaria and HIV programs</li>
+<li class="chip">Public health</li>
+<li class="chip">Malaria and HIV programmes</li>
 <li class="chip">Health information systems (DHIS2 and EMR)</li>
-<li class="chip">Refugee Livelihood programs</li>
+<li class="chip">Refugee livelihoods</li>
 <li class="chip">SRHR and GBV social norms</li>
 <li class="chip">Humanitarian response</li>
-<li class="chip">Finance and Loan performance</li>
-<li class="chip">Household Living Income</li>
+<li class="chip">Household living income</li>
 <li class="chip">Climate</li>
-
 </ul>
 </div>
 
@@ -787,12 +825,11 @@ Download CV <span class="sr-only">(PDF)</span></a>
 </div>
 
 <div class="plate p-8 space-y-6">
-<h3 class="text-xl text-ink">Wider toolset</h3>
-<div><p class="text-sm text-faint mb-3">Languages</p><ul class="flex flex-wrap gap-2"><li class="chip">Python</li><li class="chip">R</li><li class="chip">SQL</li><li class="chip">Java</li><li class="chip">Bash</li></ul></div>
-<div><p class="text-sm text-faint mb-3">ML and AI frameworks</p><ul class="flex flex-wrap gap-2"><li class="chip">TensorFlow</li><li class="chip">PyTorch</li><li class="chip">scikit-learn</li><li class="chip">statsmodels</li><li class="chip">Prophet</li><li class="chip">XGBoost</li><li class="chip">Keras</li></ul></div>
-<div><p class="text-sm text-faint mb-3">Visualisation and BI</p><ul class="flex flex-wrap gap-2"><li class="chip">Tableau</li><li class="chip">Power BI</li><li class="chip">Looker Studio</li><li class="chip">ArcGIS</li><li class="chip">Plotly</li><li class="chip">D3.js</li></ul></div>
-<div><p class="text-sm text-faint mb-3">Data engineering</p><ul class="flex flex-wrap gap-2"><li class="chip">Airflow</li><li class="chip">Spark</li><li class="chip">Hadoop</li><li class="chip">Docker</li><li class="chip">Git</li><li class="chip">PostgreSQL</li><li class="chip">MongoDB</li></ul></div>
-<div><p class="text-sm text-faint mb-3">Cloud and tooling</p><ul class="flex flex-wrap gap-2"><li class="chip">AWS</li><li class="chip">Azure</li><li class="chip">Google Cloud</li><li class="chip">Jupyter</li><li class="chip">VS Code</li><li class="chip">RStudio</li></ul></div>
+<h3 class="text-xl text-ink">Also in the kit</h3>
+<div><p class="text-sm text-faint mb-3">From the MSc, applied in capstone projects</p><ul class="flex flex-wrap gap-2"><li class="chip">Machine learning</li><li class="chip">NLP</li><li class="chip">Computer vision</li><li class="chip">Bayesian inference</li></ul></div>
+<div><p class="text-sm text-faint mb-3">Visualisation</p><ul class="flex flex-wrap gap-2"><li class="chip">D3.js — the two live charts on this page</li><li class="chip">Tableau — certified</li><li class="chip">Looker Studio</li></ul></div>
+<div><p class="text-sm text-faint mb-3">Workflow</p><ul class="flex flex-wrap gap-2"><li class="chip">Git and GitHub</li></ul></div>
+<p class="text-sm text-muted pt-2 border-t border-line/10">Every tool above earned its place on a delivery. The full stack behind each project is listed on the cards themselves.</p>
 </div>
 
 </div>
@@ -1020,6 +1057,36 @@ Download CV <span class="sr-only">(PDF)</span></a>
 </div>
 </section>
 
+<!-- ══════════════════════════════════ BEYOND WORK ══════════════════════════════════ -->
+<section aria-labelledby="beyond-title" class="py-20 px-6 bg-ink/[0.02]" id="beyond">
+<div class="max-w-7xl mx-auto">
+<div class="mb-12">
+
+<h2 class="text-4xl text-ink" id="beyond-title">Beyond work</h2>
+</div>
+
+<ul class="grid lg:grid-cols-3 gap-8">
+<li class="plate ticked lift p-8 reveal">
+<span aria-hidden="true" class="w-12 h-12 rounded-full bg-brand/20 flex items-center justify-center text-primary mb-5"><svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24" width="22"><circle cx="12" cy="6.5" r="2.5"/><path d="M10.2 9l-1.7 6h7l-1.7-6"/><path d="M7 15l-1.5 4h13L17 15"/><path d="M5 21h14"/></svg></span>
+<h3 class="text-xl text-ink mb-3">Chess</h3>
+<p class="text-ink/65">I play slow, tactical chess — a game unforgiving of vague thinking. Every move is a small hypothesis, and the board always tells me when I am wrong, which is good training for anyone who models outcomes for a living.</p>
+</li>
+<li class="plate ticked lift p-8 reveal">
+<span aria-hidden="true" class="w-12 h-12 rounded-full bg-secondary-fill/20 flex items-center justify-center text-secondary mb-5"><svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24" width="22"><circle cx="12" cy="12" r="9"/><path d="M12 7.5l4.1 3-1.55 4.85h-5.1L7.9 10.5z"/><path d="M12 3v4.5M20.8 10.5l-4.7 0M17.9 19.4l-3.35-4.05M6.1 19.4l3.35-4.05M3.2 10.5l4.7 0"/></svg></span>
+<h3 class="text-xl text-ink mb-3">Five-a-side football</h3>
+<p class="text-ink/65">I play five-a-side around Kampala at weekends. Reading space, timing the run, trusting a pass I cannot see yet — small-sided football is pattern recognition at sprint pace.</p>
+</li>
+<li class="plate ticked lift p-8 reveal">
+<span aria-hidden="true" class="w-12 h-12 rounded-full bg-tertiary/20 flex items-center justify-center text-tertiary mb-5"><svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24" width="22"><path d="M12 3l8 3v5.5c0 4.7-3.4 7.6-8 9.5-4.6-1.9-8-4.8-8-9.5V6z"/><path d="M12 8.6l1.1 2.2 2.4.35-1.75 1.7.4 2.4L12 14.1l-2.15 1.15.4-2.4-1.75-1.7 2.4-.35z"/></svg></span>
+<h3 class="text-xl text-ink mb-3">Arsenal FC</h3>
+<p class="text-ink/65">I have supported Arsenal through rebuilds and title races alike. Following a club through long cycles teaches patience and loyalty to a process — which turns out to be transferable.</p>
+</li>
+</ul>
+
+<p class="text-muted text-center mt-10">If you would rather open with chess or football before forecasts, <a class="text-primary hover:underline" href="#contact">my contact form handles both</a>.</p>
+</div>
+</section>
+
 </main>
 
 <!-- ══════════════════════════════════ FOOTER ══════════════════════════════════ -->
@@ -1038,6 +1105,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <p class="text-center">Johnson Mugarra © <span id="footer-year">2026</span> <br/> All rights reserved</p>
 <nav aria-label="Footer" class="flex flex-wrap justify-center gap-x-6 gap-y-2">
 <a class="link-action hover:text-ink transition-colors" href="#hero">Top <span aria-hidden="true">&uarr;</span></a>
+<a class="link-action hover:text-ink transition-colors" href="#beyond">Beyond work</a>
 <a class="link-action hover:text-ink transition-colors" href="mailto:johnsonmugarra@yahoo.com">Email</a>
 <a class="link-action hover:text-ink transition-colors" href="https://github.com/MugarraJohnson" rel="noopener noreferrer" target="_blank">GitHub</a>
 <a class="link-action hover:text-ink transition-colors" download="" href="CV_Johnson_Mugarra_Standard.pdf">Download CV</a>
