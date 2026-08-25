@@ -62,6 +62,20 @@ for (const ref of localRefs) {
   if (/\s/.test(path)) fail(`referenced path contains a space: ${ref}`);
 }
 
+/* 5b. Every candidate URL in srcset/imagesrcset exists on disk. */
+const srcsetRefs = new Set(
+  [...html.matchAll(/(?:srcset|imagesrcset)="([^"]+)"/g)].flatMap(([, value]) =>
+    value
+      .split(',')
+      .map((candidate) => candidate.trim().split(/\s+/)[0])
+      .filter((url) => url && !/^(https?:|#|data:|\/\/)/.test(url))
+  )
+);
+for (const ref of srcsetRefs) {
+  const path = decodeURIComponent(ref.split(/[?#]/)[0]);
+  if (!existsSync(path)) fail(`srcset references missing file: ${ref}`);
+}
+
 /* 6. Every <img> declares intrinsic dimensions, so nothing shifts on load. */
 for (const [tag] of html.matchAll(/<img\b[^>]*>/g)) {
   if (!/\swidth="/.test(tag) || !/\sheight="/.test(tag)) {
@@ -125,4 +139,4 @@ if (failures) {
   console.error(`\n${failures} check(s) failed`);
   process.exit(1);
 }
-console.log(`OK — ${anchors.length} anchors, ${localRefs.size} local refs, ${ids.size} ids, syntax clean`);
+console.log(`OK — ${anchors.length} anchors, ${localRefs.size} local refs, ${srcsetRefs.size} srcset refs, ${ids.size} ids, syntax clean`);

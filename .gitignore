@@ -21,3 +21,6 @@ img/Vanilla Workshop.JPG
 # OS / editor cruft
 .DS_Store
 Thumbs.db
+
+# Private job-application documents - never publish to johnsonmugarra.com
+applications/
