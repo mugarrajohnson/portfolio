@@ -112,7 +112,7 @@
   --chart-band-second: #86868b;
 }
 
-/* Fills that carry dark text on top stay ochre in both themes,
+/* Fills that carry text on top hold one accent in both themes,
    otherwise buttons would go muddy brown on the cream background. */
 :root {
   --c-brand: 0 100 206;
@@ -534,7 +534,7 @@
   border-right-width: 1px;
 }
 
-/* Same idea, ochre and slightly larger, for the D3 readouts. */
+/* Same idea, accented and slightly larger, for the D3 readouts. */
 .instrument-tray::before,
 .instrument-tray::after {
   content: '';

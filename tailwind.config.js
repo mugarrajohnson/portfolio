@@ -5,7 +5,7 @@
  * palette. That is why light mode needs no !important overrides.
  *
  * Two families of accent:
- *   brand / secondary-fill  fixed ochre, for fills that sit under dark text
+ *   brand / secondary-fill  fixed accent, for fills that carry label text
  *   primary / secondary     flips per theme, for text that sits on the page
  */
 
