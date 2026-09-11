@@ -78,7 +78,7 @@
     trackEvent('theme_change', { theme: next });
   }
 
-  applyTheme(root.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+  applyTheme(root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
   $('#theme-toggle')?.addEventListener('click', toggleTheme);
   $('#mob-theme-toggle')?.addEventListener('click', toggleTheme);
 

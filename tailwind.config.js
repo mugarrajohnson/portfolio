@@ -43,17 +43,21 @@ module.exports = {
         danger: token('--c-danger'),
       },
       fontFamily: {
-        body: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
-        headline: ['"Space Grotesk"', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
+        /* -apple-system resolves to SF Pro on every Apple device, which is
+           the single largest contributor to the look. Nothing is fetched:
+           the three Google families are gone, and with them a
+           render-blocking third-party stylesheet. */
+        body: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', 'Inter', 'Segoe UI', 'Roboto', 'system-ui', 'sans-serif'],
+        headline: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', 'Inter', 'Segoe UI', 'Roboto', 'system-ui', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', '"SF Mono"', 'Menlo', 'Consolas', 'monospace'],
       },
       fontSize: {
         /* Hero headline: scales with viewport, never smaller than 2.8rem */
-        display: ['clamp(2.8rem, 1.8rem + 4.2vw, 5.25rem)', { lineHeight: '0.96', letterSpacing: '-0.028em' }],
+        display: ['clamp(2.8rem, 1.8rem + 4.2vw, 5.25rem)', { lineHeight: '1.05', letterSpacing: '-0.022em' }],
       },
       borderRadius: {
-        plate: '7px',
-        control: '3px',
+        plate: '18px',
+        control: '980px',
       },
       transitionTimingFunction: {
         out: 'cubic-bezier(0.23, 1, 0.32, 1)',

@@ -10,105 +10,116 @@
    triples; nothing downstream needs an override.
    ============================================================ */
 
+/* Light is the default now, dark the opt-in, which is the way round
+   Apple runs its editorial and marketing pages. Neutrals are theirs:
+   #FFFFFF page, #F5F5F7 alternating section, #1D1D1F ink, #6E6E73
+   secondary, #D2D2D7 hairline. */
 :root,
+[data-theme='light'] {
+  color-scheme: light;
+
+  --c-bg: 255 255 255;
+  --c-surface: 255 255 255;
+  --c-surface-2: 245 245 247;
+  --c-surface-3: 232 232 237;
+
+  --c-ink: 29 29 31;
+  --c-line: 210 210 215;
+
+  /* Secondary and tertiary text are their own tokens, not ink at low
+     alpha. Light needs noticeably more contrast than dark to clear
+     4.5:1, so a single alpha ramp cannot serve both. */
+  /* Apple ships #6E6E73 secondary and #86868B tertiary. On white those
+     measure 5.07:1 and 3.62:1, so the tertiary fails AA on 12px labels
+     and fails harder on an #F5F5F7 panel. Each step is moved down one:
+     the hierarchy is unchanged, both now clear 4.5:1 on white and on
+     panel. */
+  --c-muted: 87 87 92;
+  --c-faint: 110 110 115;
+
+  /* One accent, used on maybe six things. #0071E3 is Apple's own and
+     measures 4.31:1 on a panel — under AA. #0064CE is 5.65:1 on white,
+     5.19:1 on panel, and carries white at 5.65:1 as a button fill. */
+  --c-primary: 0 100 206;
+  --c-secondary: 29 29 31;
+  --c-tertiary: 52 120 95;
+
+  --c-positive: 26 127 55;
+  --c-warn: 154 92 0;
+  --c-danger: 199 43 34;
+
+  /* Chart series. Read by charts.js and by the legend swatches, so a
+     dot, its line, its tooltip and its stats figure always agree.
+     Cooled to sit with the blue, and dark enough to clear 4.5:1 on white. */
+  --s-legit: #1a7f37;
+  --s-suspicious: #9a5c00;
+  --s-fraud: #c72b22;
+  --s-pollination: #0064ce;
+  --s-harvest: #6e6e73;
+  --s-east: #34785f;
+
+  --chart-text: rgba(29, 29, 31, 0.78);
+  --chart-axis: rgba(29, 29, 31, 0.22);
+  --chart-grid: rgba(29, 29, 31, 0.08);
+  --chart-label: rgba(29, 29, 31, 0.58);
+  --chart-tip-bg: rgba(255, 255, 255, 0.98);
+  --chart-tip-border: rgba(29, 29, 31, 0.12);
+  --chart-tip-ink: rgba(29, 29, 31, 0.92);
+  --chart-tip-dim: rgba(29, 29, 31, 0.6);
+  --chart-band-main: #1a7f37;
+  --chart-band-second: #6e6e73;
+}
+
+/* Apple's product pages: true black, #1D1D1F surfaces, #86868B secondary. */
 [data-theme='dark'] {
   color-scheme: dark;
 
-  --c-bg: 12 11 10;
-  --c-surface: 20 18 16;
-  --c-surface-2: 24 22 19;
-  --c-surface-3: 32 29 25;
+  --c-bg: 0 0 0;
+  --c-surface: 29 29 31;
+  --c-surface-2: 22 22 24;
+  --c-surface-3: 44 44 46;
 
-  --c-ink: 237 230 216;
-  --c-line: 237 230 216;
+  --c-ink: 245 245 247;
+  --c-line: 66 66 69;
 
-  /* Secondary and tertiary text are their own tokens, not ink at low
-     alpha. Light mode needs noticeably more contrast than dark mode to
-     clear 4.5:1, so a single alpha ramp cannot serve both. */
-  --c-muted: 165 158 146;
-  --c-faint: 143 136 126;
+  --c-muted: 152 152 157;
+  --c-faint: 134 134 139;
 
-  --c-primary: 232 160 32;
-  --c-secondary: 200 118 58;
-  --c-tertiary: 127 166 99;
+  --c-primary: 41 151 255;
+  --c-secondary: 245 245 247;
+  --c-tertiary: 99 199 160;
 
   --c-positive: 48 209 88;
   --c-warn: 255 159 10;
   --c-danger: 255 69 58;
 
-  /* Chart series colours. Read by charts.js and by the legend swatches,
-     so a dot, its line, its tooltip and its stats figure always agree. */
   --s-legit: #30d158;
   --s-suspicious: #ff9f0a;
   --s-fraud: #ff453a;
-  --s-pollination: #5ba3a8;
-  --s-harvest: #e8a020;
-  --s-east: #d4870a;
+  --s-pollination: #2997ff;
+  --s-harvest: #86868b;
+  --s-east: #63c7a0;
 
-  /* Chart ink, read by charts.js */
-  --chart-text: rgba(237, 230, 216, 0.72);
-  --chart-axis: rgba(237, 230, 216, 0.2);
-  --chart-grid: rgba(237, 230, 216, 0.07);
-  --chart-label: rgba(237, 230, 216, 0.55);
-  --chart-tip-bg: rgba(20, 18, 16, 0.96);
-  --chart-tip-border: rgba(237, 230, 216, 0.14);
-  --chart-tip-ink: rgba(237, 230, 216, 0.92);
-  --chart-tip-dim: rgba(237, 230, 216, 0.55);
-  --chart-band-main: #6fbf82;
-  --chart-band-second: #c99a5e;
-}
-
-[data-theme='light'] {
-  color-scheme: light;
-
-  --c-bg: 241 236 225;
-  --c-surface: 251 248 241;
-  --c-surface-2: 246 242 233;
-  --c-surface-3: 236 230 218;
-
-  --c-ink: 26 23 18;
-  --c-line: 26 23 18;
-
-  --c-muted: 82 74 62;
-  --c-faint: 110 100 85;
-
-  /* Deepened so accent text clears 4.5:1 on cream */
-  --c-primary: 138 90 20;
-  --c-secondary: 150 78 34;
-  --c-tertiary: 71 100 48;
-
-  --c-positive: 22 138 61;
-  --c-warn: 176 98 6;
-  --c-danger: 194 42 32;
-
-  /* Darkened so each series clears 4.5:1 on cream. The bright dark-mode
-     values sit at roughly 2:1 there and were unreadable as text. */
-  --s-legit: #157a33;
-  --s-suspicious: #8a5200;
-  --s-fraud: #c2261c;
-  --s-pollination: #2e7b80;
-  --s-harvest: #8a5a14;
-  --s-east: #7a4a08;
-
-  --chart-text: rgba(26, 23, 18, 0.78);
-  --chart-axis: rgba(26, 23, 18, 0.26);
-  --chart-grid: rgba(26, 23, 18, 0.09);
-  --chart-label: rgba(26, 23, 18, 0.6);
-  --chart-tip-bg: rgba(251, 248, 241, 0.98);
-  --chart-tip-border: rgba(26, 23, 18, 0.14);
-  --chart-tip-ink: rgba(26, 23, 18, 0.9);
-  --chart-tip-dim: rgba(26, 23, 18, 0.6);
-  --chart-band-main: #1e7a32;
-  --chart-band-second: #7a5020;
+  --chart-text: rgba(245, 245, 247, 0.74);
+  --chart-axis: rgba(245, 245, 247, 0.22);
+  --chart-grid: rgba(245, 245, 247, 0.08);
+  --chart-label: rgba(245, 245, 247, 0.56);
+  --chart-tip-bg: rgba(29, 29, 31, 0.98);
+  --chart-tip-border: rgba(245, 245, 247, 0.14);
+  --chart-tip-ink: rgba(245, 245, 247, 0.92);
+  --chart-tip-dim: rgba(245, 245, 247, 0.56);
+  --chart-band-main: #30d158;
+  --chart-band-second: #86868b;
 }
 
 /* Fills that carry dark text on top stay ochre in both themes,
    otherwise buttons would go muddy brown on the cream background. */
 :root {
-  --c-brand: 232 160 32;
-  --c-brand-bright: 244 200 113;
-  --c-on-brand: 26 18 6;
-  --c-secondary-fill: 200 118 58;
+  --c-brand: 0 100 206;
+  --c-brand-bright: 41 151 255;
+  /* Blue is dark enough to carry white, where ochre needed near-black. */
+  --c-on-brand: 255 255 255;
+  --c-secondary-fill: 0 113 227;
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -118,11 +129,11 @@
 /* Regions that sit on dark photography in BOTH themes keep dark-mode ink. */
 #hero,
 .on-dark {
-  --c-ink: 237 230 216;
-  --c-line: 237 230 216;
-  --c-muted: 165 158 146;
-  --c-faint: 143 136 126;
-  --c-primary: 232 160 32;
+  --c-ink: 245 245 247;
+  --c-line: 245 245 247;
+  --c-muted: 190 190 195;
+  --c-faint: 160 160 166;
+  --c-primary: 41 151 255;
 }
 
 /* ============================================================
@@ -205,21 +216,20 @@
    ============================================================ */
 
 @layer components {
-  /* Instrument plate: flat machined surface, hairline frame. Not glass. */
+  /* A panel separated by tone and space, not by a border and two
+     shadows. Removing the frame is most of where the change in register
+     comes from: a hairline plus a drop shadow plus an inset highlight
+     reads as an instrument bezel, which is a different intent. */
   .plate {
-    @apply bg-surface border border-line/[0.085] rounded-plate;
-    box-shadow:
-      0 1px 2px rgb(0 0 0 / 0.45),
-      0 14px 34px -20px rgb(0 0 0 / 0.6),
-      inset 0 1px 0 rgb(var(--c-ink) / 0.05);
+    @apply bg-surface-2 rounded-plate;
+    border: 0;
+    box-shadow: none;
   }
 
-  [data-theme='light'] .plate {
-    @apply border-line/10;
-    box-shadow:
-      0 1px 2px rgb(60 50 30 / 0.06),
-      0 12px 30px -18px rgb(60 50 30 / 0.2),
-      inset 0 1px 0 rgb(255 255 255 / 0.6);
+  [data-theme='dark'] .plate {
+    @apply bg-surface;
+    border: 0;
+    box-shadow: none;
   }
 
   .btn {
@@ -260,7 +270,8 @@
 
   /* Chip used for stack tags and filter pills. */
   .chip {
-    @apply inline-flex items-center rounded px-2 py-1 text-xs bg-ink/5 text-ink/65;
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs text-muted;
+    background: rgb(var(--c-ink) / 0.055);
   }
 
   .filt {
@@ -345,17 +356,17 @@
   z-index: -1;
   pointer-events: none;
   contain: strict;
-  background:
-    radial-gradient(115% 75% at 50% -12%, rgb(var(--c-brand) / 0.055), transparent 60%),
-    radial-gradient(90% 90% at 100% 102%, rgb(var(--c-secondary-fill) / 0.045), transparent 55%);
+  /* Two tinted radials and a noise layer over the whole page. On a warm
+     palette they read as paper; on Apple neutrals they read as dirt. */
+  background: none;
 }
 
 .page-wash::after {
   content: '';
   position: absolute;
   inset: 0;
-  opacity: 0.45;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0;
+  background-image: none;
 }
 
 /* Driven by transform, not width, so scrolling never triggers layout. */
@@ -451,36 +462,38 @@
 .hero-scrim-x {
   background: linear-gradient(
     90deg,
-    rgb(12 11 10 / 0.86) 0%,
-    rgb(12 11 10 / 0.58) 34%,
-    rgb(12 11 10 / 0.22) 66%,
-    rgb(12 11 10 / 0.03) 100%
+    rgb(0 0 0 / 0.88) 0%,
+    rgb(0 0 0 / 0.7) 28%,
+    rgb(0 0 0 / 0.44) 52%,
+    rgb(0 0 0 / 0.14) 76%,
+    rgb(0 0 0 / 0.02) 100%
   );
 }
 .hero-scrim-y {
-  background: linear-gradient(0deg, rgb(12 11 10 / 0.88) 0%, rgb(12 11 10 / 0.24) 46%, transparent 80%);
+  background: linear-gradient(0deg, rgb(0 0 0 / 0.9) 0%, rgb(0 0 0 / 0.26) 46%, transparent 80%);
 }
 [data-theme='light'] .hero-scrim-x {
   background: linear-gradient(
     90deg,
-    rgb(30 21 10 / 0.78) 0%,
-    rgb(30 21 10 / 0.48) 36%,
-    rgb(30 21 10 / 0.14) 68%,
+    rgb(0 0 0 / 0.86) 0%,
+    rgb(0 0 0 / 0.68) 28%,
+    rgb(0 0 0 / 0.42) 52%,
+    rgb(0 0 0 / 0.12) 76%,
     transparent 100%
   );
 }
 [data-theme='light'] .hero-scrim-y {
-  background: linear-gradient(0deg, rgb(30 21 10 / 0.76) 0%, rgb(30 21 10 / 0.16) 48%, transparent 82%);
+  background: linear-gradient(0deg, rgb(0 0 0 / 0.86) 0%, rgb(0 0 0 / 0.2) 48%, transparent 82%);
 }
 
-/* Ochre shimmer across the accented words of the headline. */
+/* The headline was two colours with a gradient sweeping across it on a
+   7s loop. A display headline that animates forever is the opposite of
+   quiet, so the name is now one weight and one colour. */
 .hero-accent {
-  background: linear-gradient(110deg, #f4c871 16%, #e8a020 38%, #fff0ce 50%, #e8a020 62%, #c8763a 86%);
-  background-size: 220% auto;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  animation: heroShimmer 7s linear infinite;
+  background: none;
+  color: rgb(var(--c-ink));
+  -webkit-text-fill-color: rgb(var(--c-ink));
+  animation: none;
 }
 @keyframes heroShimmer {
   to {
@@ -488,12 +501,19 @@
   }
 }
 
-/* Registration ticks: a hairline corner bracket, top-left and bottom-right. */
+/* Registration ticks were a deliberate flourish and they are the first
+   thing to go: four hairline brackets per panel, times a dozen panels,
+   is decoration doing no work. The class stays so the markup keeps
+   compiling. */
 .ticked {
   position: relative;
 }
 .ticked::before,
 .ticked::after {
+  content: none;
+}
+.ticked-unused::before,
+.ticked-unused::after {
   content: '';
   position: absolute;
   width: 10px;
@@ -540,7 +560,7 @@
 
 /* Badges laid over dark cover photography stay bright in both themes. */
 .chip-media {
-  color: #f4c871;
+  color: #ffffff;
 }
 
 /* ============================================================
@@ -588,7 +608,7 @@
    dark, and the overlaid badges are only legible against it. */
 .proj-media img[data-fit='contain'] {
   object-fit: contain;
-  background: #0f0d0a;
+  background: #1d1d1f;
   padding: 16px;
 }
 @media (min-width: 768px) {
@@ -958,3 +978,72 @@
     word-break: break-all;
   }
 }
+
+
+/* ============================================================
+   10. Register
+   ------------------------------------------------------------
+   Space and restraint, kept in one block so it is easy to read
+   and easy to remove.
+   ============================================================ */
+
+/* Vertical rhythm. The ID beats the py-20 utility in the markup, so
+   nothing in index.html has to change. */
+/* #metrics is itself a panel, so the section padding would open a hole
+   inside it rather than around it. */
+#main > section:not(#metrics) {
+  padding-block: 7rem;
+}
+#main > #metrics {
+  padding-block: 2.75rem;
+}
+@media (max-width: 767px) {
+  #main > section:not(#metrics) {
+    padding-block: 4.5rem;
+  }
+  #main > #metrics {
+    padding-block: 2rem;
+  }
+}
+
+/* SF Pro Display carries a headline at 600. At 700 and above it stops
+   looking like Apple and starts looking like a poster. */
+#hero-title,
+#main > section h2 {
+  font-weight: 600;
+}
+
+/* The featured cover had a scrim fading it into the page background.
+   That was legible against near-black; against white it bleaches the
+   bottom third of the photograph. */
+[data-theme='light'] .proj-media > .bg-gradient-to-t {
+  display: none;
+}
+
+/* Figures are neutral. The accent stays on the six things you can
+   actually click, which is what makes it register as an accent at all
+   rather than as a second body colour. */
+#metrics .metric-value,
+.proj-card .stat-value,
+#hero .stat-value {
+  color: rgb(var(--c-ink));
+}
+
+/* Apple tracks display sizes tight and body text normal. Applying a
+   single negative tracking to everything is the usual way this is got
+   wrong: it makes paragraphs harder to read, not more designed. */
+h1,
+h2,
+.text-display {
+  letter-spacing: -0.022em;
+}
+h3 {
+  letter-spacing: -0.014em;
+}
+p,
+li,
+dd,
+dt {
+  letter-spacing: normal;
+}
+

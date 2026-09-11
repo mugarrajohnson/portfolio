@@ -57,7 +57,7 @@
       suspicious: read('--s-suspicious', '#ff9f0a'),
       fraud: read('--s-fraud', '#ff453a'),
       pollination: read('--s-pollination', '#5ba3a8'),
-      harvest: read('--s-harvest', '#e8a020'),
+      harvest: read('--s-harvest', '#6e6e73'),
     };
   }
 
@@ -214,9 +214,20 @@
     function draw() {
       activeRegion = getRegion();
       const ink = inks();
+      /* The band fills used to be literal rgba values while only the
+         labels read the palette, so the shading kept its old hue after a
+         retheme and disagreed with its own legend swatch. Both now come
+         off the same token. */
+      const tint = (hex, alpha) => {
+        const m = /^#?([0-9a-f]{6})$/i.exec(String(hex).trim());
+        if (!m) return hex;
+        const n = parseInt(m[1], 16);
+        return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${alpha})`;
+      };
+
       const bandStyles = {
-        main: { fill: 'rgba(46,160,67,0.13)', stroke: 'rgba(46,160,67,0.45)', label: ink.bandMain, text: 'Main harvest' },
-        secondary: { fill: 'rgba(160,110,50,0.13)', stroke: 'rgba(160,110,50,0.4)', label: ink.bandSecond, text: '2nd harvest' },
+        main: { fill: tint(ink.bandMain, 0.13), stroke: tint(ink.bandMain, 0.45), label: ink.bandMain, text: 'Main harvest' },
+        secondary: { fill: tint(ink.bandSecond, 0.13), stroke: tint(ink.bandSecond, 0.4), label: ink.bandSecond, text: '2nd harvest' },
       };
 
       d3.select(mount).selectAll('svg').remove();

@@ -13,19 +13,19 @@
 <script>
 (function () {
   var root = document.documentElement;
-  var theme = 'dark';
+  var theme = 'light';
   try {
     var saved = localStorage.getItem('jm-theme');
     if (saved === 'light' || saved === 'dark') theme = saved;
-    else if (window.matchMedia('(prefers-color-scheme: light)').matches) theme = 'light';
-  } catch (e) { /* private mode: fall through to dark */ }
+    else if (window.matchMedia('(prefers-color-scheme: dark)').matches) theme = 'dark';
+  } catch (e) { /* private mode: fall through to light */ }
   root.setAttribute('data-theme', theme);
   root.classList.toggle('dark', theme === 'dark');
 })();
 </script>
 
-<meta content="#0C0B0A" media="(prefers-color-scheme: dark)" name="theme-color"/>
-<meta content="#F1ECE1" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#000000" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<meta content="#FFFFFF" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="yes" name="mobile-web-app-capable"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
@@ -52,9 +52,6 @@
 <meta content="https://johnsonmugarra.com/og-image.jpg" name="twitter:image"/>
 
 <!-- Fonts: one request, variable weight ranges covering 400 to 800. -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400..600&family=Plus+Jakarta+Sans:wght@400..800&family=Space+Grotesk:wght@400..700&display=swap" rel="stylesheet"/>
 
 <link href="assets/styles.css" rel="stylesheet"/>
 <link as="image" fetchpriority="high" href="img/vanilla-workshop-1600.webp" imagesizes="100vw" imagesrcset="img/vanilla-workshop-800.webp 800w, img/vanilla-workshop-1600.webp 1600w" rel="preload"/>
@@ -160,8 +157,8 @@
 <a class="flex items-center gap-2.5 shrink-0" href="#hero">
 <svg aria-hidden="true" class="w-9 h-9 shrink-0" fill="none" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
 <defs>
-<linearGradient gradientUnits="userSpaceOnUse" id="logo-bg-n" x1="0" x2="40" y1="0" y2="40"><stop offset="0%" stop-color="#201D19"/><stop offset="100%" stop-color="#0C0B0A"/></linearGradient>
-<linearGradient gradientUnits="userSpaceOnUse" id="logo-bar-n" x1="7" x2="33" y1="0" y2="0"><stop offset="0%" stop-color="#E8A020"/><stop offset="100%" stop-color="#C8763A"/></linearGradient>
+<linearGradient gradientUnits="userSpaceOnUse" id="logo-bg-n" x1="0" x2="40" y1="0" y2="40"><stop offset="0%" stop-color="#2C2C2E"/><stop offset="100%" stop-color="#1D1D1F"/></linearGradient>
+<linearGradient gradientUnits="userSpaceOnUse" id="logo-bar-n" x1="7" x2="33" y1="0" y2="0"><stop offset="0%" stop-color="#2997FF"/><stop offset="100%" stop-color="#0071E3"/></linearGradient>
 </defs>
 <rect fill="url(#logo-bg-n)" height="40" rx="10" width="40"/>
 <rect fill="none" height="38.5" rx="9.25" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" width="38.5" x="0.75" y="0.75"/>
@@ -672,7 +669,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <div class="plate p-8 mt-10 text-center">
 <h3 class="text-xl text-ink mb-2">GitHub activity</h3>
 <p class="text-faint text-sm mb-6">A year of public commits, pulled from GitHub</p>
-<div class="overflow-x-auto"><img alt="Contribution heatmap of the last year of public commits on GitHub" class="mx-auto rounded-lg max-w-full" height="128" loading="lazy" referrerpolicy="no-referrer" src="https://ghchart.rshah.org/E8A020/MugarraJohnson" width="663"/></div>
+<div class="overflow-x-auto"><img alt="Contribution heatmap of the last year of public commits on GitHub" class="mx-auto rounded-lg max-w-full" height="128" loading="lazy" referrerpolicy="no-referrer" src="https://ghchart.rshah.org/0071E3/MugarraJohnson" width="663"/></div>
 <p><a class="btn-ghost mt-6 inline-flex" href="https://github.com/MugarraJohnson" rel="noopener noreferrer" target="_blank">View GitHub profile <span aria-hidden="true" class="ml-1">&rarr;</span></a></p>
 </div>
 </div>
@@ -1098,8 +1095,8 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-faint">
 <svg aria-hidden="true" class="w-7 h-7 opacity-60" fill="none" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
 <defs>
-<linearGradient gradientUnits="userSpaceOnUse" id="logo-bg-f" x1="0" x2="40" y1="0" y2="40"><stop offset="0%" stop-color="#201D19"/><stop offset="100%" stop-color="#0C0B0A"/></linearGradient>
-<linearGradient gradientUnits="userSpaceOnUse" id="logo-bar-f" x1="7" x2="33" y1="0" y2="0"><stop offset="0%" stop-color="#E8A020"/><stop offset="100%" stop-color="#C8763A"/></linearGradient>
+<linearGradient gradientUnits="userSpaceOnUse" id="logo-bg-f" x1="0" x2="40" y1="0" y2="40"><stop offset="0%" stop-color="#2C2C2E"/><stop offset="100%" stop-color="#1D1D1F"/></linearGradient>
+<linearGradient gradientUnits="userSpaceOnUse" id="logo-bar-f" x1="7" x2="33" y1="0" y2="0"><stop offset="0%" stop-color="#2997FF"/><stop offset="100%" stop-color="#0071E3"/></linearGradient>
 </defs>
 <rect fill="url(#logo-bg-f)" height="40" rx="10" width="40"/>
 <rect fill="none" height="38.5" rx="9.25" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" width="38.5" x="0.75" y="0.75"/>
