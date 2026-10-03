@@ -67,7 +67,7 @@ IMPROVEMENTS.md     longer-term direction
 
 ## Theming
 
-Colours are CSS custom properties defined once in `src/tailwind.css` and exposed to Tailwind as `bg-background`, `text-ink`, `text-muted`, `border-line` and so on. Light mode swaps the variables and needs no per-utility overrides.
+Colors are CSS custom properties defined once in `src/tailwind.css` and exposed to Tailwind as `bg-background`, `text-ink`, `text-muted`, `border-line` and so on. Light mode swaps the variables and needs no per-utility overrides.
 
 Two rules worth knowing:
 

@@ -6,9 +6,9 @@ brand
 
 ## Users
 
-International development practitioners, research institutions, government agencies, and programme leads who need a rigorous data scientist for evidence work. They arrive already knowing who Johnson is — from a referral, a publication, or a conference — and come to confirm that the work is as serious as the reputation. Context: they are evaluating collaborators, not browsing freelancers.
+International development practitioners, research institutions, government agencies, and program leads who need a rigorous data scientist for evidence work. They arrive already knowing who Johnson is — from a referral, a publication, or a conference — and come to confirm that the work is as serious as the reputation. Context: they are evaluating collaborators, not browsing freelancers.
 
-Secondary: academic hiring committees and research programme officers at organisations like USAID, UNDP, CGIAR, World Bank, and African policy institutes.
+Secondary: academic hiring committees and research program officers at organizations like USAID, UNDP, CGIAR, World Bank, and African policy institutes.
 
 ## Product Purpose
 
