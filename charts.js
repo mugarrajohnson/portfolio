@@ -1,8 +1,8 @@
 /* ============================================================
-   charts.js — the two D3 readouts on johnsonmugarra.com
+   charts.js — the three D3 readouts on johnsonmugarra.com
    ------------------------------------------------------------
-   Both charts draw into a fixed viewBox, so the SVG scales with
-   its container and never needs redrawing on resize or when a
+   All three charts draw into a fixed viewBox, so the SVG scales
+   with its container and never needs redrawing on resize or when a
    hidden tab is revealed. The only redraw trigger is a theme
    change, because the axis and tooltip inks come from CSS
    custom properties.
@@ -58,6 +58,11 @@
       fraud: read('--s-fraud', '#ff453a'),
       pollination: read('--s-pollination', '#5ba3a8'),
       harvest: read('--s-harvest', '#6e6e73'),
+      /* Tree of life domains. The legend swatches in the markup read the
+         same tokens, so a dot always matches the branches beside it. */
+      eukaryota: read('--s-pollination', '#0064ce'),
+      bacteria: read('--s-suspicious', '#9a5c00'),
+      archaea: read('--s-east', '#34785f'),
     };
   }
 
@@ -85,7 +90,10 @@
         let left = event.clientX - box.left + 14;
         const top = event.clientY - box.top - 56;
         if (left + 250 > box.width) left = event.clientX - box.left - 226;
-        node.style('display', 'block').style('left', `${Math.max(4, left)}px`).style('top', `${top}px`).html(html);
+        /* The -56 sits the box above the pointer, which puts it outside the
+           tray whenever the pointer is near the top edge. The tree of life
+           hits that on every label in the top quarter of the circle. */
+        node.style('display', 'block').style('left', `${Math.max(4, left)}px`).style('top', `${Math.max(4, top)}px`).html(html);
       },
       hide() {
         node.style('display', 'none');
@@ -648,5 +656,617 @@
 
     draw();
     redrawHandlers.push(draw);
+  })();
+
+  /* ============================================================
+     Tree of life
+     ------------------------------------------------------------
+     A radial cluster of the three domains, rebuilt from the D3
+     gallery notebook of the same name by Mike Bostock. The Newick
+     string and the layout maths are his; what this version changes
+     is the palette, which now reads the theme tokens like the two
+     charts above, and the interaction, which reports a lineage on
+     hover instead of only bolding a branch.
+
+     The data is fetched rather than inlined because a Newick string
+     is one unreadable line and inlining it would put 12kB of tree
+     syntax in the middle of this file. It is kept in the repo, so
+     the fetch is same-origin and survives the upstream host moving
+     or rate-limiting the file.
+     ============================================================ */
+
+  (function treeOfLifeChart() {
+    const mount = document.getElementById('tree-chart');
+    if (!mount) return;
+
+    const DURATION = reduceMotion ? 0 : 750;
+    const DATA_URL = 'data/life.txt';
+
+    /** Square viewBox. The SVG is wider than the labels need, so the
+        whole circle sits in the centre of whatever box it lands in. */
+    const SIZE = 960;
+    const outerRadius = SIZE / 2;
+    /** Ring width leaves room for the leaf labels outside it. */
+    const innerRadius = outerRadius - 170;
+    /** Extra ring outside the branch tips for the extension stubs. */
+    const EXTENSION = 10;
+
+    const DOMAIN_ORDER = ['Eukaryota', 'Bacteria', 'Archaea'];
+
+    let data = null;
+    let loadError = null;
+    /* Both are no-ops until draw() has run, so a theme flip that lands
+       mid-fetch cannot throw. */
+    let paint = () => {};
+    let applyLength = null;
+
+    /**
+     * Newick parser, from Jason Davies' newick.js, which is what the
+     * notebook credits. Reads ( , ) : and branch lengths, and ignores
+     * the [support] values in square brackets.
+     */
+    function parseNewick(a) {
+      for (var e = [], r = {}, s = a.split(/\s*(;|\(|\)|,|:)\s*/), t = 0; t < s.length; t++) {
+        var n = s[t];
+        switch (n) {
+          case '(':
+            var c = {};
+            r.branchset = [c];
+            e.push(r);
+            r = c;
+            break;
+          case ',':
+            var c = {};
+            e[e.length - 1].branchset.push(c);
+            r = c;
+            break;
+          case ')':
+            r = e.pop();
+            break;
+          case ':':
+            break;
+          default:
+            var h = s[t - 1];
+            ')' == h || '(' == h || ',' == h ? (r.name = n) : ':' == h && (r.length = parseFloat(n));
+        }
+      }
+      return r;
+    }
+
+    function labelFor(node) {
+      return (node.data.name || '').replace(/_/g, ' ');
+    }
+
+    /** Longest root-to-leaf distance in the tree. */
+    function maxLength(d) {
+      return d.data.length + (d.children ? d3.max(d.children, maxLength) : 0);
+    }
+
+    /** Radius per node, scaled so the longest branch ends on the ring. */
+    function setRadius(d, y0, k) {
+      d.radius = (y0 += d.data.length) * k;
+      if (d.children) d.children.forEach((child) => setRadius(child, y0, k));
+    }
+
+    /** Each node inherits its domain's colour from the nearest ancestor
+        that declares one, which is why only the three roots are keyed. */
+    function setColor(d, palette) {
+      const name = d.data.name;
+      d.color = DOMAIN_ORDER.includes(name) ? palette[name] : d.parent ? d.parent.color : null;
+      if (d.children) d.children.forEach((child) => setColor(child, palette));
+    }
+
+    /** Elbow from one polar point to another: an arc, then a radius. */
+    function linkStep(startAngle, startRadius, endAngle, endRadius) {
+      const c0 = Math.cos((startAngle = (startAngle - 90) / 180 * Math.PI));
+      const s0 = Math.sin(startAngle);
+      const c1 = Math.cos((endAngle = (endAngle - 90) / 180 * Math.PI));
+      const s1 = Math.sin(endAngle);
+      return (
+        'M' + startRadius * c0 + ',' + startRadius * s0 +
+        (endAngle === startAngle ? '' : 'A' + startRadius + ',' + startRadius + ' 0 0 ' + (endAngle > startAngle ? 1 : 0) + ' ' + startRadius * c1 + ',' + startRadius * s1) +
+        'L' + endRadius * c1 + ',' + endRadius * s1
+      );
+    }
+
+    const linkConstant = (d) => linkStep(d.source.x, d.source.y, d.target.x, d.target.y);
+    const linkVariable = (d) => linkStep(d.source.x, d.source.radius, d.target.x, d.target.radius);
+    const extensionConstant = (d) => linkStep(d.target.x, d.target.y, d.target.x, innerRadius);
+    const extensionVariable = (d) => linkStep(d.target.x, d.target.radius, d.target.x, innerRadius);
+
+    function draw() {
+      if (!data) return;
+      const ink = inks();
+      const palette = { Eukaryota: ink.eukaryota, Bacteria: ink.bacteria, Archaea: ink.archaea };
+
+      d3.select(mount).selectAll('svg').remove();
+
+      const root = d3
+        .hierarchy(data, (d) => d.branchset)
+        .sum((d) => (d.branchset ? 0 : 1))
+        .sort((a, b) => a.value - b.value || d3.ascending(a.data.length, b.data.length));
+
+      d3.cluster().size([360, innerRadius]).separation(() => 1)(root);
+      root.data.length = 0;
+      setRadius(root, root.data.length, innerRadius / maxLength(root));
+      setColor(root, palette);
+
+      const svg = d3
+        .select(mount)
+        .append('svg')
+        .attr('viewBox', `${-outerRadius} ${-outerRadius} ${SIZE} ${SIZE}`)
+        .attr('role', 'img')
+        .attr(
+          'aria-label',
+          'Radial cluster tree of life in three domains: Eukaryota, Bacteria and Archaea. Each branch is a clade and its length is the evolutionary distance from its ancestor.'
+        )
+        .style('width', '100%')
+        .style('height', '100%')
+        .style('overflow', 'visible');
+
+      svg.append('circle')
+        .attr('r', innerRadius)
+        .attr('fill', 'none')
+        .attr('stroke', ink.axis)
+        .attr('stroke-dasharray', '2,6');
+
+      /* Only the links that end on a leaf get an extension stub, which is
+         what makes a collapsed clade read as "there is more in here". */
+      const extensions = svg
+        .append('g')
+        .attr('fill', 'none')
+        /* Fallback ink on the group as well as per link. The parser wraps
+           the tree in an unnamed root that declares no domain, so its one
+           link resolves to no colour and would otherwise vanish. The
+           notebook covers the same case by setting stroke on the group. */
+        .attr('stroke', ink.axis)
+        .attr('stroke-opacity', 0.25)
+        .selectAll('path')
+        .data(root.links().filter((d) => !d.target.children))
+        .join('path')
+        .each(function (d) {
+          d.target.extensionNode = this;
+        })
+        .attr('d', extensionConstant)
+        .attr('stroke', (d) => d.target.color);
+
+      const links = svg
+        .append('g')
+        .attr('fill', 'none')
+        .attr('stroke', ink.axis)
+        .selectAll('path')
+        .data(root.links())
+        .join('path')
+        .each(function (d) {
+          d.target.linkNode = this;
+        })
+        .attr('d', linkConstant)
+        .attr('stroke', (d) => d.target.color);
+
+      const labels = svg
+        .append('g')
+        .selectAll('text')
+        .data(root.leaves())
+        .join('text')
+        .attr('dy', '.31em')
+        .attr('transform', (d) => `rotate(${d.x - 90}) translate(${innerRadius + EXTENSION},0)${d.x < 180 ? '' : ' rotate(180)'}`)
+        .attr('text-anchor', (d) => (d.x < 180 ? 'start' : 'end'))
+        .attr('fill', ink.text)
+        .attr('font-size', '10px')
+        .text(labelFor);
+
+      /* ═══ Interactions ═══════════════════════════════════════ */
+
+      applyLength = (showLength) => {
+        const t = d3.transition().duration(DURATION);
+        extensions.transition(t).attr('d', showLength ? extensionVariable : extensionConstant);
+        links.transition(t).attr('d', showLength ? linkVariable : linkConstant);
+      };
+
+      const tip = tooltipFor(mount);
+
+      /** Root to leaf, so a hover reports which clade the tip sits in.
+          The Newick file nests several ranks under one name, so a run of
+          identical names collapses to one entry with a count. Reading
+          "Eukaryota subclade ×6" is both shorter and more accurate than
+          printing the same six words on separate lines. */
+      function lineage(d) {
+        const names = [];
+        for (let node = d; node.parent; node = node.parent) {
+          const name = labelFor(node);
+          const last = names[names.length - 1];
+          if (last && last.name === name) last.count++;
+          else names.push({ name, count: 1 });
+        }
+        return names
+          .map((entry) => (entry.count > 1 ? `${entry.name} ×${entry.count}` : entry.name))
+          .join(' › ');
+      }
+
+      /* The shared tooltip positions itself from the pointer. The pointer here
+         belongs to a leaf label rather than to a mark in the plot area, but
+         the labels sit inside the chart surface, so its offsets are still
+         measured against a box that contains them and it needs no special
+         handling. */
+      function hover(event, d) {
+        tip.show(
+          event,
+          `<strong style="color:${ink.tipInk}">${labelFor(d)}</strong><br>` +
+            `<span style="color:${d.color};font-size:10px;font-weight:600">${DOMAIN_ORDER.find((name) => d.color === palette[name]) || ''}</span><br>` +
+            `<span style="color:${ink.tipDim};font-size:10px;line-height:1.5">${lineage(d)}</span>`
+        );
+      }
+
+      /** Bolds the hovered branch and everything above it, so the lineage
+          in the tooltip is visible in the tree as well as in the text. */
+      function highlight(node, on) {
+        for (let d = node; d; d = d.parent) {
+          d3.select(d.linkNode).attr('stroke', on ? ink.text : d.target.color).attr('stroke-width', on ? 1.8 : 1);
+          d3.select(d.extensionNode).attr('stroke-opacity', on ? 0.6 : 0.25);
+        }
+      }
+
+      labels
+        .on('mouseover', function (event, d) {
+          d3.select(this).attr('fill', ink.tipInk).attr('font-weight', 'bold');
+          highlight(d, true);
+          hover(event, d);
+        })
+        .on('mouseout', function (event, d) {
+          d3.select(this).attr('fill', ink.text).attr('font-weight', null);
+          highlight(d, false);
+          tip.hide();
+        });
+
+      paint = draw;
+    }
+
+    function renderMessage(message) {
+      d3.select(mount).selectAll('*').remove();
+      d3.select(mount)
+        .append('p')
+        .attr('class', 'flex h-full items-center justify-center text-center text-sm text-muted')
+        .text(message);
+    }
+
+    /* ═══ Wiring ═══════════════════════════════════════════════ */
+
+    const toggle = document.getElementById('tree-length');
+    toggle?.addEventListener('change', (event) => {
+      if (applyLength) applyLength(event.target.checked);
+    });
+
+    fetch(DATA_URL)
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.text();
+      })
+      .then((text) => {
+        data = parseNewick(text);
+        draw();
+      })
+      .catch((error) => {
+        loadError = error;
+        renderMessage('The tree of life data could not be loaded.');
+      });
+
+    /* A theme flip is the only reason this chart repaints, so the redraw
+       is registered up front and simply does nothing until the fetch has
+       landed. The catch also re-renders the message, because it is written
+       in theme tokens and the old one would sit on the wrong background. */
+    redrawHandlers.push(() => {
+      if (data) paint();
+      else if (loadError) renderMessage('The tree of life data could not be loaded.');
+    });
+  })();
+
+  /* ============================================================
+     Word cloud
+     ------------------------------------------------------------
+     Rebuilt from the Word cloud notebook in the D3 gallery, which is
+     a demonstration of d3-cloud rather than of D3 itself. The text
+     is Martin Luther King Jr's 1963 speech, as in the notebook.
+
+     Two departures from the notebook, both for this page:
+
+       The ink is applied as a CSS custom property rather than a
+       resolved colour, so a theme flip recolours the cloud without
+       re-running the layout. This chart therefore registers no
+       redraw handler, which is the point: the sprite collision
+       pass is randomised, so a redraw would scatter every word to a
+       new place each time the reader toggled the theme.
+
+       Words are buffered and flushed in one go under reduced
+       motion, so the cloud appears settled rather than assembling
+       itself word by word.
+     ============================================================ */
+
+  (function wordCloudChart() {
+    const mount = document.getElementById('cloud-chart');
+    if (!mount) return;
+    /* d3-cloud attaches itself to the d3 namespace as d3.layout.cloud.
+       It is a separate library from d3, so a blocked CDN leaves this
+       panel empty rather than breaking the charts above it. */
+    if (!window.d3 || !d3.layout || !d3.layout.cloud) return;
+
+    const WIDTH = 960;
+    const HEIGHT = 480;
+    const MAX_WORDS = 120;
+    /* Word size scales with the square root of the count, which is the
+       notebook's formula and keeps a word twice as frequent from
+       looking four times as important. */
+    const FONT_SCALE = 13;
+    const FONT = 'system-ui, -apple-system, "Segoe UI", sans-serif';
+    /** The most frequent words carry the accent, the rest recede. */
+    const ACCENT = 14;
+    const ROTATED_SHARE = 0.16;
+
+    /* The notebook's list, trimmed of the contractions it carries. */
+    const STOPWORDS = new Set(
+      ('i,me,my,myself,we,us,our,ours,ourselves,you,your,yours,yourself,yourselves,he,him,his,himself,' +
+        'she,her,hers,herself,it,its,itself,they,them,their,theirs,themselves,what,which,who,whom,whose,' +
+        'this,that,these,those,am,is,are,was,were,be,been,being,have,has,had,having,do,does,did,doing,' +
+        'will,would,should,can,could,ought,isnt,arent,wasnt,werent,hasnt,havent,hadnt,doesnt,dont,didnt,' +
+        'wont,wouldnt,shant,shouldnt,cant,cannot,couldnt,mustnt,lets,thats,whos,whats,heres,theres,when,' +
+        'where,whys,hows,a,an,the,and,but,if,or,because,as,until,while,of,at,by,for,with,about,against,' +
+        'between,into,through,during,before,after,above,below,to,from,up,upon,down,in,out,on,off,over,' +
+        'under,again,further,then,once,here,there,when,where,why,how,all,any,both,each,few,more,most,' +
+        'other,some,such,no,nor,not,only,own,same,so,than,too,very,say,says,said,shall')
+        .split(',')
+    );
+
+    /** Strip punctuation at both ends, drop possessives, cap the length. */
+    function tokenize(text) {
+      return text
+        .split(/[\s.]+/g)
+        .map((w) => w.replace(/^[“‘"()[\]{}-]+/g, ''))
+        .map((w) => w.replace(/[;:.!?()[\]{},"'’-]+$/g, ''))
+        .map((w) => w.replace(/['’]s$/g, ''))
+        .map((w) => w.substring(0, 30).toLowerCase())
+        .filter((w) => w && !STOPWORDS.has(w));
+    }
+
+    function renderMessage(message) {
+      d3.select(mount).selectAll('*').remove();
+      d3.select(mount)
+        .append('p')
+        .attr('class', 'flex h-full items-center justify-center text-center text-sm text-muted')
+        .text(message);
+    }
+
+    function draw(words) {
+      d3.select(mount).selectAll('*').remove();
+
+      const ink = inks();
+      const svg = d3
+        .select(mount)
+        .append('svg')
+        .attr('viewBox', `0 0 ${WIDTH} ${HEIGHT}`)
+        .attr('role', 'img')
+        .attr('aria-label', 'Word cloud of the most frequent words in the 1963 speech I Have a Dream, sized by how often each word appears')
+        .style('width', '100%')
+        .style('height', '100%')
+        .style('overflow', 'visible');
+
+      const layer = svg.append('g').attr('text-anchor', 'middle');
+      const tip = tooltipFor(mount);
+
+      function place(word) {
+        const accent = words.indexOf(word) < ACCENT;
+        layer
+          .append('text')
+          .datum(word)
+          .attr('font-size', word.size)
+          .attr('font-family', FONT)
+          .attr('transform', `translate(${word.x},${word.y}) rotate(${word.rotate})`)
+          /* var() on the inline style is what lets a theme flip recolour
+             the cloud without touching the layout. */
+          .style('fill', accent ? 'var(--s-pollination)' : 'var(--chart-text)')
+          .style('fill-opacity', accent ? null : 0.72)
+          .style('cursor', 'crosshair')
+          .text(word.text)
+          .on('mouseover', function (event, d) {
+            d3.select(this).style('fill', accent ? ink.tipInk : ink.tipInk).attr('font-weight', 'bold');
+            tip.show(
+              event,
+              `<strong style="color:${ink.tipInk}">${d.text}</strong><br>` +
+                `<span style="color:${ink.tipDim};font-size:10px">appears </span>` +
+                `<strong style="color:${ink.pollination}">${d.size}</strong>` +
+                `<span style="color:${ink.tipDim};font-size:10px"> times</span>`
+            );
+          })
+          .on('mouseleave', function () {
+            d3.select(this).attr('font-weight', null).style('fill', accent ? 'var(--s-pollination)' : 'var(--chart-text)');
+            tip.hide();
+          });
+      }
+
+      const placed = [];
+      const cloud = d3.layout
+        .cloud()
+        .size([WIDTH, HEIGHT])
+        .words(words)
+        .padding(2)
+        .font(FONT)
+        .fontSize((d) => Math.sqrt(d.size) * FONT_SCALE)
+        /* A minority of words sit on their side. Rotating every word,
+           as the notebook's own example does, is unreadable. */
+        .rotate(() => (Math.random() < ROTATED_SHARE ? 90 : 0))
+        .on('word', (word) => {
+          placed.push(word);
+          if (!reduceMotion) place(word);
+        })
+        .on('end', () => {
+          if (reduceMotion) placed.forEach(place);
+          const stats = document.getElementById('cloud-stats');
+          if (stats) {
+            stats.innerHTML =
+              `<strong>${words.length}</strong> most frequent words &nbsp;·&nbsp; ` +
+              `<span style="color:var(--s-pollination)"><strong>${words[0].size}</strong> appearances of "${words[0].text}"</span>`;
+          }
+        });
+
+      cloud.start();
+    }
+
+    fetch('data/dream.txt')
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.text();
+      })
+      .then((text) => {
+        const counts = d3.rollups(tokenize(text), (group) => group.length, (w) => w)
+          .sort(([, a], [, b]) => d3.descending(a, b))
+          .slice(0, MAX_WORDS)
+          .map(([word, size]) => ({ text: word, size }));
+        if (!counts.length) throw new Error('no words');
+        draw(counts);
+      })
+      .catch(() => renderMessage('The word cloud text could not be loaded.'));
+  })();
+
+  /* ============================================================
+     Seamless zoomable map tiles
+     ------------------------------------------------------------
+     Rebuilt from the Seamless zoomable map tiles notebook in the
+     D3 gallery. The trick it demonstrates is layering: while the
+     full-resolution tiles for the current zoom are still loading,
+     coarser tiles from four zoom levels down are already on screen
+     underneath them. Without them a pan flashes the background.
+
+     The notebook opens on the north pole, because its initial
+     transform is anchored to world pixel zero. This one opens on
+     Kampala.
+
+     This is the only chart here that is not self-contained. Map
+     tiles are raster images fetched from opentopomap.org as the
+     reader pans, which is why the attribution below the map is not
+     optional.
+     ============================================================ */
+
+  (function mapTilesChart() {
+    const mount = document.getElementById('map-chart');
+    if (!mount) return;
+    if (!window.d3 || !d3.tile) return;
+
+    const WIDTH = 960;
+    const HEIGHT = 520;
+    /** Tile edge in screen pixels. d3-tile doubles the standard 256, so
+        a tile covers two columns of the usual slippy scheme. */
+    const TILE_SIZE = 512;
+    /** Slippy zoom level to open at. */
+    const ZOOM = 12;
+    /** The transform scale that puts d3-tile on that zoom level:
+        it reads z = log2(transform.k / tileSize). */
+    const K = TILE_SIZE * Math.pow(2, ZOOM);
+    /** Kampala. The notebook's own initial transform lands on the north pole. */
+    const CENTRE = { lon: 32.5825, lat: 0.3476 };
+    /** Zoom deltas below the current level, coarsest first. Two levels down
+        is enough to cover the gap without fetching tiles nobody sees. */
+    const DELTAS = [-4, -1, 0];
+    const TILE_URL = (x, y, z) => `https://tile.opentopomap.org/${z}/${x}/${y}.png`;
+
+    /** Tile index of a lon/lat at a slippy zoom level, in the 256px scheme
+        that tile.opentopomap.org addresses. This is also d3-tile's index:
+        doubling tileSize changes how wide a tile is drawn, not how the
+        world is divided. Getting that wrong fetches a valid tile of the
+        wrong place, which looks like a map and is not one. */
+    function tileIndex(lon, lat, z) {
+      const n = Math.pow(2, z);
+      const phi = (lat * Math.PI) / 180;
+      return [((lon + 180) / 360) * n, ((1 - Math.log(Math.tan(phi) + 1 / Math.cos(phi)) / Math.PI) / 2) * n];
+    }
+
+    /**
+     * A transform putting Kampala in the middle of the viewport.
+     *
+     * d3-tile draws tile (tx, ty) at screen tx * tileScale, with
+     * tileScale = TILE_SIZE here and an offset of transform.x - k / 2,
+     * so the centre wants
+     *
+     *     tx * TILE_SIZE + transform.x - K / 2 = WIDTH / 2
+     *
+     * The translate has to be divided by K because zoomIdentity scales
+     * an x or y added after .scale(), but not one added before it.
+     */
+    function initialTransform() {
+      const [tx, ty] = tileIndex(CENTRE.lon, CENTRE.lat, ZOOM);
+      const x = WIDTH / 2 - tx * TILE_SIZE + K / 2;
+      const y = HEIGHT / 2 - ty * TILE_SIZE + K / 2;
+      return d3.zoomIdentity.scale(K).translate(x / K, y / K);
+    }
+
+    d3.select(mount).selectAll('*').remove();
+
+    const svg = d3
+      .select(mount)
+      .append('svg')
+      .attr('class', 'tile-map')
+      .attr('viewBox', `0 0 ${WIDTH} ${HEIGHT}`)
+      .attr('role', 'img')
+      .attr('aria-label', 'Zoomable topographic map centred on Kampala, Uganda. Drag to pan and scroll to zoom.')
+      .style('width', '100%')
+      .style('height', '100%');
+
+    const tile = d3.tile().extent([[0, 0], [WIDTH, HEIGHT]]).tileSize(TILE_SIZE).clampX(false);
+    const readout = document.getElementById('map-readout');
+
+    const zoom = d3
+      .zoom()
+      .scaleExtent([1 << 8, 1 << 22])
+      .extent([[0, 0], [WIDTH, HEIGHT]])
+      .on('zoom', (event) => {
+        const transform = event.transform;
+        const base = Math.log2(transform.k / TILE_SIZE);
+        /* Zoomed out far enough, two deltas resolve to the same clamped
+           zoom level. Drawing both would stack identical tiles, so each
+           level is only filled the first time it comes up. */
+        const drawn = new Set();
+        levels.each(function (delta) {
+          const z0 = Math.max(Math.round(base + delta), 0);
+          if (drawn.has(z0)) {
+            d3.select(this).selectAll('image').remove();
+            return;
+          }
+          drawn.add(z0);
+          const tiles = tile.zoomDelta(delta)(transform);
+          d3.select(this)
+            .selectAll('image')
+            .data(tiles, (d) => d)
+            .join('image')
+            .attr('href', (d) => TILE_URL(...d3.tileWrap(d)))
+            .attr('x', ([x]) => (x + tiles.translate[0]) * tiles.scale)
+            .attr('y', ([, y]) => (y + tiles.translate[1]) * tiles.scale)
+            .attr('width', tiles.scale)
+            .attr('height', tiles.scale);
+        });
+        /* The slippy zoom this actually requested, which is not the same
+           number as log2(transform.k) once the tile size is folded in. */
+        if (readout) readout.textContent = `Zoom ${Math.max(base, 0).toFixed(1)} of ${ZOOM}`;
+      });
+
+    /* Three layers, coarsest first, so the low-resolution tiles sit
+       underneath the ones actually on screen. */
+    const levels = svg
+      .append('g')
+      .attr('pointer-events', 'none')
+      .selectAll('g')
+      .data(DELTAS)
+      .join('g');
+
+    svg.call(zoom).call(zoom.transform, initialTransform());
+
+    /* ═══ Controls ═════════════════════════════════════════════ */
+
+    /* Fades every layer so the low-resolution ones behind become
+       visible. Off, they are doing their job unseen. */
+    const layerToggle = document.getElementById('map-layers');
+    layerToggle?.addEventListener('change', (event) => {
+      levels.style('opacity', event.target.checked ? 0.3 : null);
+    });
+
+    document.getElementById('map-reset')?.addEventListener('click', () => {
+      svg.transition().duration(reduceMotion ? 0 : 650).call(zoom.transform, initialTransform());
+    });
   })();
 })();

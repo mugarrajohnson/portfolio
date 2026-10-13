@@ -18,7 +18,7 @@
    ============================================================ */
 'use strict';
 
-const CACHE_NAME = 'jm-portfolio-v8';
+const CACHE_NAME = 'jm-portfolio-v10';
 
 const PRECACHE_URLS = [
   './',
@@ -27,6 +27,8 @@ const PRECACHE_URLS = [
   './assets/styles.css',
   './script.js',
   './charts.js',
+  './data/life.txt',
+  './data/dream.txt',
   './manifest.json',
   './img/vanilla-workshop-800.webp',
   './img/vanilla-workshop-1600.webp',

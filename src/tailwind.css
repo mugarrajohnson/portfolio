@@ -291,6 +291,30 @@
     transform: scale(0.97);
   }
 
+  /* Checkbox for the tree of life, so the shape of the control matches the
+     filter buttons beside it. :has gives the focus ring on the label, which
+     is the box the pointer actually lands on. */
+  .toggle-line {
+    @apply inline-flex cursor-pointer items-center gap-2.5 rounded-full border border-line/10 px-4 py-2 text-sm font-medium text-muted;
+    transition:
+      background-color 180ms ease-out,
+      color 180ms ease-out,
+      border-color 180ms ease-out;
+  }
+  .toggle-line:hover {
+    @apply bg-ink/5;
+  }
+  .toggle-line:has(:checked) {
+    @apply border-brand/40 bg-brand/20 text-primary;
+  }
+  .toggle-line:has(:focus-visible) {
+    @apply outline outline-2 outline-offset-2 outline-brand/70;
+  }
+  .toggle-line input {
+    @apply m-0 h-4 w-4 shrink-0 accent-[rgb(var(--c-primary))];
+    cursor: inherit;
+  }
+
   /* Segmented tab used by the analytics demos. */
   .seg-tab {
     @apply rounded-full px-5 py-2 text-sm font-medium text-muted;
@@ -710,6 +734,17 @@
   position: relative;
 }
 
+/* The map owns the pointer while the cursor is over it: drag pans and
+   scroll zooms, which is what every map does. Without touch-action the
+   browser scrolls the page out from under a touch drag instead. */
+.tile-map {
+  touch-action: none;
+  cursor: grab;
+}
+.tile-map:active {
+  cursor: grabbing;
+}
+
 .legend-dot {
   display: inline-block;
   width: 0.75rem;
@@ -725,6 +760,14 @@
 .dot-pollination { background: var(--s-pollination); }
 .dot-harvest { background: var(--s-harvest); }
 .dot-east { background: var(--s-east); }
+
+/* Tree of life domains, borrowed from the series palette above rather than
+   given tokens of their own. Blue for Eukaryota and amber for Bacteria keep
+   the hues distinct from each other in both themes, and reusing established
+   tokens is what stops a third colour set drifting out of step later. */
+.dot-eukaryota { background: var(--s-pollination); }
+.dot-bacteria { background: var(--s-suspicious); }
+.dot-archaea { background: var(--s-east); }
 
 /* Legend key drawn as a rule. */
 .legend-rule {

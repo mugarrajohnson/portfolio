@@ -61,6 +61,9 @@
 
 <script defer src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script defer src="https://d3js.org/d3.v7.min.js"></script>
+<!-- Both attach to the d3 global above, so they must load after it. -->
+<script defer src="https://cdn.jsdelivr.net/npm/d3-cloud@1/build/d3.layout.cloud.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/d3-tile@1/dist/d3-tile.js"></script>
 <script defer src="charts.js"></script>
 <script defer src="script.js"></script>
 
@@ -674,12 +677,15 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <div class="max-w-7xl mx-auto">
 <div class="mb-8 text-center">
 
-<h2 class="text-4xl text-ink mb-6" id="analytics-title">Live analytics</h2>
-<div aria-label="Analytics demos" class="inline-flex flex-wrap justify-center rounded-full border border-line/10 p-1 bg-ink/5" id="analytics-tabs" role="tablist">
+<h2 class="text-4xl text-ink mb-6" id="analytics-title">Live visualisations</h2>
+<div aria-label="Visualisation demos" class="inline-flex flex-wrap justify-center rounded-full border border-line/10 p-1 bg-ink/5" id="analytics-tabs" role="tablist">
 <button aria-controls="vanilla-harvest" aria-selected="true" class="seg-tab" id="tab-vanilla" role="tab" tabindex="0" type="button">Vanilla harvest</button>
 <button aria-controls="fraud-analytics" aria-selected="false" class="seg-tab" id="tab-fraud" role="tab" tabindex="-1" type="button">Fraud detection</button>
+<button aria-controls="tree-analytics" aria-selected="false" class="seg-tab" id="tab-tree" role="tab" tabindex="-1" type="button">Tree of life</button>
+<button aria-controls="cloud-analytics" aria-selected="false" class="seg-tab" id="tab-cloud" role="tab" tabindex="-1" type="button">Word cloud</button>
+<button aria-controls="map-analytics" aria-selected="false" class="seg-tab" id="tab-map" role="tab" tabindex="-1" type="button">Map tiles</button>
 </div>
-<noscript><p class="mt-6 text-sm text-muted max-w-xl mx-auto">Both charts are drawn in the browser with D3, so they need JavaScript. Everything else on this page works without it.</p></noscript>
+<noscript><p class="mt-6 text-sm text-muted max-w-xl mx-auto">These visualisations are drawn in the browser with D3, so they need JavaScript. Everything else on this page works without it.</p></noscript>
 </div>
 
 <!-- Vanilla harvest -->
@@ -748,6 +754,92 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-fraud"></span>Confirmed fraud</li>
 <li class="flex items-center"><span aria-hidden="true" class="legend-rule rule-threshold"></span>Threshold 0.50</li>
 </ul>
+</div>
+</div>
+
+<!-- Tree of life -->
+<div aria-labelledby="tab-tree" hidden="" id="tree-analytics" role="tabpanel" tabindex="0">
+<div class="plate p-8 lg:p-12">
+<div class="mb-8">
+<p class="eyebrow mb-2">Phylogenetics · hierarchical layout</p>
+<h3 class="text-3xl lg:text-4xl text-ink mb-6">Tree of life</h3>
+<p class="text-ink/75 leading-[1.78]">The three domains of life, parsed from a <strong class="text-ink font-semibold">Newick string</strong> into a hierarchy and laid out radially. Every branch is a clade, and its length is the evolutionary distance back to its parent. Hover a tip to read its full lineage.</p>
+</div>
+
+<div class="flex flex-wrap items-center gap-3 mb-8" data-chart-controls="tree" role="group" aria-label="Tree display options">
+<span class="text-sm text-faint mr-1">Display:</span>
+<label class="toggle-line"><input id="tree-length" type="checkbox"/>Show branch length</label>
+<span class="text-sm text-faint">Mouse over a tip for its lineage</span>
+</div>
+
+<figure class="m-0">
+<div class="bg-background/60 border border-line/5 rounded-xl p-4 mb-6 relative instrument-tray chart-surface">
+<div class="w-full h-[480px] lg:h-[600px]" id="tree-chart"></div>
+</div>
+<figcaption class="sr-only">Radial cluster tree of life. Every branch is a clade. The three domains are Eukaryota in blue, Bacteria in amber and Archaea in green. Angular position encodes ancestry only; with branch lengths shown, distance from the centre encodes evolutionary distance.</figcaption>
+</figure>
+
+<ul class="flex flex-wrap gap-6 text-sm text-ink/65 justify-center">
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-eukaryota"></span>Eukaryota</li>
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-bacteria"></span>Bacteria</li>
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-archaea"></span>Archaea</li>
+</ul>
+
+<p class="mt-8 text-center text-sm text-faint">Source data and original notebook: Mike Bostock, <em>Tree of Life</em>, D3 gallery, ISC licensed.</p>
+</div>
+</div>
+
+<!-- Word cloud -->
+<div aria-labelledby="tab-cloud" hidden="" id="cloud-analytics" role="tabpanel" tabindex="0">
+<div class="plate p-8 lg:p-12">
+<div class="mb-8">
+<p class="eyebrow mb-2">Text analysis · frequency and packing</p>
+<h3 class="text-3xl lg:text-4xl text-ink mb-6">Word cloud</h3>
+<p class="text-ink/75 leading-[1.78]">The 120 most frequent words in Martin Luther King Jr's 1963 <em>I Have a Dream</em> speech, after stopwords and punctuation are stripped. Each word is placed at the first position where it does not overlap one already down, and sized by the square root of its count so frequency reads honestly. Hover a word for its exact total.</p>
+</div>
+
+<p aria-live="polite" class="text-sm text-ink/65 mb-6" id="cloud-stats"></p>
+
+<figure class="m-0">
+<div class="bg-background/60 border border-line/5 rounded-xl p-4 mb-6 relative instrument-tray chart-surface">
+<div class="w-full h-[420px]" id="cloud-chart"></div>
+</div>
+<figcaption class="sr-only">Word cloud of the 120 most frequent words in the I Have a Dream speech. The largest and most frequent words are shown in blue and the rest in grey. Word size is proportional to the square root of how often the word appears.</figcaption>
+</figure>
+
+<ul class="flex flex-wrap gap-6 text-sm text-ink/65 justify-center">
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-pollination"></span>Most frequent words</li>
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-harvest"></span>Remaining words</li>
+</ul>
+
+<p class="mt-8 text-center text-sm text-faint">Original notebook: <em>Word cloud</em>, D3 gallery, Observable, ISC licensed. Text: Martin Luther King Jr, <em>I Have a Dream</em>, 1963.</p>
+</div>
+</div>
+
+<!-- Map tiles -->
+<div aria-labelledby="tab-map" hidden="" id="map-analytics" role="tabpanel" tabindex="0">
+<div class="plate p-8 lg:p-12">
+<div class="mb-8">
+<p class="eyebrow mb-2">Geospatial · Web Mercator and quadtree tiling</p>
+<h3 class="text-3xl lg:text-4xl text-ink mb-6">Seamless zoomable map tiles</h3>
+<p class="text-ink/75 leading-[1.78]"> Scroll to zoom, drag to pan.</p>
+</div>
+
+<div class="flex flex-wrap items-center gap-3 mb-8" data-chart-controls="map" role="group" aria-label="Map display options">
+<span class="text-sm text-faint mr-1">Display:</span>
+<label class="toggle-line"><input id="map-layers" type="checkbox"/>Show low-resolution layers</label>
+<button class="filt" id="map-reset" type="button">Reset to Kampala</button>
+<span aria-live="polite" class="text-sm text-faint" id="map-readout"></span>
+</div>
+
+<figure class="m-0">
+<div class="bg-background/60 border border-line/5 rounded-xl p-4 mb-6 relative instrument-tray chart-surface">
+<div class="w-full h-[440px]" id="map-chart"></div>
+</div>
+<figcaption class="sr-only">Zoomable topographic map centred on Kampala, Uganda, at zoom level 12. Drag to pan and scroll to zoom. The map is built from raster tiles fetched from OpenTopoMap as the view moves.</figcaption>
+</figure>
+
+<p class="mt-8 text-center text-sm text-faint leading-relaxed">Map data: &copy; <a class="underline decoration-primary/30 underline-offset-2 hover:decoration-primary" href="https://openstreetmap.org/copyright" rel="noopener noreferrer" target="_blank">OpenStreetMap</a> contributors, SRTM. Tiles by <a class="underline decoration-primary/30 underline-offset-2 hover:decoration-primary" href="https://opentopomap.org/" rel="noopener noreferrer" target="_blank">OpenTopoMap</a> (CC-BY-SA).<br>Original notebook: <em>Seamless zoomable map tiles</em>, D3 gallery, Observable, ISC licensed.</p>
 </div>
 </div>
 
@@ -825,7 +917,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <div class="plate p-8 space-y-6">
 <h3 class="text-xl text-ink">Other tools</h3>
 <div><p class="text-sm text-faint mb-3">From the MSc, applied in capstone projects</p><ul class="flex flex-wrap gap-2"><li class="chip">Machine learning</li><li class="chip">NLP</li><li class="chip">Computer vision</li><li class="chip">Bayesian inference</li></ul></div>
-<div><p class="text-sm text-faint mb-3">Visualisation</p><ul class="flex flex-wrap gap-2"><li class="chip">D3.js (the 2 live charts on this page)</li><li class="chip">Tableau (certified)</li><li class="chip">Looker Studio</li></ul></div>
+<div><p class="text-sm text-faint mb-3">Visualisation</p><ul class="flex flex-wrap gap-2"><li class="chip">D3.js (the live visualisations on this page)</li><li class="chip">Tableau (certified)</li><li class="chip">Looker Studio</li></ul></div>
 <div><p class="text-sm text-faint mb-3">Workflow</p><ul class="flex flex-wrap gap-2"><li class="chip">Git and GitHub</li></ul></div>
 </div>
 
