@@ -1155,7 +1155,7 @@
         a tile covers two columns of the usual slippy scheme. */
     const TILE_SIZE = 512;
     /** Slippy zoom level to open at. */
-    const ZOOM = 12;
+    const ZOOM = 6;
     /** The transform scale that puts d3-tile on that zoom level:
         it reads z = log2(transform.k / tileSize). */
     const K = TILE_SIZE * Math.pow(2, ZOOM);
