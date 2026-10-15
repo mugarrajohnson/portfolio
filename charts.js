@@ -45,6 +45,9 @@
       text: read('--chart-text', 'rgba(237,230,216,0.72)'),
       axis: read('--chart-axis', 'rgba(237,230,216,0.2)'),
       grid: read('--chart-grid', 'rgba(237,230,216,0.07)'),
+      /* Painted behind labels as a stroke, so it follows the chart tray
+         rather than the page. */
+      halo: read('--chart-halo', 'rgba(237,230,216,0.9)'),
       label: read('--chart-label', 'rgba(237,230,216,0.55)'),
       tipInk: read('--chart-tip-ink', 'rgba(237,230,216,0.92)'),
       tipDim: read('--chart-tip-dim', 'rgba(237,230,216,0.55)'),
@@ -58,6 +61,7 @@
       fraud: read('--s-fraud', '#ff453a'),
       pollination: read('--s-pollination', '#5ba3a8'),
       harvest: read('--s-harvest', '#6e6e73'),
+      east: read('--s-east', '#34785f'),
       /* Tree of life domains. The legend swatches in the markup read the
          same tokens, so a dot always matches the branches beside it. */
       eukaryota: read('--s-pollination', '#0064ce'),
@@ -957,6 +961,453 @@
     redrawHandlers.push(() => {
       if (data) paint();
       else if (loadError) renderMessage('The tree of life data could not be loaded.');
+    });
+  })();
+
+/* ============================================================
+     Thematic codebook
+     ------------------------------------------------------------
+     Rebuilt from the Radial tidy tree notebook in the D3 gallery by
+     Mike Bostock, which draws a software class hierarchy as a radial
+     tidy tree. A codebook has the same shape, so the layout, the link
+     geometry and the halo labels are his and are kept as they are.
+
+     What changes is what the two radial coordinates carry. In the
+     notebook the radius is depth and the angle is a tidy split of the
+     circle, one equal slice per leaf. Here the radius is still depth,
+     but the angle is weighted: a branch is drawn as wide as the coded
+     excerpts beneath it, so a reader can see which themes the corpus
+     actually rests on. The display toggle puts the notebook's even
+     split back, because an encoding whose effect cannot be seen is
+     just a claim.
+
+     One structural note. The notebook labels every node from inside
+     the node's own rotated group, so a label is part of the thing it
+     names and inherits its hover. That is kept here: the circle and
+     its text live in a single <g>, which is why there is one set of
+     event handlers rather than two parallel selections to keep in
+     step across a redraw.
+
+     What the notebook does not have to solve is this chart's label
+     budget. A radial layout spends one radial band per labelled level,
+     and three bands of outward labels do not fit a square beside a
+     readable font size. So the themes and the codes are labelled, the
+     sub-themes are left as their ring of dots and named on hover, and
+     the code labels alternate between two bands. Every node still
+     reports its own name and its full path in the tooltip and in its
+     accessible name, so nothing is unreachable, only unlabelled.
+     ============================================================ */
+
+  (function codebookChart() {
+    const mount = document.getElementById('codebook-chart');
+    if (!mount) return;
+
+    const DURATION = reduceMotion ? 0 : 650;
+    const DATA_URL = 'data/codebook.json';
+
+    /* A square viewBox, so the circle is undistorted. The notebook's own
+       1152 with a 100 margin is the wrong proportion here: the tray is
+       square, so a 1152 viewBox would scale down by the ratio between the
+       two and put the label text under 6px on screen.
+
+       The tray is therefore sized to match the viewBox, which keeps one
+       unit very close to one pixel and makes the font sizes below mean
+       what they say. The margin is generous because the outermost band
+       belongs to the code labels, not to the tree. */
+    const SIZE = 920;
+    const MARGIN = 160;
+    const outerRadius = (SIZE - MARGIN * 2) / 2;
+
+    /* Five top-level themes, keyed to the same series tokens the tree of
+       life and the legend swatches use, so a branch colour always matches
+       the swatch that names it. */
+    const THEMES = {
+      'Record availability': 'pollination',
+      'Paperless readiness': 'suspicious',
+      'Workflow and workload': 'east',
+      'Data quality and reconciliation': 'harvest',
+      'Facilitators and barriers': 'fraud',
+    };
+    const LEVELS = ['Theme', 'Sub-theme', 'Code'];
+
+    /* The codebook is wrapped in an unnamed root so the themes share a
+       parent, which shifts every real level down by one: a theme sits at
+       depth 1. These two keep the reader-facing level out of that
+       arithmetic.
+
+       Depth, not height. d3.hierarchy's height is the distance from a node
+       down to its deepest descendant, so a code has height 0 and the root
+       has height 3. Reading the level off height silently inverts the
+       whole hierarchy. */
+    const levelIndex = (d) => Math.max(0, Math.min(d.depth - 1, LEVELS.length - 1));
+    const levelName = (d) => LEVELS[levelIndex(d)];
+
+    let data = null;
+    let loadError = null;
+    let paint = () => {};
+    let setWeighting = null;
+    let applyFilter = null;
+    let readFilter = () => 'All';
+
+    function labelFor(node) {
+      return (node.data && node.data.name) || '';
+    }
+
+    /** The root is a container for the themes, not a code, so it is never
+        labelled and never given a name to read. */
+    const isRoot = (d) => d.depth === 0;
+
+    /** Innermost theme above a node, which is what the swatches name. */
+    function themeOf(node) {
+      for (let d = node; d; d = d.parent) {
+        if (d.data && THEMES[labelFor(d)]) return labelFor(d);
+      }
+      return '';
+    }
+
+    /**
+     * d3.tree gives every leaf an equal slice of the circle. A codebook is
+     * not evenly distributed, so each leaf is instead allotted a span in
+     * proportion to its excerpt count and every internal node takes the
+     * union of its children. Child order is left alone, so siblings stay
+     * contiguous and the result is still the tidy layout.
+     *
+     * Only called when weighting is on. Otherwise d3.tree's own even split
+     * stands, which is the other half of what the toggle is for.
+     */
+    function weightAngles(root, total) {
+      let cursor = 0;
+      (function walk(node) {
+        if (node.children) {
+          const from = cursor;
+          node.children.forEach(walk);
+          node.span = cursor - from;
+        } else {
+          node.span = node.value;
+          cursor += node.value;
+        }
+        /* Mid-angle of the span, in radians clockwise from twelve. */
+        node.x = ((cursor - node.span / 2) / total) * 2 * Math.PI;
+      })(root);
+    }
+
+    /**
+     * One branch, as a cubic that leaves its parent along the parent's
+     * radius and arrives at its child along the child's. Both control
+     * points sit on their own end's radius, so the tangent is radial at
+     * both ends and the curve flows out of one dot and into the next.
+     *
+     * The notebook's own link is an elbow: an arc along the parent's
+     * circle, then a straight radius to the child. On a tree with this
+     * many nodes that puts a hard right angle at every branch point, and
+     * forty-odd right angles read as scaffolding. This is the same shape
+     * d3-shape's linkRadial draws.
+     */
+    function linkStep(startAngle, startRadius, endAngle, endRadius) {
+      const span = endRadius - startRadius;
+      const grip = span * 0.42;
+      const a0 = startAngle - Math.PI / 2;
+      const a1 = endAngle - Math.PI / 2;
+      const pt = (r, a) => `${r * Math.cos(a)},${r * Math.sin(a)}`;
+      return (
+        'M' + pt(startRadius, a0) +
+        'C' + pt(startRadius + grip, a0) + ' ' + pt(endRadius - grip, a1) + ' ' + pt(endRadius, a1)
+      );
+    }
+
+    const linkPath = (d) => linkStep(d.source.x, d.source.y, d.target.x, d.target.y);
+
+    function renderMessage(message) {
+      d3.select(mount).selectAll('*').remove();
+      d3.select(mount)
+        .append('p')
+        .attr('class', 'flex h-full items-center justify-center text-center text-sm text-muted')
+        .text(message);
+    }
+
+    function draw() {
+      if (!data) return;
+      const ink = inks();
+      const palette = Object.fromEntries(Object.entries(THEMES).map(([name, token]) => [name, ink[token]]));
+
+      d3.select(mount).selectAll('svg').remove();
+
+      const svg = d3
+        .select(mount)
+        .append('svg')
+        .attr('viewBox', `${-SIZE / 2} ${-SIZE / 2} ${SIZE} ${SIZE}`)
+        .attr('role', 'img')
+        .attr(
+          'aria-label',
+          'Radial tidy tree of a thematic codebook. Five themes branch into sub-themes and then into individual codes. Distance from the centre is the level in the code hierarchy, and the width of a branch is the number of coded excerpts filed under it.'
+        )
+        .style('width', '100%')
+        .style('height', '100%')
+        .style('overflow', 'visible');
+
+      const rings = svg.append('g').attr('fill', 'none').attr('stroke', ink.grid).attr('stroke-dasharray', '2,6');
+      const linkLayer = svg.append('g').attr('fill', 'none');
+      const nodeLayer = svg.append('g');
+      const tip = tooltipFor(mount);
+
+      let root = null;
+      let maxCount = 1;
+      let activeTheme = 'All';
+      let weighted = document.getElementById('codebook-weight')?.checked !== false;
+
+      /** Node dots are large enough to be the thing the eye lands on, and a
+          code is scaled by its share of the corpus on a log scale so one
+          large code cannot swallow the ring. */
+      function radiusOf(d) {
+        if (isRoot(d)) return 0;
+        if (!d.children) return 3.4 + 3.4 * (Math.log(d.value + 1) / Math.log(maxCount + 1));
+        return d.depth === 1 ? 5.4 : 4.5;
+      }
+
+      /* Branches carry more ink than the notebook's 1.5, to match the
+         larger dots they land on. */
+      const linkWidth = (d) => (d.target.children ? 2 : 1.4);
+      const nodeTransform = (d) => `rotate(${(d.x * 180) / Math.PI - 90}) translate(${d.y},0)`;
+
+      /** Offset of a label from its dot. The notebook sends a leaf's label
+          outward and an internal node's inward, which keeps a fully
+          labelled tree from colliding with itself. Here sub-themes carry
+          no label, so there is no reason for two directions: every label
+          points outward from the centre, and the five long theme names
+          stop piling over each other in the middle of the circle.
+
+          Code labels alternate between two radial bands. A codebook puts
+          narrow themes beside wide ones, so a label and its angular
+          neighbour collide well before either runs out of room. */
+      function labelOffset(d) {
+        const outward = d.x < Math.PI ? 1 : -1;
+        const stagger = !d.children ? (d.leafIndex % 2) * 15 : 0;
+        return outward * (9 + stagger);
+      }
+
+      /** Themes and codes carry a visible label; sub-themes do not, and
+          the root never does. Sub-theme names live in the tooltip, the
+          accessible name and the stats line instead. */
+      const labelled = (d) => !isRoot(d) && d.depth !== 2;
+
+      function describe(d) {
+        return `${labelFor(d)}. ${levelName(d)} under ${themeOf(d)}. ${d.value} coded excerpts.`;
+      }
+
+      function hover(event, d) {
+        const theme = themeOf(d);
+        const trail = d
+          .ancestors()
+          .reverse()
+          .map(labelFor)
+          .filter(Boolean)
+          .join(' > ');
+        tip.show(
+          event,
+          `<strong style="color:${ink.tipInk}">${labelFor(d)}</strong><br>` +
+            `<span style="color:${palette[theme]};font-size:10px;font-weight:600">${theme}</span><br>` +
+            `<span style="color:${ink.tipDim};font-size:10px">${levelName(d)} &middot; <strong style="color:${ink.tipInk}">${d.value}</strong> excerpts<br>${trail}</span>`
+        );
+      }
+
+      /** Bolds the hovered branch and everything above it, so the path in
+          the tooltip is visible in the tree as well as in the text. */
+      function highlight(node, on) {
+        for (let d = node; d; d = d.parent) {
+          linkLayer
+            .selectAll('path')
+            .filter((l) => l.target === d)
+            .attr('stroke-width', (l) => (on ? (l.target.children ? 2.4 : 1.9) : linkWidth(l)))
+            .attr('stroke-opacity', (l) => (on ? 0.95 : activeTheme === 'All' || themeOf(l.target) === activeTheme ? 0.55 : 0.05));
+        }
+      }
+
+      function updateStats(theme) {
+        const stats = document.getElementById('codebook-stats');
+        if (!stats || !root) return;
+        const total = root.value;
+        if (theme === 'All') {
+          stats.innerHTML =
+            `<strong>${total.toLocaleString('en-GB')}</strong> coded excerpts across ` +
+            `<strong>${root.leaves().length}</strong> codes in <strong>${root.children.length}</strong> themes`;
+          return;
+        }
+        const branch = root.children.find((d) => labelFor(d) === theme);
+        if (!branch) return;
+        const pct = ((branch.value / total) * 100).toFixed(1);
+        stats.innerHTML =
+          `<strong>${branch.value.toLocaleString('en-GB')}</strong> coded excerpts across ` +
+          `<strong>${branch.leaves().length}</strong> codes under ` +
+          `<span style="color:${palette[theme]};font-weight:600">${theme}</span>` +
+          ` &nbsp;&middot;&nbsp; <strong>${pct}%</strong> of the corpus`;
+      }
+
+      /** Dims everything outside the chosen theme. Angular position is left
+          alone on purpose: the arcs still show each theme's true share of
+          the corpus, and dimming a branch is a reading aid rather than a
+          second, contradictory encoding. */
+      applyFilter = (theme) => {
+        activeTheme = theme;
+        const shown = (d) => theme === 'All' || themeOf(d) === theme;
+        linkLayer
+          .selectAll('path')
+          .attr('stroke-opacity', (d) => (shown(d.target) ? 0.55 : 0.05))
+          .attr('stroke-width', linkWidth);
+        nodeLayer.selectAll('g').attr('opacity', (d) => (shown(d) ? 1 : 0.14));
+        updateStats(theme);
+      };
+
+      function rebuild(animate) {
+        /* The file's own top level is the study, not a code, so the
+           themes hang off an unnamed root. That keeps the study name in the
+           file for a reader of the data and out of the drawing. */
+        root = d3
+          .hierarchy({ children: data.children }, (d) => d.children)
+          .sum((d) => (d.children ? 0 : d.count || 0))
+          .sort((a, b) => b.value - a.value || d3.ascending(a.data.name, b.data.name));
+
+        /* The notebook's separation: siblings close, cousins further apart,
+           both scaled by depth so the ring spacing stays even. */
+        d3
+          .tree()
+          .size([2 * Math.PI, outerRadius])
+          .separation((a, b) => (a.parent === b.parent ? 1 : 2) / a.depth)(root);
+
+        if (weighted) weightAngles(root, root.value);
+        maxCount = d3.max(root.leaves(), (d) => d.value);
+        /* Leaves come back in angular order, which is the order the
+           stagger alternates through. */
+        root.leaves().forEach((d, i) => {
+          d.leafIndex = i;
+        });
+
+        const t = animate && DURATION ? d3.transition().duration(DURATION) : null;
+        const pick = (sel) => (t ? sel.transition(t) : sel);
+
+        /* One faint ring per level the tree actually uses, so the radius
+           axis is legible as a level and not only as a distance. */
+        const radiusByDepth = new Map();
+        root.each((d) => radiusByDepth.set(d.depth, d.y));
+        pick(rings.selectAll('circle').data([...radiusByDepth.keys()]).join('circle'))
+          .attr('cx', 0)
+          .attr('cy', 0)
+          .attr('r', (depth) => radiusByDepth.get(depth));
+
+        const links = linkLayer.selectAll('path').data(root.links()).join('path');
+        links
+          .attr('stroke', (d) => palette[themeOf(d.target)])
+          .attr('stroke-width', linkWidth)
+          .attr('stroke-linecap', 'round')
+          .attr('stroke-linejoin', 'round');
+        pick(links).attr('d', linkPath);
+
+        /* The node group carries both the dot and its label, as in the
+           notebook, so the label is hoverable and follows the dot.
+
+           The children are appended rather than reached with
+           selectAll().data().join(): that form binds to the join's own
+           parent node, so on a selection which is itself a join result it
+           files every circle and every label into a single group. append()
+           is the API that means one child per element of the selection. */
+        nodeLayer.selectAll('*').remove();
+        const nodes = nodeLayer.selectAll('g').data(root.descendants()).join('g');
+        pick(nodes).attr('transform', nodeTransform);
+
+        nodes
+          .attr('tabindex', 0)
+          .attr('role', 'button')
+          .attr('aria-label', describe)
+          .on('mouseenter', function (event, d) {
+            highlight(d, true);
+            hover(event, d);
+          })
+          .on('mouseleave', function (event, d) {
+            tip.hide();
+            highlight(d, false);
+          })
+          .on('focus', function (event, d) {
+            highlight(d, true);
+            hover(event, d);
+          })
+          .on('blur', function (event, d) {
+            tip.hide();
+            highlight(d, false);
+          });
+
+        nodes
+          .append('circle')
+          .attr('r', radiusOf)
+          .attr('fill', (d) => (d.children ? palette[themeOf(d)] : 'none'))
+          .attr('stroke', (d) => palette[themeOf(d)])
+          .attr('stroke-width', (d) => (d.children ? 2 : 2.2));
+
+        /* Sub-themes and the root keep the dot alone; the filter is what keeps
+           the text elements from being appended to every node. */
+        nodes
+          .filter(labelled)
+          .append('text')
+          /* Flip the label on the left half of the circle so it reads
+             outward rather than upside down. */
+          .attr('transform', (d) => `rotate(${d.x >= Math.PI ? 180 : 0})`)
+          .attr('dy', '0.32em')
+          .attr('x', labelOffset)
+          .attr('text-anchor', (d) => (d.x < Math.PI ? 'start' : 'end'))
+          .attr('font-size', (d) => (d.depth === 1 ? 10 : 9))
+          .attr('font-weight', (d) => (d.depth === 1 ? 600 : null))
+          .attr('fill', (d) => (d.depth === 1 ? ink.tipInk : ink.text))
+          /* The notebook's halo, which is what lets a label cross a branch
+             and still be read. It needs a surface token rather than a flat
+             white, or the labels read as pale rectangles on cream. */
+          .attr('paint-order', 'stroke')
+          .attr('stroke', ink.halo)
+          .attr('stroke-width', 3)
+          .attr('stroke-linejoin', 'round')
+          .text(labelFor);
+
+        /* Keep the active filter across a re-layout. */
+        applyFilter(activeTheme);
+      }
+
+      rebuild(false);
+
+      setWeighting = (on, animate) => {
+        weighted = on;
+        rebuild(animate);
+      };
+
+      paint = draw;
+    }
+
+    /* ── Wiring ───────────────────────────────────────────────── */
+
+    readFilter = bindFilterGroup('[data-chart-controls="codebook"]', 'data-theme', (theme) => {
+      if (applyFilter) applyFilter(theme);
+    });
+
+    document.getElementById('codebook-weight')?.addEventListener('change', (event) => {
+      if (setWeighting) setWeighting(event.target.checked, true);
+    });
+
+    fetch(DATA_URL)
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+      })
+      .then((json) => {
+        data = json;
+        draw();
+        if (applyFilter) applyFilter(readFilter());
+      })
+      .catch((error) => {
+        loadError = error;
+        renderMessage('The codebook data could not be loaded.');
+      });
+
+    /* A theme flip is the only reason this chart repaints, so the redraw is
+       registered up front and does nothing until the fetch has landed. */
+    redrawHandlers.push(() => {
+      if (data) paint();
+      else if (loadError) renderMessage('The codebook data could not be loaded.');
     });
   })();
 

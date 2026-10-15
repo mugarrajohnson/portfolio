@@ -1,0 +1,130 @@
+{
+  "_note": "Illustrative thematic codebook for the radial tree chart. Themes follow the SITES Uganda fieldwork on facility readiness for Health Information Exchange and paperless viral load requests. The counts are a plausible corpus, not a record of one study. `count` on a leaf is the number of coded excerpts filed under it; internal nodes inherit the sum of their children.",
+  "name": "Facility readiness",
+  "children": [
+    {
+      "name": "Record availability",
+      "children": [
+        {
+          "name": "Register completeness",
+          "children": [
+            { "name": "ART register gaps", "count": 44 },
+            { "name": "Encounter pages missing", "count": 38 }
+          ]
+        },
+        {
+          "name": "UgandaEMR uptime",
+          "children": [
+            { "name": "Server downtime", "count": 31 },
+            { "name": "Sync delays", "count": 21 }
+          ]
+        },
+        {
+          "name": "Card stockouts",
+          "children": [
+            { "name": "No cards on hand", "count": 20 },
+            { "name": "Reprinting backlog", "count": 14 }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Paperless readiness",
+      "children": [
+        {
+          "name": "Viral load request practice",
+          "children": [
+            { "name": "Paper form still used", "count": 39 },
+            { "name": "Request not sent same day", "count": 29 }
+          ]
+        },
+        {
+          "name": "Staff training",
+          "children": [
+            { "name": "Never trained on tool", "count": 26 },
+            { "name": "Refresher training lapsed", "count": 18 }
+          ]
+        },
+        {
+          "name": "Device access",
+          "children": [
+            { "name": "Shared device at facility", "count": 19 },
+            { "name": "No device at outreach", "count": 11 }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Workflow and workload",
+      "children": [
+        {
+          "name": "Point-of-care workflow",
+          "children": [
+            { "name": "Queue at data entry", "count": 33 },
+            { "name": "Duplicate entry", "count": 25 }
+          ]
+        },
+        {
+          "name": "Turnaround time",
+          "children": [
+            { "name": "Results returned slowly", "count": 24 },
+            { "name": "Results not returned", "count": 16 }
+          ]
+        },
+        {
+          "name": "Staffing",
+          "children": [
+            { "name": "One clerk, all desks", "count": 17 },
+            { "name": "Clerk doubles as dispenser", "count": 9 }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Data quality and reconciliation",
+      "children": [
+        {
+          "name": "Register versus UgandaEMR",
+          "children": [
+            { "name": "Drug dose mismatch", "count": 28 },
+            { "name": "Encounter date mismatch", "count": 22 }
+          ]
+        },
+        {
+          "name": "Transcription",
+          "children": [
+            { "name": "Illegible handwriting", "count": 17 },
+            { "name": "Misspelt drug name", "count": 11 }
+          ]
+        },
+        {
+          "name": "Missing identifiers",
+          "children": [
+            { "name": "ART number absent", "count": 12 },
+            { "name": "Phone number absent", "count": 6 }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Facilitators and barriers",
+      "children": [
+        {
+          "name": "Facilitators",
+          "children": [
+            { "name": "Peer support", "count": 19 },
+            { "name": "Facility champion", "count": 15 },
+            { "name": "Motivated records clerk", "count": 10 }
+          ]
+        },
+        {
+          "name": "Barriers",
+          "children": [
+            { "name": "Transport for outreach", "count": 18 },
+            { "name": "Staff rotation", "count": 12 }
+          ]
+        }
+      ]
+    }
+  ]
+}

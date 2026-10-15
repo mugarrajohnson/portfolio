@@ -682,6 +682,7 @@ Download CV <span class="sr-only">(PDF)</span></a>
 <button aria-controls="vanilla-harvest" aria-selected="true" class="seg-tab" id="tab-vanilla" role="tab" tabindex="0" type="button">Vanilla harvest</button>
 <button aria-controls="fraud-analytics" aria-selected="false" class="seg-tab" id="tab-fraud" role="tab" tabindex="-1" type="button">Fraud detection</button>
 <button aria-controls="tree-analytics" aria-selected="false" class="seg-tab" id="tab-tree" role="tab" tabindex="-1" type="button">Tree of life</button>
+<button aria-controls="codebook-analytics" aria-selected="false" class="seg-tab" id="tab-codebook" role="tab" tabindex="-1" type="button">Thematic codebook</button>
 <button aria-controls="cloud-analytics" aria-selected="false" class="seg-tab" id="tab-cloud" role="tab" tabindex="-1" type="button">Word cloud</button>
 <button aria-controls="map-analytics" aria-selected="false" class="seg-tab" id="tab-map" role="tab" tabindex="-1" type="button">Map tiles</button>
 </div>
@@ -786,6 +787,51 @@ Download CV <span class="sr-only">(PDF)</span></a>
 </ul>
 
 <p class="mt-8 text-center text-sm text-faint">Source data and original notebook: Mike Bostock, <em>Tree of Life</em>, D3 gallery, ISC licensed.</p>
+</div>
+</div>
+
+<!-- Thematic codebook -->
+<div aria-labelledby="tab-codebook" hidden="" id="codebook-analytics" role="tabpanel" tabindex="0">
+<div class="plate p-8 lg:p-12">
+<div class="mb-8">
+<p class="eyebrow mb-2">Qualitative analysis &middot; hierarchical layout</p>
+<h3 class="text-3xl lg:text-4xl text-ink mb-6">Thematic codebook</h3>
+<p class="text-ink/75 leading-[1.78]">A codebook is a hierarchy, which is what a radial tidy tree draws well. Distance from the centre is the level in the code structure &mdash; theme, then sub-theme, then code. The width of a branch is the number of coded excerpts filed under it, so the themes the corpus rests on are visible before anything is read. Themes and codes are labelled; sub-theme names are left to hover, because three sets of labels do not fit one circle.</p>
+</div>
+
+<div class="flex flex-wrap items-center gap-3 mb-8" data-chart-controls="codebook" role="group" aria-label="Filter by theme">
+<span class="text-sm text-faint mr-1">Theme:</span>
+<button aria-pressed="true" class="filt" data-theme="All" type="button">All themes</button>
+<button aria-pressed="false" class="filt" data-theme="Record availability" type="button"><span aria-hidden="true" class="legend-dot dot-records"></span>Record availability</button>
+<button aria-pressed="false" class="filt" data-theme="Paperless readiness" type="button"><span aria-hidden="true" class="legend-dot dot-paperless"></span>Paperless readiness</button>
+<button aria-pressed="false" class="filt" data-theme="Workflow and workload" type="button"><span aria-hidden="true" class="legend-dot dot-workflow"></span>Workflow and workload</button>
+<button aria-pressed="false" class="filt" data-theme="Data quality and reconciliation" type="button"><span aria-hidden="true" class="legend-dot dot-reconciliation"></span>Data quality</button>
+<button aria-pressed="false" class="filt" data-theme="Facilitators and barriers" type="button"><span aria-hidden="true" class="legend-dot dot-facilitators"></span>Facilitators and barriers</button>
+</div>
+
+<div class="flex flex-wrap items-center gap-3 mb-8" data-chart-controls="codebook-display" role="group" aria-label="Display options">
+<span class="text-sm text-faint mr-1">Display:</span>
+<label class="toggle-line"><input checked="" id="codebook-weight" type="checkbox"/>Weight branches by excerpt count</label>
+</div>
+
+<p aria-live="polite" class="text-sm text-ink/65 mb-6" id="codebook-stats"></p>
+
+<figure class="m-0">
+<div class="bg-background/60 border border-line/5 rounded-xl p-4 mb-6 relative instrument-tray chart-surface">
+<div class="w-full max-w-[920px] mx-auto aspect-square" id="codebook-chart"></div>
+</div>
+<figcaption class="sr-only">Radial tidy tree of a thematic codebook. Five themes branch into sub-themes and then individual codes. Distance from the centre is the level in the code hierarchy; the width of a branch is the number of coded excerpts filed under it. Record availability is blue, Paperless readiness amber, Workflow and workload green, Data quality grey and Facilitators and barriers red. Every node is focusable and reports its own name, its level and its excerpt count.</figcaption>
+</figure>
+
+<ul class="flex flex-wrap gap-6 text-sm text-ink/65 justify-center">
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-records"></span>Record availability</li>
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-paperless"></span>Paperless readiness</li>
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-workflow"></span>Workflow and workload</li>
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-reconciliation"></span>Data quality</li>
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-facilitators"></span>Facilitators and barriers</li>
+</ul>
+
+<p class="mt-8 text-center text-sm text-faint leading-relaxed">The codebook is illustrative. Its themes follow the field research on facility readiness for Health Information Exchange and paperless viral load requests; the excerpt counts are a plausible corpus, not a record of one study.<br>Original notebook: <em>Radial tidy tree</em>, D3 gallery, Observable, ISC licensed.</p>
 </div>
 </div>
 
