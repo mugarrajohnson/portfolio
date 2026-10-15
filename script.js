@@ -352,6 +352,95 @@
     });
   }
 
+  /* ── Hero background slideshow ───────────────────────────────
+     Two photographs, thirty seconds apart, cross-fading on top of
+     each other. The fade length lives in the .hero-slide rule in
+     tailwind.css and is deliberately not repeated here, because the
+     timer never needs to know it.
+
+     A chained setTimeout rather than setInterval: a slow tab, a long
+     decode or a backgrounded window would otherwise let the dwell drift,
+     and drift is how a slideshow ends up firing twice in a row and
+     sitting still for ninety seconds. Chaining also means the clock
+     simply restarts.
+
+     The clock is held while the reader cannot see the result — tab
+     hidden, or hero scrolled out — and restarts when they can. Turning
+     the slideshow while nobody is looking serves nobody, and a reader
+     coming back to a rotation that has already gone round finds the
+     hero on slide two without ever having seen slide one.
+  ──────────────────────────────────────────────────────────── */
+  (function heroSlideshow() {
+    const stage = $('#hero-slides');
+    if (!stage) return;
+
+    const slides = $$('img', stage);
+    if (slides.length < 2) return;
+
+    const DWELL_MS = 30000;
+    /** Resolves once a photograph is decoded and safe to fade in. */
+    function whenReady(img) {
+      if (img.complete) return Promise.resolve();
+      if (typeof img.decode === 'function') return img.decode().catch(() => {});
+      return new Promise((resolve) => {
+        img.addEventListener('load', resolve, { once: true });
+        img.addEventListener('error', resolve, { once: true });
+      });
+    }
+
+    let index = 0;
+    let timer = null;
+    let tabVisible = document.visibilityState !== 'hidden';
+    let heroVisible = true;
+
+    function show(next) {
+      const outgoing = slides[index];
+      index = next;
+      slides[next].classList.add('is-active');
+      outgoing.classList.remove('is-active');
+      /* Only the photograph on screen is exposed to assistive tech.
+         Both are in the DOM, so without this a screen reader announces
+         two alt texts for one hero. */
+      outgoing.setAttribute('aria-hidden', 'true');
+      slides[next].removeAttribute('aria-hidden');
+    }
+
+    function tick() {
+      const next = (index + 1) % slides.length;
+      /* Waiting on the decode matters most for the first turn, when the
+         second photograph has been fetched but almost certainly has not
+         painted yet. Fading to an empty frame looks like a broken hero. */
+      whenReady(slides[next]).then(() => {
+        show(next);
+        schedule();
+      });
+    }
+
+    function schedule() {
+      clearTimeout(timer);
+      timer = null;
+      if (!tabVisible || !heroVisible) return;
+      timer = setTimeout(tick, DWELL_MS);
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      tabVisible = document.visibilityState !== 'hidden';
+      schedule();
+    });
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(
+        ([entry]) => {
+          heroVisible = entry.isIntersecting;
+          schedule();
+        },
+        { threshold: 0.05 }
+      ).observe(stage);
+    }
+
+    schedule();
+  })();
+
   /* ── Analytics demo tabs ───────────────────────────────────── */
   const tablist = $('#analytics-tabs');
   if (tablist) {

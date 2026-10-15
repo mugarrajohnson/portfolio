@@ -488,6 +488,22 @@
 
 /* Hero ------------------------------------------------------ */
 
+/* Background slideshow. Both photographs stay in the DOM and stacked on
+   top of each other; the one carrying is-active is the visible one.
+
+   Positioned here rather than with utility classes on the markup, because
+   two static images do not stack: they lay out in normal flow, one under
+   the other, and the second lands below the first instead of over it. */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+}
+.hero-slide.is-active {
+  opacity: 1;
+}
+
 .hero-scrim-x {
   background: linear-gradient(
     90deg,
