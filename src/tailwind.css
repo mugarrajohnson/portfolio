@@ -407,7 +407,7 @@
   transform: scaleX(0);
   transform-origin: 0 50%;
   will-change: transform;
-  background: linear-gradient(to right, rgb(var(--c-brand)), rgb(var(--c-secondary-fill)));
+  background: rgb(var(--c-brand));
 }
 
 /* Nav ------------------------------------------------------- */
@@ -504,31 +504,14 @@
   opacity: 1;
 }
 
-.hero-scrim-x {
-  background: linear-gradient(
-    90deg,
-    rgb(0 0 0 / 0.88) 0%,
-    rgb(0 0 0 / 0.7) 28%,
-    rgb(0 0 0 / 0.44) 52%,
-    rgb(0 0 0 / 0.14) 76%,
-    rgb(0 0 0 / 0.02) 100%
-  );
+/* Flat scrim. The photographs need a dark bed under light type, and a
+   single even tint does that without the banding a gradient leaves across
+   sky and foliage. */
+.hero-scrim {
+  background: rgb(0 0 0 / 0.6);
 }
-.hero-scrim-y {
-  background: linear-gradient(0deg, rgb(0 0 0 / 0.9) 0%, rgb(0 0 0 / 0.26) 46%, transparent 80%);
-}
-[data-theme='light'] .hero-scrim-x {
-  background: linear-gradient(
-    90deg,
-    rgb(0 0 0 / 0.86) 0%,
-    rgb(0 0 0 / 0.68) 28%,
-    rgb(0 0 0 / 0.42) 52%,
-    rgb(0 0 0 / 0.12) 76%,
-    transparent 100%
-  );
-}
-[data-theme='light'] .hero-scrim-y {
-  background: linear-gradient(0deg, rgb(0 0 0 / 0.86) 0%, rgb(0 0 0 / 0.2) 48%, transparent 82%);
+[data-theme='light'] .hero-scrim {
+  background: rgb(0 0 0 / 0.58);
 }
 
 /* The headline was two colours with a gradient sweeping across it on a
@@ -540,12 +523,6 @@
   -webkit-text-fill-color: rgb(var(--c-ink));
   animation: none;
 }
-@keyframes heroShimmer {
-  to {
-    background-position: 220% center;
-  }
-}
-
 /* Registration ticks were a deliberate flourish and they are the first
    thing to go: four hairline brackets per panel, times a dozen panels,
    is decoration doing no work. The class stays so the markup keeps
@@ -1085,12 +1062,9 @@
   font-weight: 600;
 }
 
-/* The featured cover had a scrim fading it into the page background.
-   That was legible against near-black; against white it bleaches the
-   bottom third of the photograph. */
-[data-theme='light'] .proj-media > .bg-gradient-to-t {
-  display: none;
-}
+/* The featured cover used to carry a scrim fading into the page
+   background. The photograph now runs clean to its border in both
+   themes. */
 
 /* Figures are neutral. The accent stays on the six things you can
    actually click, which is what makes it register as an accent at all
