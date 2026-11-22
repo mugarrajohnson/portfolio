@@ -41,21 +41,41 @@ INK = "#000000"
 
 DISTRICTS = ["Gulu", "Kitgum", "Pader", "Amuru", "Nwoya"]
 GROUPS = ["All", "Female", "Male", "Youth (15-35)", "Adult (36+)", "Persons with disabilities"]
+# (baseline, target, direction). Direction "decrease" means lower is better.
 INDICATORS = {
-    "Income adequacy (% of living income)": (34, 60),
-    "Food security score (0-100)": (38, 65),
-    "School attendance (%)": (61, 85),
-    "Access to clean water (%)": (45, 80),
-    "Savings group participation (%)": (22, 55),
-    "Livelihood diversity index (0-100)": (30, 58),
+    "Income adequacy (% of living income)": (34, 60, "increase"),
+    "Food security score (0-100)": (38, 65, "increase"),
+    "School attendance (%)": (61, 85, "increase"),
+    "Savings group participation (%)": (22, 55, "increase"),
+    "Food insecurity score (0-100, lower is better)": (64, 35, "decrease"),
+    "Debt distress (% of households, lower is better)": (49, 24, "decrease"),
 }
+# One line per indicator: four sharp colours, dashed where lower is better.
+LINE_STYLE = {
+    "Income adequacy (% of living income)": (BLUE, "solid"),
+    "Food security score (0-100)": (GREEN, "solid"),
+    "School attendance (%)": (RED, "solid"),
+    "Savings group participation (%)": (INK, "solid"),
+    "Food insecurity score (0-100, lower is better)": (BLUE, "dash"),
+    "Debt distress (% of households, lower is better)": (RED, "dash"),
+}
+# How much of the gap to target each indicator closes: above 1 = target met.
+ATTAINMENT = {
+    "Income adequacy (% of living income)": 1.06,
+    "Food security score (0-100)": 0.92,
+    "School attendance (%)": 1.02,
+    "Savings group participation (%)": 0.88,
+    "Food insecurity score (0-100, lower is better)": 1.05,
+    "Debt distress (% of households, lower is better)": 0.94,
+}
+# (baseline disadvantage, extra endline gain) — positive values always help the group.
 GROUP_SHIFT = {
     "All": (0, 0),
-    "Female": (-4, 3),
-    "Male": (3, -1),
-    "Youth (15-35)": (2, 5),
-    "Adult (36+)": (-1, 0),
-    "Persons with disabilities": (-7, -2),
+    "Female": (4, 3),
+    "Male": (-3, -1),
+    "Youth (15-35)": (-2, 5),
+    "Adult (36+)": (1, 0),
+    "Persons with disabilities": (7, -2),
 }
 PHASES = ["Baseline", "Midline", "Endline"]
 
@@ -75,11 +95,14 @@ def build_data() -> pd.DataFrame:
     rows = []
     for district in DISTRICTS:
         d_shift = rng.integers(-3, 4)
-        for indicator, (base, target) in INDICATORS.items():
+        for indicator, (base, target, direction) in INDICATORS.items():
+            sign = 1 if direction == "increase" else -1
             for group in GROUPS:
-                gb, ge = GROUP_SHIFT[group]
-                b = np.clip(base + gb + d_shift + rng.normal(0, 1.5), 0, 100)
-                e = np.clip(base + gb + ge + d_shift + rng.normal(0, 1.5), 0, 100)
+                disadvantage, extra_gain = GROUP_SHIFT[group]
+                # A disadvantage always starts the group further from the target:
+                # lower for "higher is better" indicators, higher for the reverse.
+                b = np.clip(base - sign * disadvantage - sign * d_shift + rng.normal(0, 1.5), 0, 100)
+                e = np.clip(b + sign * (ATTAINMENT[indicator] * abs(target - b) + extra_gain) + rng.normal(0, 1.5), 0, 100)
                 m = b + (e - b) * rng.uniform(0.42, 0.58)
                 for phase, value in zip(PHASES, [b, m, e]):
                     rows.append({
@@ -89,6 +112,7 @@ def build_data() -> pd.DataFrame:
                         "phase": phase,
                         "value": round(float(value), 1),
                         "target": target,
+                        "direction": direction,
                     })
     return pd.DataFrame(rows)
 
@@ -117,18 +141,33 @@ with st.sidebar:
     st.header("Filters")
     district = st.selectbox("District", ["All districts"] + DISTRICTS)
     group = st.selectbox("Disaggregation", GROUPS)
+    selected_indicators = st.multiselect("Indicators", list(INDICATORS), default=list(INDICATORS))
 
 view = df if district == "All districts" else df[df["district"] == district]
 view = view[view["group"] == group]
+view = view[view["indicator"].isin(selected_indicators)]
+
+if view.empty:
+    st.warning("No indicators selected.")
+    st.stop()
 
 line = view.groupby(["indicator", "phase"], as_index=False)["value"].mean()
 pivot = line.pivot(index="indicator", columns="phase", values="value").reset_index()
-targets = view.groupby("indicator", as_index=False)["target"].first()
-summary = pivot.merge(targets, on="indicator")
-summary["change"] = summary["Endline"] - summary["Baseline"]
+meta = view.groupby("indicator", as_index=False)[["target", "direction"]].first()
+summary = pivot.merge(meta, on="indicator")
+# Improvement is always the move toward the target, whatever the direction.
+summary["change"] = np.where(
+    summary["direction"] == "increase",
+    summary["Endline"] - summary["Baseline"],
+    summary["Baseline"] - summary["Endline"],
+)
 
 overall = summary.copy()
-overall["met"] = overall["Endline"] >= overall["target"]
+overall["met"] = np.where(
+    overall["direction"] == "increase",
+    overall["Endline"] >= overall["target"],
+    overall["Endline"] <= overall["target"],
+)
 met = int(overall["met"].sum())
 total = len(overall)
 
@@ -147,12 +186,29 @@ else:
 
 st.markdown("---")
 long = line.melt(id_vars="indicator", var_name="Phase", value_name="Score")
+long["direction"] = long["indicator"].map(lambda i: INDICATORS[i][2])
 with st.container():
-    st.subheader("Baseline, midline and endline by indicator")
-    fig = px.bar(long, x="indicator", y="Score", color="Phase", barmode="group",
-                 color_discrete_sequence=[INK, BLUE, GREEN],
-                 labels={"indicator": "Indicator", "Score": "Score (0-100)"})
+    st.subheader("Indicator trajectories: baseline → midline → endline")
+    fig = px.line(
+        long,
+        x="Phase",
+        y="Score",
+        color="indicator",
+        line_dash="direction",
+        markers=True,
+        category_orders={"Phase": PHASES},
+        color_discrete_map={i: LINE_STYLE[i][0] for i in INDICATORS},
+        line_dash_map={"increase": "solid", "decrease": "dash"},
+        labels={"Score": "Indicator value (0-100)", "Phase": "Survey round", "indicator": "Indicator"},
+    )
     st.plotly_chart(chart_layout(fig), width="stretch")
+    st.markdown(
+        '<p style="color:#000000;">'
+        "Solid lines: higher is better. Dashed lines: lower is better. "
+        "Each line follows one indicator from baseline through midline to endline."
+        "</p>",
+        unsafe_allow_html=True,
+    )
 
 left, right = st.columns(2)
 with left:
@@ -170,7 +226,7 @@ with right:
         view[view["phase"] == "Endline"]
         .groupby(["indicator", "group"], as_index=False)["value"].mean()
     )
-    selected = st.selectbox("Indicator", list(INDICATORS), key="group_indicator")
+    selected = st.selectbox("Indicator", [i for i in INDICATORS if i in selected_indicators], key="group_indicator")
     fig = px.bar(by_group[by_group["indicator"] == selected], x="group", y="value",
                  color_discrete_sequence=[BLUE],
                  labels={"value": "Endline score", "group": "Group"})
