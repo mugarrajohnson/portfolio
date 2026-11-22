@@ -67,6 +67,13 @@ DASHBOARD_FACTS = {
     Shows retention curves, a cohort-by-month heatmap, completion at month 12 and
     outcome trends by cohort. All members and figures are invented.
     """,
+    "ml_supervised_demo": """
+    Supervised learning demo: a linear regression trained on 1,800 synthetic vanilla
+    farms to predict yield in kg from rainfall, temperature, flowers opened, farm
+    size, fertilizer use and experience. Shows the fitted equation, coefficients,
+    test R-squared and MAE, a contribution waterfall for user-chosen inputs and a
+    predicted-vs-actual chart. All rows are invented.
+    """,
     "advanced_dashboard_demo": """
     Advanced analytics demo: a URL-driven dashboard with period pills (1M to All),
     region and segment filters, price-scenario slider, KPI deltas against the

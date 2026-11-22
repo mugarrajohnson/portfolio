@@ -144,24 +144,6 @@
   ]
 }
 </script>
-<style>
-/* Ask about Johnson — offline, curated assistant. Black text, sharp accents only. */
-#ask-launcher{position:fixed;right:1.25rem;bottom:1.25rem;z-index:60;background:#000000;color:#FFFFFF;border:2px solid #000000;padding:0.75rem 1.1rem;font:700 0.875rem/1.2 system-ui,sans-serif;cursor:pointer;box-shadow:0 6px 0 #0057D9;}
-#ask-launcher:hover{background:#0057D9;}
-#ask-panel{position:fixed;right:1.25rem;bottom:5rem;z-index:61;width:min(24rem,calc(100vw - 2rem));max-height:70vh;display:none;flex-direction:column;background:#FFFFFF;color:#000000;border:2px solid #000000;font:0.875rem/1.5 system-ui,sans-serif;box-shadow:0 10px 0 rgba(0,0,0,0.18);}
-#ask-panel.is-open{display:flex;}
-#ask-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:#000000;color:#FFFFFF;padding:0.75rem 1rem;font-weight:700;}
-#ask-close{background:#FFFFFF;color:#000000;border:2px solid #FFFFFF;padding:0.15rem 0.5rem;font-weight:700;cursor:pointer;}
-#ask-body{padding:1rem;overflow:auto;}
-#ask-answer{border:2px solid #000000;padding:0.85rem;margin:0.85rem 0;color:#000000;min-height:3rem;}
-#ask-answer a{color:#0057D9;font-weight:700;text-decoration:underline;}
-#ask-suggestions{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.85rem;}
-#ask-suggestions button{background:#FFFFFF;color:#000000;border:2px solid #0057D9;padding:0.3rem 0.55rem;font:600 0.75rem/1.2 system-ui,sans-serif;cursor:pointer;}
-#ask-form{display:flex;gap:0.4rem;}
-#ask-input{flex:1;min-width:0;border:2px solid #000000;padding:0.5rem;font:0.875rem/1.2 system-ui,sans-serif;color:#000000;}
-#ask-send{background:#008F3D;color:#FFFFFF;border:2px solid #000000;padding:0.5rem 0.8rem;font-weight:700;cursor:pointer;}
-@media(max-width:640px){#ask-launcher{bottom:4.75rem;}}
-</style>
 </head>
 
 <body>
@@ -961,6 +943,14 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <!-- PLACEHOLDER LINK: replace with the live Streamlit Cloud URL after deployment (see streamlit-apps/README.md). -->
 <a class="btn-primary group pr-2" href="https://advanceddashboarddemo.streamlit.app" rel="noopener noreferrer" target="_blank">Open live demo<span aria-hidden="true" class="ml-3 inline-flex">&rarr;</span></a>
 </article>
+
+<article class="plate p-8">
+<ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Streamlit</li><li class="chip">scikit-learn</li><li class="chip">Synthetic data</li></ul>
+<h3 class="text-2xl text-ink mb-4">Supervised learning demo</h3>
+<p class="text-ink mb-6">Train a regression model on synthetic vanilla-farm data, read the fitted equation, inspect each feature's contribution, then change the inputs and watch the prediction and its contribution waterfall adjust in real time.</p>
+<!-- PLACEHOLDER LINK: replace with the live Streamlit Cloud URL after deployment (see streamlit-apps/README.md). -->
+<a class="btn-primary group pr-2" href="https://jm-supervised-learning-demo.streamlit.app" rel="noopener noreferrer" target="_blank">Open live demo<span aria-hidden="true" class="ml-3 inline-flex">&rarr;</span></a>
+</article>
 </div>
 </div>
 </section>
@@ -1296,93 +1286,5 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 </nav>
 
-<!-- Ask about Johnson: curated, offline assistant. No API key or server required. -->
-<button aria-controls="ask-panel" aria-expanded="false" id="ask-launcher" type="button">Ask AI</button>
-<section aria-label="Ask about Johnson" class="" id="ask-panel" role="dialog">
-<div id="ask-head"><span>Ask about Johnson</span><button aria-label="Close assistant" id="ask-close" type="button">Close</button></div>
-<div id="ask-body">
-<p style="margin:0 0 0.6rem;font-weight:700;">Try one of these:</p>
-<div id="ask-suggestions">
-<button type="button" data-q="Who are you and what do you do?">About you</button>
-<button type="button" data-q="What projects have you built?">Projects</button>
-<button type="button" data-q="Tell me about your dashboards">Dashboards</button>
-<button type="button" data-q="What evaluation work have you done?">Evaluation work</button>
-<button type="button" data-q="How can I contact you?">Contact</button>
-</div>
-<div id="ask-answer" aria-live="polite">Ask a question above, or type your own below. Answers come from this portfolio only.</div>
-<form id="ask-form">
-<label class="sr-only" for="ask-input">Your question</label>
-<input autocomplete="off" id="ask-input" placeholder="Type a question…" type="text"/>
-<button id="ask-send" type="submit">Ask</button>
-</form>
-</div>
-</section>
-<script>
-(() => {
-  const launcher = document.getElementById('ask-launcher');
-  const panel = document.getElementById('ask-panel');
-  const close = document.getElementById('ask-close');
-  const input = document.getElementById('ask-input');
-  const form = document.getElementById('ask-form');
-  const answer = document.getElementById('ask-answer');
-  const link = (text, href) => `<a href="${href}">${text}</a>`;
-
-  const entries = [
-    { keys: ['who','about','background','experience','data scientist','engineer','job','career','role'],
-      text: `Johnson Mugarra is a data scientist and ML engineer in Kampala with 6+ years across East Africa and the Horn of Africa. He works on impact evaluation, machine learning, NLP and the data systems behind vanilla and coffee value chains. ${link('Read the background →','#about')}` },
-    { keys: ['project','projects','work','built','build','portfolio','case study','machine learning','model'],
-      text: `Projects include vanilla supply-chain forecasting with satellite climate data, an automated impact-evaluation pipeline, hierarchical forecasting, farmer geomapping, a living-income study and a farmer data platform. ${link('See all projects →','#projects')}` },
-    { keys: ['dashboard','dashboards','streamlit','visual','visualisation','visualization','demo','app','interactive'],
-      text: `Seven public Streamlit demos are live: vanilla value chain, contributions analytics, endline evaluation, traceability, an RCT, cohort analysis and an advanced URL-driven analytics app. All use synthetic data. ${link('Open the dashboards →','#dashboards')}` },
-    { keys: ['evaluation','eval','impact','rct','randomised','randomized','baseline','midline','endline','oecd','dac','monitoring','m&e'],
-      text: `Evaluation work spans impact designs including randomised trials, difference-in-differences, OECD-DAC criteria and baseline/midline/endline measurement. He has cut evaluation cycles from six weeks to ten days. ${link('See the evaluation demos →','#dashboards')} ${link('Research →','#publications')}` },
-    { keys: ['vanilla','coffee','agriculture','harvest','farm','farmer','maaif','climate'],
-      text: `He researched vanilla maturity and harvest timing with MAAIF and Makerere using field measurements and climate data, and maintains the farmer data system, pipelines and dashboards behind the vanilla and coffee value chains. ${link('Projects →','#projects')}` },
-    { keys: ['skill','skills','tool','tools','python','power bi','tableau','sas','certified','certification','tech stack'],
-      text: `Methods: machine learning, NLP, computer vision and Bayesian inference. Tools include Python, Power BI, SAS and Tableau; certified in those tools and in Google project management. ${link('Skills and sectors →','#skills')}` },
-    { keys: ['publication','publications','paper','papers','research','phd','msc','education','degree','study'],
-      text: `Co-author on two peer-reviewed papers in Agronomy and Advances in Agriculture, with an M.Sc. in Data Science. ${link('Publications →','#publications')} ${link('Education →','#education')}` },
-    { keys: ['contact','email','hire','reach','connect','talk','consult','address'],
-      text: `Email johnsonmugarra@yahoo.com, or use the contact form. Based in Kampala, open to remote and international work. ${link('Contact section →','#contact')}` },
-  ];
-
-  function respond(q) {
-    const text = String(q || '').toLowerCase();
-    let best = null, score = 0;
-    entries.forEach((entry) => {
-      let hits = 0;
-      entry.keys.forEach((k) => { if (text.includes(k)) hits += k.length > 4 ? 2 : 1; });
-      if (hits > score) { score = hits; best = entry; }
-    });
-    answer.innerHTML = best
-      ? best.text
-      : `I don't have a precise answer for that in this portfolio. Try asking about projects, dashboards, evaluation work, skills or contact details. ${link('Or use the contact form →','#contact')}`;
-  }
-
-  function open() {
-    panel.classList.add('is-open');
-    launcher.setAttribute('aria-expanded', 'true');
-    input.focus();
-  }
-  function closePanel() {
-    panel.classList.remove('is-open');
-    launcher.setAttribute('aria-expanded', 'false');
-  }
-  launcher.addEventListener('click', () => panel.classList.contains('is-open') ? closePanel() : open());
-  close.addEventListener('click', closePanel);
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && panel.classList.contains('is-open')) closePanel(); });
-  document.getElementById('ask-suggestions').addEventListener('click', (e) => {
-    const b = e.target.closest('button[data-q]');
-    if (!b) return;
-    input.value = b.dataset.q;
-    respond(b.dataset.q);
-  });
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    respond(input.value);
-    input.value = '';
-  });
-})();
-</script>
 </body>
 </html>

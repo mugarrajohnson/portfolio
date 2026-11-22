@@ -1,6 +1,6 @@
 # Public Streamlit dashboards
 
-Seven dashboards that demonstrate the monitoring and evaluation work shown elsewhere
+Eight dashboards that demonstrate the monitoring and evaluation work shown elsewhere
 on the portfolio, built for a public audience.
 
 **Every app uses synthetic data generated in memory. There is no database connection,
@@ -15,6 +15,7 @@ no file upload, and no client, farmer, donor or beneficiary information in any a
 | Randomised trial | `streamlit-apps/rct_demonstration/app.py` | `https://jm-rct-demo.streamlit.app` (placeholder) |
 | Cohort analysis | `streamlit-apps/cohort_analysis/app.py` | `https://jm-cohort-analysis-demo.streamlit.app` (placeholder) |
 | Advanced analytics (period pills, deep links) | `streamlit-apps/advanced_dashboard_demo/app.py` | `https://jm-advanced-analytics-demo.streamlit.app` (placeholder) |
+| Supervised learning (train + feature contributions) | `streamlit-apps/ml_supervised_demo/app.py` | `https://jm-supervised-learning-demo.streamlit.app` (placeholder) |
 
 ## Run locally
 
@@ -36,10 +37,6 @@ of that dashboard plus portfolio facts, and answers questions about both.
   renders a clear setup message and the rest of the app works when no key is present.
 - `openai` is listed in the requirements files.
 - No client, farmer or beneficiary data is ever included in the prompt context.
-
-The static portfolio site has its own offline **Ask AI** launcher. It matches questions
-against curated portfolio content and links to the relevant section — no key, server
-or running cost.
 
 ## Deploy on Streamlit Cloud
 
