@@ -25,21 +25,33 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-      .stApp { background: #FFFFFF; color: #000000; }
-      h1, h2, h3, h4, p, li, label, span, div { color: #000000; }
-      [data-testid="stSidebar"] { background: #FFFFFF; border-right: 2px solid #000000; }
-      [data-testid="stMetric"] { border: 2px solid #000000; border-radius: 0; padding: 14px; }
-      [data-testid="stMetricLabel"], [data-testid="stMetricValue"] { color: #000000; }
-      hr { border-color: #000000; }
+      /* Charts inherit Streamlit's active theme (light or dark). */
+      .plotly { background: transparent !important; }
+      .plotly .bg, .plotly .plotbg { fill: transparent !important; }
+      .plotly text, .plotly .gtitle, .plotly .legend text,
+      .plotly .xtick text, .plotly .ytick text, .plotly .hovertext text {
+        fill: currentColor !important;
+      }
+      .plotly .gridlayer path, .plotly .xaxis path, .plotly .yaxis path,
+      .plotly .zerolinelayer path {
+        stroke: currentColor !important;
+        opacity: 0.3 !important;
+      }
+      /* Structural rules follow the theme instead of forcing black. */
+      [data-testid="stMetric"] { border: 2px solid currentColor; border-radius: 0; padding: 14px; }
+      [data-testid="stSidebar"] { border-right: 2px solid currentColor; }
+      [data-testid="stButton"] button, .stButton > button { border: 2px solid currentColor; border-radius: 0; }
+      hr { border-color: currentColor; }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-BLUE = "#0057D9"
-GREEN = "#008F3D"
-RED = "#D11A00"
+BLUE = "#2E7DFF"
+GREEN = "#00B050"
+RED = "#FF4D2E"
 INK = "#000000"
+VIOLET = "#9B30FF"  # sharp fourth series colour, visible on light and dark
 DISTRICTS = ["Gulu", "Kitgum", "Pader", "Amuru"]
 
 
@@ -66,10 +78,10 @@ def build_data() -> pd.DataFrame:
 
 def chart_layout(fig):
     fig.update_layout(
-        paper_bgcolor="#FFFFFF", plot_bgcolor="#FFFFFF",
+        paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
         font={"color": INK, "family": "Arial, sans-serif", "size": 12},
         margin={"l": 10, "r": 10, "t": 10, "b": 10},
-        hoverlabel={"bgcolor": INK, "font": {"color": "#FFFFFF"}},
+        hoverlabel={"bgcolor": BLUE, "font": {"color": "#FFFFFF"}},
     )
     fig.update_xaxes(gridcolor="#000000", zeroline=False, linecolor=INK)
     fig.update_yaxes(gridcolor="#000000", zeroline=False, linecolor=INK)
@@ -114,11 +126,11 @@ c3.metric("p-value", f"{pvalue:.3f}")
 c4.metric("Attrition", f"{attrition:.1f}%")
 
 if pvalue < 0.05 and did > 0:
-    st.markdown('<p style="color:#008F3D;font-weight:700;">Result: a statistically significant positive effect.</p>', unsafe_allow_html=True)
+    st.success("Result: a statistically significant positive effect.")
 elif pvalue < 0.05 and did < 0:
-    st.markdown('<p style="color:#D11A00;font-weight:700;">Result: a statistically significant negative effect.</p>', unsafe_allow_html=True)
+    st.error("Result: a statistically significant negative effect.")
 else:
-    st.markdown('<p style="color:#0057D9;font-weight:700;">Result: no statistically significant effect detected.</p>', unsafe_allow_html=True)
+    st.info("Result: no statistically significant effect detected.")
 
 st.markdown("---")
 left, right = st.columns(2)
@@ -138,12 +150,12 @@ with right:
         error_y={"type": "data", "array": [1.96 * se], "visible": True},
         marker_color=GREEN if did > 0 else RED,
     ))
-    fig.update_layout(paper_bgcolor="#FFFFFF", plot_bgcolor="#FFFFFF",
+    fig.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
                       font={"color": INK}, yaxis_title="Change in outcome (points)",
                       margin={"l": 10, "r": 10, "t": 10, "b": 10})
     fig.update_yaxes(gridcolor="#000000", zeroline=False, linecolor=INK)
     st.plotly_chart(fig, width="stretch")
-    st.markdown(f'<p style="color:#000000;">95% confidence interval: {lo:+.1f} to {hi:+.1f} points.</p>', unsafe_allow_html=True)
+    st.markdown(f'<p style="">95% confidence interval: {lo:+.1f} to {hi:+.1f} points.</p>', unsafe_allow_html=True)
 
 left, right = st.columns(2)
 with left:
@@ -159,7 +171,7 @@ with right:
         Age=("age", "mean"), Female_pct=("sex", lambda s: 100 * (s == "Female").mean()),
         Baseline=("baseline", "mean")).round(1)
     st.dataframe(balance, hide_index=True, width="stretch")
-    st.markdown('<p style="color:#000000;">Baseline characteristics should be close across arms in a well-randomised trial.</p>', unsafe_allow_html=True)
+    st.markdown('<p style="">Baseline characteristics should be close across arms in a well-randomised trial.</p>', unsafe_allow_html=True)
 
 st.markdown("---")
-st.markdown('<p style="color:#000000;font-size:0.85rem;">Public demo built with Streamlit and Plotly</p>', unsafe_allow_html=True)
+st.markdown('<p style="font-size:0.85rem;">Public demo built with Streamlit and Plotly</p>', unsafe_allow_html=True)

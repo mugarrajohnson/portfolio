@@ -23,21 +23,33 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-      .stApp { background: #FFFFFF; color: #000000; }
-      h1, h2, h3, h4, p, li, label, span, div { color: #000000; }
-      [data-testid="stSidebar"] { background: #FFFFFF; border-right: 2px solid #000000; }
-      [data-testid="stMetric"] { border: 2px solid #000000; border-radius: 0; padding: 14px; }
-      [data-testid="stMetricLabel"], [data-testid="stMetricValue"] { color: #000000; }
-      hr { border-color: #000000; }
+      /* Charts inherit Streamlit's active theme (light or dark). */
+      .plotly { background: transparent !important; }
+      .plotly .bg, .plotly .plotbg { fill: transparent !important; }
+      .plotly text, .plotly .gtitle, .plotly .legend text,
+      .plotly .xtick text, .plotly .ytick text, .plotly .hovertext text {
+        fill: currentColor !important;
+      }
+      .plotly .gridlayer path, .plotly .xaxis path, .plotly .yaxis path,
+      .plotly .zerolinelayer path {
+        stroke: currentColor !important;
+        opacity: 0.3 !important;
+      }
+      /* Structural rules follow the theme instead of forcing black. */
+      [data-testid="stMetric"] { border: 2px solid currentColor; border-radius: 0; padding: 14px; }
+      [data-testid="stSidebar"] { border-right: 2px solid currentColor; }
+      [data-testid="stButton"] button, .stButton > button { border: 2px solid currentColor; border-radius: 0; }
+      hr { border-color: currentColor; }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-BLUE = "#0057D9"
-GREEN = "#008F3D"
-RED = "#D11A00"
+BLUE = "#2E7DFF"
+GREEN = "#00B050"
+RED = "#FF4D2E"
 INK = "#000000"
+VIOLET = "#9B30FF"  # sharp fourth series colour, visible on light and dark
 
 DISTRICTS = ["Gulu", "Kitgum", "Pader", "Amuru", "Nwoya"]
 GROUPS = ["All", "Female", "Male", "Youth (15-35)", "Adult (36+)", "Persons with disabilities"]
@@ -55,7 +67,7 @@ LINE_STYLE = {
     "Income adequacy (% of living income)": (BLUE, "solid"),
     "Food security score (0-100)": (GREEN, "solid"),
     "School attendance (%)": (RED, "solid"),
-    "Savings group participation (%)": (INK, "solid"),
+    "Savings group participation (%)": (VIOLET, "solid"),
     "Food insecurity score (0-100, lower is better)": (BLUE, "dash"),
     "Debt distress (% of households, lower is better)": (RED, "dash"),
 }
@@ -132,10 +144,10 @@ def build_data() -> pd.DataFrame:
 
 def chart_layout(fig):
     fig.update_layout(
-        paper_bgcolor="#FFFFFF", plot_bgcolor="#FFFFFF",
+        paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
         font={"color": INK, "family": "Arial, sans-serif", "size": 12},
         margin={"l": 10, "r": 10, "t": 10, "b": 10},
-        hoverlabel={"bgcolor": INK, "font": {"color": "#FFFFFF"}},
+        hoverlabel={"bgcolor": BLUE, "font": {"color": "#FFFFFF"}},
     )
     fig.update_xaxes(gridcolor="#000000", zeroline=False, linecolor=INK)
     fig.update_yaxes(gridcolor="#000000", zeroline=False, linecolor=INK)
@@ -191,11 +203,11 @@ c3.metric("Targets met", f"{met} of {total}")
 c4.metric("Average change", f"+{summary['change'].mean():.1f} pts")
 
 if met == total:
-    st.markdown('<p style="color:#008F3D;font-weight:700;">Verdict: targets met across all indicators.</p>', unsafe_allow_html=True)
+    st.success("Verdict: targets met across all indicators.")
 elif met == 0:
-    st.markdown('<p style="color:#D11A00;font-weight:700;">Verdict: no targets met.</p>', unsafe_allow_html=True)
+    st.error("Verdict: no targets met.")
 else:
-    st.markdown('<p style="color:#0057D9;font-weight:700;">Verdict: partial success — some targets met.</p>', unsafe_allow_html=True)
+    st.info("Verdict: partial success — some targets met.")
 
 st.markdown("---")
 long = summary.melt(id_vars="indicator", value_vars=PHASES, var_name="Phase", value_name="Score")
@@ -224,7 +236,7 @@ with st.container():
     fig.update_xaxes(tickformat="%d %b %Y")
     st.plotly_chart(fig, width="stretch")
     st.markdown(
-        '<p style="color:#000000;">'
+        '<p style="">'
         "Solid lines: higher is better. Dashed lines: lower is better. "
         "Each line follows one indicator across the three survey dates; the label on every point is its value."
         "</p>",
@@ -237,7 +249,7 @@ with left:
     prog = summary.melt(id_vars="indicator", value_vars=["Endline", "target"],
                         var_name="Series", value_name="Score")
     fig = px.bar(prog, x="indicator", y="Score", color="Series", barmode="group",
-                 color_discrete_sequence=[GREEN, INK],
+                 color_discrete_sequence=[GREEN, VIOLET],
                  labels={"indicator": "Indicator", "Score": "Score (0-100)"})
     st.plotly_chart(chart_layout(fig), width="stretch")
 
@@ -262,8 +274,7 @@ fig = px.bar(dac_df, x="Criterion", y="Score", range_y=[0, 5],
              labels={"Score": "Score (1-5)"})
 st.plotly_chart(chart_layout(fig), width="stretch")
 for criterion, score, note in DAC:
-    colour = GREEN if score >= 4 else RED
-    st.markdown(f'<p style="color:{colour};"><strong>{criterion} — {score:.1f}/5.</strong> {note}</p>', unsafe_allow_html=True)
+    st.markdown(f"**{criterion} — {score:.1f}/5.** {note}")
 
 st.markdown("---")
-st.markdown('<p style="color:#000000;font-size:0.85rem;">Public demo built with Streamlit and Plotly</p>', unsafe_allow_html=True)
+st.markdown('<p style="font-size:0.85rem;">Public demo built with Streamlit and Plotly</p>', unsafe_allow_html=True)

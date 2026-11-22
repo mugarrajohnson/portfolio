@@ -53,6 +53,9 @@ settings → Requirements file** to the correct path.
 
 ## Design notes
 
-- Text is black `#000000`; accents are blue `#0057D9`, green `#008F3D` and red
-  `#D11A00`. No muted or grey copy.
+- All apps follow Streamlit's active light/dark theme: no hardcoded text colours,
+  chart text and gridlines use `currentColor`, and verdicts use themed
+  `st.success` / `st.error` / `st.info` messages. Nothing disappears when the
+  browser switches to dark mode.
+- Accents are sharp blue, green and red, plus a violet fourth series colour.
 - Data is seeded, so the same figures appear on every visit — useful for a demo.

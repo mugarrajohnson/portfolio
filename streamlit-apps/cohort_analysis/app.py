@@ -22,21 +22,33 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-      .stApp { background: #FFFFFF; color: #000000; }
-      h1, h2, h3, h4, p, li, label, span, div { color: #000000; }
-      [data-testid="stSidebar"] { background: #FFFFFF; border-right: 2px solid #000000; }
-      [data-testid="stMetric"] { border: 2px solid #000000; border-radius: 0; padding: 14px; }
-      [data-testid="stMetricLabel"], [data-testid="stMetricValue"] { color: #000000; }
-      hr { border-color: #000000; }
+      /* Charts inherit Streamlit's active theme (light or dark). */
+      .plotly { background: transparent !important; }
+      .plotly .bg, .plotly .plotbg { fill: transparent !important; }
+      .plotly text, .plotly .gtitle, .plotly .legend text,
+      .plotly .xtick text, .plotly .ytick text, .plotly .hovertext text {
+        fill: currentColor !important;
+      }
+      .plotly .gridlayer path, .plotly .xaxis path, .plotly .yaxis path,
+      .plotly .zerolinelayer path {
+        stroke: currentColor !important;
+        opacity: 0.3 !important;
+      }
+      /* Structural rules follow the theme instead of forcing black. */
+      [data-testid="stMetric"] { border: 2px solid currentColor; border-radius: 0; padding: 14px; }
+      [data-testid="stSidebar"] { border-right: 2px solid currentColor; }
+      [data-testid="stButton"] button, .stButton > button { border: 2px solid currentColor; border-radius: 0; }
+      hr { border-color: currentColor; }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-BLUE = "#0057D9"
-GREEN = "#008F3D"
-RED = "#D11A00"
+BLUE = "#2E7DFF"
+GREEN = "#00B050"
+RED = "#FF4D2E"
 INK = "#000000"
+VIOLET = "#9B30FF"  # sharp fourth series colour, visible on light and dark
 PROGRAMS = ["Livelihoods", "Skills"]
 COHORTS = [f"{y} Q{q}" for y in (2024, 2025) for q in (1, 2, 3, 4)]
 MONTHS = list(range(0, 13))
@@ -66,10 +78,10 @@ def build_data() -> pd.DataFrame:
 
 def chart_layout(fig):
     fig.update_layout(
-        paper_bgcolor="#FFFFFF", plot_bgcolor="#FFFFFF",
+        paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
         font={"color": INK, "family": "Arial, sans-serif", "size": 12},
         margin={"l": 10, "r": 10, "t": 10, "b": 10},
-        hoverlabel={"bgcolor": INK, "font": {"color": "#FFFFFF"}},
+        hoverlabel={"bgcolor": BLUE, "font": {"color": "#FFFFFF"}},
     )
     fig.update_xaxes(gridcolor="#000000", zeroline=False, linecolor=INK)
     fig.update_yaxes(gridcolor="#000000", zeroline=False, linecolor=INK)
@@ -101,7 +113,6 @@ enrolled = final["enrolled"].sum()
 retained = final["retained"].sum()
 completion = 100 * retained / enrolled if enrolled else 0.0
 outcome = final["outcome"].mean()
-colour = GREEN if completion >= 70 else RED
 
 c1, c2, c3, c4 = st.columns(4)
 c1.metric("Cohorts", str(final["cohort"].nunique()))
@@ -109,7 +120,10 @@ c2.metric("Members enrolled", f"{enrolled:,}")
 c3.metric("12-month retention", f"{completion:.1f}%")
 c4.metric("Mean outcome at month 12", f"{outcome:.1f}")
 
-st.markdown(f'<p style="color:{colour};font-weight:700;">Completion: {completion:.1f}% of enrolled members were still active at month 12.</p>', unsafe_allow_html=True)
+if completion >= 70:
+    st.success(f"Completion: {completion:.1f}% of enrolled members were still active at month 12.")
+else:
+    st.error(f"Completion: {completion:.1f}% of enrolled members were still active at month 12.")
 
 st.markdown("---")
 st.subheader("Retention by cohort and month")
@@ -122,7 +136,7 @@ left, right = st.columns(2)
 with left:
     st.subheader("Retention curves")
     fig = px.line(view, x="month", y="retention_pct", color="cohort",
-                  color_discrete_sequence=[BLUE, GREEN, RED, INK, BLUE, GREEN, RED, INK],
+                  color_discrete_sequence=[BLUE, GREEN, RED, VIOLET, BLUE, GREEN, RED, VIOLET],
                   labels={"retention_pct": "Retained %", "month": "Month"})
     st.plotly_chart(chart_layout(fig), width="stretch")
 
@@ -136,9 +150,9 @@ with right:
 st.markdown("---")
 st.subheader("Outcome by cohort over time")
 fig = px.line(view, x="month", y="outcome", color="cohort",
-              color_discrete_sequence=[BLUE, GREEN, RED, INK, BLUE, GREEN, RED, INK],
+              color_discrete_sequence=[BLUE, GREEN, RED, VIOLET, BLUE, GREEN, RED, VIOLET],
               labels={"outcome": "Outcome score", "month": "Month"})
 st.plotly_chart(chart_layout(fig), width="stretch")
 
 st.markdown("---")
-st.markdown('<p style="color:#000000;font-size:0.85rem;">Public demo built with Streamlit and Plotly</p>', unsafe_allow_html=True)
+st.markdown('<p style="font-size:0.85rem;">Public demo built with Streamlit and Plotly</p>', unsafe_allow_html=True)

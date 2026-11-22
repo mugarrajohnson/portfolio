@@ -22,23 +22,34 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-      .stApp { background: #FFFFFF; color: #000000; }
-      h1, h2, h3, h4, p, li, label, span, div { color: #000000; }
-      [data-testid="stSidebar"] { background: #FFFFFF; border-right: 2px solid #000000; }
-      [data-testid="stMetric"] { border: 2px solid #000000; border-radius: 0; padding: 14px; }
-      [data-testid="stMetricLabel"], [data-testid="stMetricValue"] { color: #000000; }
-      hr { border-color: #000000; }
-      .stButton > button { border: 2px solid #000000; color: #000000; background: #FFFFFF; border-radius: 0; }
+      /* Charts inherit Streamlit's active theme (light or dark). */
+      .plotly { background: transparent !important; }
+      .plotly .bg, .plotly .plotbg { fill: transparent !important; }
+      .plotly text, .plotly .gtitle, .plotly .legend text,
+      .plotly .xtick text, .plotly .ytick text, .plotly .hovertext text {
+        fill: currentColor !important;
+      }
+      .plotly .gridlayer path, .plotly .xaxis path, .plotly .yaxis path,
+      .plotly .zerolinelayer path {
+        stroke: currentColor !important;
+        opacity: 0.3 !important;
+      }
+      /* Structural rules follow the theme instead of forcing black. */
+      [data-testid="stMetric"] { border: 2px solid currentColor; border-radius: 0; padding: 14px; }
+      [data-testid="stSidebar"] { border-right: 2px solid currentColor; }
+      [data-testid="stButton"] button, .stButton > button { border: 2px solid currentColor; border-radius: 0; }
+      hr { border-color: currentColor; }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-BLUE = "#0057D9"
-GREEN = "#008F3D"
-RED = "#D11A00"
+BLUE = "#2E7DFF"
+GREEN = "#00B050"
+RED = "#FF4D2E"
 INK = "#000000"
-PALETTE = [BLUE, GREEN, RED, INK]
+VIOLET = "#9B30FF"  # sharp fourth series colour, visible on light and dark
+PALETTE = [BLUE, GREEN, RED, VIOLET]
 
 SECTORS = ["Health", "Education", "WASH", "Nutrition", "Protection"]
 DONORS = [f"Donor {c}" for c in "ABCDEF"]
@@ -76,11 +87,11 @@ def build_data() -> pd.DataFrame:
 
 def chart_layout(fig):
     fig.update_layout(
-        paper_bgcolor="#FFFFFF",
-        plot_bgcolor="#FFFFFF",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
         font={"color": INK, "family": "Arial, sans-serif", "size": 12},
         margin={"l": 10, "r": 10, "t": 10, "b": 10},
-        hoverlabel={"bgcolor": INK, "font": {"color": "#FFFFFF"}},
+        hoverlabel={"bgcolor": BLUE, "font": {"color": "#FFFFFF"}},
     )
     fig.update_xaxes(gridcolor="#000000", zeroline=False, linecolor=INK)
     fig.update_yaxes(gridcolor="#000000", zeroline=False, linecolor=INK)
@@ -145,13 +156,13 @@ with left:
 by_donor = view.groupby("donor", as_index=False)["paid_usd"].sum().sort_values("paid_usd", ascending=False)
 with right:
     st.subheader("Paid by donor")
-    fig = px.bar(by_donor, x="donor", y="paid_usd", color_discrete_sequence=[INK],
+    fig = px.bar(by_donor, x="donor", y="paid_usd", color_discrete_sequence=[VIOLET],
                  labels={"paid_usd": "USD paid", "donor": "Donor"})
     st.plotly_chart(chart_layout(fig), width="stretch")
 
 st.markdown("---")
 st.markdown(
-    '<p style="color:#000000;font-size:0.85rem;">'
+    '<p style="font-size:0.85rem;">'
     "Public demo built with Streamlit and Plotly</p>",
     unsafe_allow_html=True,
 )
