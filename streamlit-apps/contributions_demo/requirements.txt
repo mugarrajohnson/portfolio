@@ -1,0 +1,5 @@
+# Read by Streamlit Cloud: this is the app's entrypoint directory.
+streamlit>=1.30
+pandas>=2.0
+numpy>=1.24
+plotly>=5.18

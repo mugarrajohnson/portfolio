@@ -12,7 +12,7 @@ import plotly.express as px
 import streamlit as st
 
 st.set_page_config(
-    page_title="Contributions Analytics — Public Demo",
+    page_title="Contributions Analytics",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -89,10 +89,9 @@ def chart_layout(fig):
 
 df = build_data()
 
-st.title("Contributions analytics — public demo")
+st.title("Contributions analytics")
 st.write(
     "A public demonstration of financial monitoring and reporting. "
-    "**Every row is synthetic** — no donor, client or beneficiary information is used."
 )
 
 with st.sidebar:
@@ -153,6 +152,6 @@ with right:
 st.markdown("---")
 st.markdown(
     '<p style="color:#000000;font-size:0.85rem;">'
-    "Public demo · synthetic data only · built with Streamlit and Plotly</p>",
+    "Public demo built with Streamlit and Plotly</p>",
     unsafe_allow_html=True,
 )

@@ -10,9 +10,8 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-
 st.set_page_config(
-    page_title="Vanilla Value Chain — Public Demo",
+    page_title="Vanilla Value Chain",
     page_icon="🌱",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -93,10 +92,9 @@ def chart_layout(fig):
 
 df = build_data()
 
-st.title("Vanilla value chain — public demo")
+st.title("Vanilla value chain")
 st.write(
     "A public demonstration of the kind of dashboard built for agricultural data. "
-    "**Every row is synthetic** — no farmer, client or beneficiary information is used."
 )
 
 with st.sidebar:
@@ -152,6 +150,6 @@ with right:
 st.markdown("---")
 st.markdown(
     '<p style="color:#000000;font-size:0.85rem;">'
-    "Public demo · synthetic data only · built with Streamlit and Plotly</p>",
+    "Public demo built with Streamlit and Plotly</p>",
     unsafe_allow_html=True,
 )

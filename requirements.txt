@@ -1,0 +1,6 @@
+# Fallback for Streamlit Cloud: it checks each app's entrypoint directory first,
+# then the repository root. Keep in sync with the copies in streamlit-apps/*/.
+streamlit>=1.30
+pandas>=2.0
+numpy>=1.24
+plotly>=5.18

@@ -13,9 +13,11 @@ no file upload, and no client, farmer, donor or beneficiary information in eithe
 
 ## Run locally
 
+From the repository root:
+
 ```bash
 pip install -r requirements.txt
-cd agriculture_demo && streamlit run app.py
+cd streamlit-apps/agriculture_demo && streamlit run app.py
 cd ../contributions_demo && streamlit run app.py
 ```
 
@@ -26,8 +28,9 @@ cd ../contributions_demo && streamlit run app.py
 3. **New app** → choose this repository, branch `main`.
 4. Set **Main file path** to `streamlit-apps/agriculture_demo/app.py` for the first app,
    and `streamlit-apps/contributions_demo/app.py` for the second.
-5. Leave secrets, environment variables and advanced settings empty — neither app
-   needs them. Deploy.
+5. Leave secrets and environment variables empty — neither app needs them.
+   Each app directory contains its own `requirements.txt` (the location Streamlit
+   Cloud checks first), with a copy at the repository root as a fallback. Deploy.
 6. Copy each live URL and replace the two placeholder URLs in `index.html`
    (search for `PLACEHOLDER` in the **Public dashboards** section), then update
    the table above.
@@ -35,6 +38,15 @@ cd ../contributions_demo && streamlit run app.py
 The placeholder links in `index.html` are marked with an HTML comment so they are
 easy to find before publishing. They are safe to leave until the apps are live;
 they simply point at reserved-looking names rather than a deployed app.
+
+### If deployment fails with `ModuleNotFoundError: plotly`
+
+Streamlit Cloud has not installed the dependencies. It searches for a dependency
+file in the **app's entrypoint directory first**, then the repository root — a
+`requirements.txt` in an intermediate folder is ignored. Both apps now have one in
+their own directory and one at the root. After committing, use **Manage app →
+Reboot** to rebuild the environment. If you move the files, set **Advanced
+settings → Requirements file** to the correct path.
 
 ## Design notes
 
