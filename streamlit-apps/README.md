@@ -1,6 +1,6 @@
 # Public Streamlit dashboards
 
-Six dashboards that demonstrate the monitoring and evaluation work shown elsewhere
+Seven dashboards that demonstrate the monitoring and evaluation work shown elsewhere
 on the portfolio, built for a public audience.
 
 **Every app uses synthetic data generated in memory. There is no database connection,
@@ -14,6 +14,7 @@ no file upload, and no client, farmer, donor or beneficiary information in any a
 | Traceability study | `streamlit-apps/traceability_study/app.py` | `https://jm-traceability-demo.streamlit.app` (placeholder) |
 | Randomised trial | `streamlit-apps/rct_demonstration/app.py` | `https://jm-rct-demo.streamlit.app` (placeholder) |
 | Cohort analysis | `streamlit-apps/cohort_analysis/app.py` | `https://jm-cohort-analysis-demo.streamlit.app` (placeholder) |
+| Advanced analytics | `streamlit-apps/advanced_dashboard_demo/app.py` | `https://jm-advanced-analytics-demo.streamlit.app` (placeholder) |
 
 ## Run locally
 
@@ -53,6 +54,9 @@ settings → Requirements file** to the correct path.
 
 ## Design notes
 
+- All apps use a compact dashboard layout: minimal padding around the top, bottom
+  and sides, tight heading/metric spacing and full-width charts, so the visuals fill
+  the viewport without crowding.
 - All apps follow Streamlit's active light/dark theme: no hardcoded text colours,
   chart text and gridlines use `currentColor`, and verdicts use themed
   `st.success` / `st.error` / `st.info` messages. Nothing disappears when the

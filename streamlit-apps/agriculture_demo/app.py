@@ -38,6 +38,21 @@ st.markdown(
       [data-testid="stSidebar"] { border-right: 2px solid currentColor; }
       [data-testid="stButton"] button, .stButton > button { border: 2px solid currentColor; border-radius: 0; }
       hr { border-color: currentColor; }
+      /* Compact dashboard density: minimal surrounding whitespace. */
+      [data-testid="stMainBlockContainer"] { padding-top: 1rem !important; padding-bottom: 1.25rem !important; }
+      [data-testid="stSidebarContent"] { padding-top: 0.75rem !important; }
+      [data-testid="stSidebar"] [data-testid="stVerticalBlock"] { gap: 0.4rem !important; }
+      [data-testid="stHeader"] { background: transparent !important; }
+      h1 { font-size: 2rem !important; margin: 0 0 0.4rem 0 !important; }
+      h2 { font-size: 1.45rem !important; margin: 0.6rem 0 0.35rem 0 !important; }
+      h3 { font-size: 1.15rem !important; margin: 0.5rem 0 0.3rem 0 !important; }
+      [data-testid="stMarkdownContainer"] p { margin: 0.35rem 0 !important; }
+      hr { margin: 0.6rem 0 !important; }
+      [data-testid="stMetric"] { padding: 10px 12px !important; }
+      [data-testid="stMetricValue"] { font-size: 1.6rem !important; }
+      .stTabs [data-baseweb="tab-list"] { gap: 2px; padding: 0; }
+      .stTabs [data-baseweb="tab"] { padding: 6px 10px; }
+      .stPlotlyChart { margin-top: 0.2rem; margin-bottom: 0.2rem; }
     </style>
     """,
     unsafe_allow_html=True,
@@ -94,6 +109,7 @@ def chart_layout(fig):
         plot_bgcolor="rgba(0,0,0,0)",
         font={"color": INK, "family": "Arial, sans-serif", "size": 12},
         margin={"l": 10, "r": 10, "t": 10, "b": 10},
+        height=340,
         hoverlabel={"bgcolor": BLUE, "font": {"color": "#FFFFFF"}},
     )
     fig.update_xaxes(gridcolor="#000000", zeroline=False, linecolor=INK)
