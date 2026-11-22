@@ -15,11 +15,16 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from _shared.ask_ai import ask_ai
+
 st.set_page_config(
     page_title="RCT Demonstration ",
     page_icon="🧪",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
 st.markdown(
@@ -39,9 +44,10 @@ st.markdown(
       }
       /* Structural rules follow the theme instead of forcing black. */
       [data-testid="stMetric"] { border: 2px solid currentColor; border-radius: 0; padding: 14px; }
-      [data-testid="stSidebar"] { border-right: 2px solid currentColor; }
       [data-testid="stButton"] button, .stButton > button { border: 2px solid currentColor; border-radius: 0; }
       hr { border-color: currentColor; }
+      /* No sidebar: all controls live in the top toolbar. */
+      [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"] { display: none !important; }
       /* Compact dashboard density: minimal surrounding whitespace. */
       [data-testid="stMainBlockContainer"] { padding-top: 1rem !important; padding-bottom: 1.25rem !important; }
       [data-testid="stSidebarContent"] { padding-top: 0.75rem !important; }
@@ -107,15 +113,18 @@ def chart_layout(fig):
 df = build_data()
 
 st.title("Randomised trial ")
+ask_ai()
 st.write(
     "A public demonstration of a two-arm randomised evaluation: baseline balance, "
     "difference-in-differences, uncertainty and attrition. "
 )
 
-with st.sidebar:
-    st.header("Filters")
+c1, c2 = st.columns([2, 2])
+with c1:
     district = st.selectbox("District", ["All districts"] + DISTRICTS)
+with c2:
     retained_only = st.checkbox("Analyse retained participants only", value=True)
+st.markdown("---")
 
 view = df if district == "All districts" else df[df["district"] == district]
 if retained_only:

@@ -12,11 +12,16 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from _shared.ask_ai import ask_ai
+
 st.set_page_config(
     page_title="Traceability Study ",
     page_icon="🔎",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
 st.markdown(
@@ -36,9 +41,10 @@ st.markdown(
       }
       /* Structural rules follow the theme instead of forcing black. */
       [data-testid="stMetric"] { border: 2px solid currentColor; border-radius: 0; padding: 14px; }
-      [data-testid="stSidebar"] { border-right: 2px solid currentColor; }
       [data-testid="stButton"] button, .stButton > button { border: 2px solid currentColor; border-radius: 0; }
       hr { border-color: currentColor; }
+      /* No sidebar: all controls live in the top toolbar. */
+      [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"] { display: none !important; }
       /* Compact dashboard density: minimal surrounding whitespace. */
       [data-testid="stMainBlockContainer"] { padding-top: 1rem !important; padding-bottom: 1.25rem !important; }
       [data-testid="stSidebarContent"] { padding-top: 0.75rem !important; }
@@ -120,16 +126,20 @@ def chart_layout(fig):
 df = build_data()
 
 st.title("Traceability study ")
+ask_ai()
 st.write(
     "A public demonstration of supply-chain traceability findings — where records "
     "break down, and how quickly a lot can be traced end to end. "
 )
 
-with st.sidebar:
-    st.header("Filters")
+c1, c2, c3 = st.columns([2, 2, 2])
+with c1:
     commodity = st.selectbox("Commodity", ["All"] + sorted(df["commodity"].unique()))
+with c2:
     district = st.selectbox("District", ["All districts"] + DISTRICTS)
+with c3:
     years = st.multiselect("Year", sorted(df["year"].unique()), default=sorted(df["year"].unique()))
+st.markdown("---")
 
 view = df[(df["year"].isin(years))]
 if commodity != "All":

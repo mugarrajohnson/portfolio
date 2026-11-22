@@ -26,6 +26,21 @@ streamlit run streamlit-apps/endline_evaluation/app.py
 # or any of the other paths in the table above
 ```
 
+## Ask AI
+
+Every app has an **Ask AI** panel at the top. It is grounded in a curated description
+of that dashboard plus portfolio facts, and answers questions about both.
+
+- Add `OPENAI_API_KEY` (and optionally `OPENAI_MODEL`, default `gpt-4o-mini`) to each
+  app's **Streamlit Cloud secrets** — or set `OPENAI_API_KEY` locally. The widget
+  renders a clear setup message and the rest of the app works when no key is present.
+- `openai` is listed in the requirements files.
+- No client, farmer or beneficiary data is ever included in the prompt context.
+
+The static portfolio site has its own offline **Ask AI** launcher. It matches questions
+against curated portfolio content and links to the relevant section — no key, server
+or running cost.
+
 ## Deploy on Streamlit Cloud
 
 1. Push this repository to GitHub (the apps are already in `portfolio/streamlit-apps/`).
@@ -54,6 +69,8 @@ settings → Requirements file** to the correct path.
 
 ## Design notes
 
+- Filters and controls sit in a horizontal toolbar at the top of every app; there
+  is no sidebar or vertical divider.
 - All apps use a compact dashboard layout: minimal padding around the top, bottom
   and sides, tight heading/metric spacing and full-width charts, so the visuals fill
   the viewport without crowding.

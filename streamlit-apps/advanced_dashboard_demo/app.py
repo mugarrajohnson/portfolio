@@ -14,11 +14,16 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from _shared.ask_ai import ask_ai
+
 st.set_page_config(
     page_title="Advanced Analytics",
     page_icon="📊",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
 st.markdown(
@@ -32,9 +37,10 @@ st.markdown(
       .plotly .gridlayer path, .plotly .xaxis path, .plotly .yaxis path,
       .plotly .zerolinelayer path { stroke: currentColor !important; opacity: 0.3 !important; }
       [data-testid="stMetric"] { border: 2px solid currentColor; border-radius: 0; padding: 14px; }
-      [data-testid="stSidebar"] { border-right: 2px solid currentColor; }
       .stButton > button { border: 2px solid currentColor; border-radius: 0; }
       hr { border-color: currentColor; }
+      /* No sidebar: all controls live in the top toolbar. */
+      [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"] { display: none !important; }
       /* Compact dashboard density: minimal surrounding whitespace. */
       [data-testid="stMainBlockContainer"] { padding-top: 1rem !important; padding-bottom: 1.25rem !important; }
       [data-testid="stSidebarContent"] { padding-top: 0.75rem !important; }
@@ -125,30 +131,29 @@ initial_period = st.query_params.get("period", "3M")
 initial_region = st.query_params.get("region", "All")
 initial_segment = st.query_params.get("segment", "All")
 
-with st.sidebar:
-    st.header("View controls")
+st.title("Advanced analytics")
+ask_ai()
+bar = st.columns([2, 2, 3, 2, 1])
+with bar[0]:
     region = st.selectbox("Region", ["All"] + REGIONS,
                           index=(["All"] + REGIONS).index(initial_region) if initial_region in ["All"] + REGIONS else 0)
+with bar[1]:
     segment = st.selectbox("Segment", ["All"] + SEGMENTS,
                            index=(["All"] + SEGMENTS).index(initial_segment) if initial_segment in ["All"] + SEGMENTS else 0)
-    st.markdown("---")
-    scenario = st.slider("What-if price change (%)", -20, 30, 0, 5)
-    st.markdown("Applies to the projection on the Trends tab only.")
-
-st.title("Advanced analytics")
-bar = st.columns([4, 3, 1])
-with bar[0]:
-    st.markdown(f"**{region} region · {segment} segment · last {initial_period}**")
-with bar[1]:
+with bar[2]:
     period = st.segmented_control(
         "Period", list(PERIODS),
         default=initial_period if initial_period in PERIODS else "3M",
         key="period_pill", label_visibility="collapsed",
     )
-with bar[2]:
+with bar[3]:
+    scenario = st.slider("Price scenario (%)", -20, 30, 0, 5)
+with bar[4]:
     if st.button("Reset"):
         st.query_params.clear()
         st.rerun()
+st.markdown(f"**{region} region · {segment} segment · last {period}** · price scenario {scenario:+d}%")
+st.markdown("---")
 
 sync_param("period", period)
 sync_param("region", region)

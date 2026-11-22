@@ -13,11 +13,16 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from _shared.ask_ai import ask_ai
+
 st.set_page_config(
     page_title="Endline Evaluation ",
     page_icon="📈",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
 st.markdown(
@@ -37,9 +42,10 @@ st.markdown(
       }
       /* Structural rules follow the theme instead of forcing black. */
       [data-testid="stMetric"] { border: 2px solid currentColor; border-radius: 0; padding: 14px; }
-      [data-testid="stSidebar"] { border-right: 2px solid currentColor; }
       [data-testid="stButton"] button, .stButton > button { border: 2px solid currentColor; border-radius: 0; }
       hr { border-color: currentColor; }
+      /* No sidebar: all controls live in the top toolbar. */
+      [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"] { display: none !important; }
       /* Compact dashboard density: minimal surrounding whitespace. */
       [data-testid="stMainBlockContainer"] { padding-top: 1rem !important; padding-bottom: 1.25rem !important; }
       [data-testid="stSidebarContent"] { padding-top: 0.75rem !important; }
@@ -173,16 +179,20 @@ def chart_layout(fig):
 df = build_data()
 
 st.title("Endline evaluation ")
+ask_ai()
 st.write(
     "A public demonstration of baseline, midline and endline reporting against the "
     "**six OECD-DAC criteria**, with sex, age and disability disaggregations. "
 )
 
-with st.sidebar:
-    st.header("Filters")
+c1, c2, c3 = st.columns([2, 2, 2])
+with c1:
     district = st.selectbox("District", ["All districts"] + DISTRICTS)
+with c2:
     group = st.selectbox("Disaggregation", GROUPS)
+with c3:
     selected_indicators = st.multiselect("Indicators", list(INDICATORS), default=list(INDICATORS))
+st.markdown("---")
 
 view = df if district == "All districts" else df[df["district"] == district]
 view = view[view["group"] == group]
