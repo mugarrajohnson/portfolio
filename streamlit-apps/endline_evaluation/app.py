@@ -78,6 +78,19 @@ GROUP_SHIFT = {
     "Persons with disabilities": (7, -2),
 }
 PHASES = ["Baseline", "Midline", "Endline"]
+ROUND_DATES = {
+    "Baseline": "2024-03-01",
+    "Midline": "2025-03-01",
+    "Endline": "2026-03-01",
+}
+UNITS = {
+    "Income adequacy (% of living income)": "%",
+    "Food security score (0-100)": " pts",
+    "School attendance (%)": "%",
+    "Savings group participation (%)": "%",
+    "Food insecurity score (0-100, lower is better)": " pts",
+    "Debt distress (% of households, lower is better)": "%",
+}
 
 DAC = [
     ("Relevance", 4.6, "Objectives still match the priorities of the people supported."),
@@ -185,27 +198,35 @@ else:
     st.markdown('<p style="color:#0057D9;font-weight:700;">Verdict: partial success — some targets met.</p>', unsafe_allow_html=True)
 
 st.markdown("---")
-long = line.melt(id_vars="indicator", var_name="Phase", value_name="Score")
+long = summary.melt(id_vars="indicator", value_vars=PHASES, var_name="Phase", value_name="Score")
 long["direction"] = long["indicator"].map(lambda i: INDICATORS[i][2])
+long["round_date"] = pd.to_datetime(long["Phase"].map(ROUND_DATES))
+long["Label"] = [
+    f"{score:.1f}{UNITS[indicator]}"
+    for score, indicator in zip(long["Score"], long["indicator"])
+]
 with st.container():
-    st.subheader("Indicator trajectories: baseline → midline → endline")
+    st.subheader("Indicator trajectories by survey date")
     fig = px.line(
         long,
-        x="Phase",
+        x="round_date",
         y="Score",
         color="indicator",
         line_dash="direction",
         markers=True,
-        category_orders={"Phase": PHASES},
+        text="Label",
         color_discrete_map={i: LINE_STYLE[i][0] for i in INDICATORS},
         line_dash_map={"increase": "solid", "decrease": "dash"},
-        labels={"Score": "Indicator value (0-100)", "Phase": "Survey round", "indicator": "Indicator"},
+        labels={"Score": "Indicator value (0-100)", "round_date": "Survey date", "indicator": "Indicator"},
     )
-    st.plotly_chart(chart_layout(fig), width="stretch")
+    fig.update_traces(textposition="top center", textfont_size=9)
+    fig = chart_layout(fig)
+    fig.update_xaxes(tickformat="%d %b %Y")
+    st.plotly_chart(fig, width="stretch")
     st.markdown(
         '<p style="color:#000000;">'
         "Solid lines: higher is better. Dashed lines: lower is better. "
-        "Each line follows one indicator from baseline through midline to endline."
+        "Each line follows one indicator across the three survey dates; the label on every point is its value."
         "</p>",
         unsafe_allow_html=True,
     )
