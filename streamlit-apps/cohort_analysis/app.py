@@ -13,7 +13,7 @@ import plotly.express as px
 import streamlit as st
 
 st.set_page_config(
-    page_title="Cohort Analysis — Public Demo",
+    page_title="Cohort Analysis ",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -78,10 +78,9 @@ def chart_layout(fig):
 
 df = build_data()
 
-st.title("Cohort analysis — public demo")
+st.title("Cohort analysis ")
 st.write(
-    "A public demonstration of cohort tracking: retention over twelve months, "
-    "completion and outcomes by intake cohort. **All cohorts are synthetic.**"
+    "A public demonstration of cohort tracking: retention over twelve months"
 )
 
 with st.sidebar:
@@ -142,4 +141,4 @@ fig = px.line(view, x="month", y="outcome", color="cohort",
 st.plotly_chart(chart_layout(fig), width="stretch")
 
 st.markdown("---")
-st.markdown('<p style="color:#000000;font-size:0.85rem;">Public demo · synthetic data only · built with Streamlit and Plotly</p>', unsafe_allow_html=True)
+st.markdown('<p style="color:#000000;font-size:0.85rem;">Public demo built with Streamlit and Plotly</p>', unsafe_allow_html=True)

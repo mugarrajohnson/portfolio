@@ -13,7 +13,7 @@ import plotly.express as px
 import streamlit as st
 
 st.set_page_config(
-    page_title="Traceability Study — Public Demo",
+    page_title="Traceability Study ",
     page_icon="🔎",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -91,7 +91,7 @@ def chart_layout(fig):
 
 df = build_data()
 
-st.title("Traceability study — public demo")
+st.title("Traceability study ")
 st.write(
     "A public demonstration of supply-chain traceability findings — where records "
     "break down, and how quickly a lot can be traced end to end. "
@@ -177,4 +177,4 @@ for text in [
     st.markdown(f'<p style="color:#000000;">• {text}</p>', unsafe_allow_html=True)
 
 st.markdown("---")
-st.markdown('<p style="color:#000000;font-size:0.85rem;">Public demo · synthetic data only · built with Streamlit and Plotly</p>', unsafe_allow_html=True)
+st.markdown('<p style="color:#000000;font-size:0.85rem;">Public demo built with Streamlit and Plotly</p>', unsafe_allow_html=True)

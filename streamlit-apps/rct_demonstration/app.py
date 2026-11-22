@@ -16,7 +16,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 st.set_page_config(
-    page_title="RCT Demonstration — Public Demo",
+    page_title="RCT Demonstration ",
     page_icon="🧪",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -78,11 +78,10 @@ def chart_layout(fig):
 
 df = build_data()
 
-st.title("Randomised trial — public demo")
+st.title("Randomised trial ")
 st.write(
     "A public demonstration of a two-arm randomised evaluation: baseline balance, "
     "difference-in-differences, uncertainty and attrition. "
-    "**All participants and results are synthetic.**"
 )
 
 with st.sidebar:
@@ -163,4 +162,4 @@ with right:
     st.markdown('<p style="color:#000000;">Baseline characteristics should be close across arms in a well-randomised trial.</p>', unsafe_allow_html=True)
 
 st.markdown("---")
-st.markdown('<p style="color:#000000;font-size:0.85rem;">Public demo · synthetic data only · built with Streamlit and Plotly</p>', unsafe_allow_html=True)
+st.markdown('<p style="color:#000000;font-size:0.85rem;">Public demo built with Streamlit and Plotly</p>', unsafe_allow_html=True)

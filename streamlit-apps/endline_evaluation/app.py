@@ -111,7 +111,6 @@ st.title("Endline evaluation — public demo")
 st.write(
     "A public demonstration of baseline, midline and endline reporting against the "
     "**six OECD-DAC criteria**, with sex, age and disability disaggregations. "
-    "**All figures are synthetic** — no client or beneficiary information is used."
 )
 
 with st.sidebar:
@@ -190,4 +189,4 @@ for criterion, score, note in DAC:
     st.markdown(f'<p style="color:{colour};"><strong>{criterion} — {score:.1f}/5.</strong> {note}</p>', unsafe_allow_html=True)
 
 st.markdown("---")
-st.markdown('<p style="color:#000000;font-size:0.85rem;">Public demo · synthetic data only · built with Streamlit and Plotly</p>', unsafe_allow_html=True)
+st.markdown('<p style="color:#000000;font-size:0.85rem;">Public demo built with Streamlit and Plotly</p>', unsafe_allow_html=True)
