@@ -14,11 +14,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from _shared.ask_ai import ask_ai
-
 st.set_page_config(
     page_title="Advanced Analytics",
     page_icon="📊",
@@ -132,7 +127,6 @@ initial_region = st.query_params.get("region", "All")
 initial_segment = st.query_params.get("segment", "All")
 
 st.title("Advanced analytics")
-ask_ai()
 bar = st.columns([2, 2, 3, 2, 1])
 with bar[0]:
     region = st.selectbox("Region", ["All"] + REGIONS,

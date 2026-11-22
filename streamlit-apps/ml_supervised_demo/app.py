@@ -8,9 +8,6 @@ in memory from a fixed seed.
 """
 from __future__ import annotations
 
-import sys
-from pathlib import Path
-
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -19,9 +16,6 @@ import streamlit as st
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, r2_score
 from sklearn.model_selection import train_test_split
-
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from _shared.ask_ai import ask_ai
 
 st.set_page_config(
     page_title="Supervised Learning",
@@ -118,12 +112,10 @@ def chart_layout(fig, height=340):
 
 
 st.title("Supervised learning")
-ask_ai()
 
 st.write(
     "A synthetic regression problem: train a model on vanilla-farm data, read the "
-    "fitted equation, inspect what each feature contributes, then change the inputs "
-    "and watch the prediction move. **Every row is generated in memory.**"
+    "fitted equation, inspect what each feature contributes, then adjust the input features to see how the prediction changes."
 )
 
 share = st.slider("Training share (%)", 50, 90, 80, 5)

@@ -12,11 +12,6 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from _shared.ask_ai import ask_ai
-
 st.set_page_config(
     page_title="Cohort Analysis ",
     page_icon="📊",
@@ -113,7 +108,6 @@ def chart_layout(fig):
 df = build_data()
 
 st.title("Cohort analysis ")
-ask_ai()
 st.write(
     "A public demonstration of cohort tracking: retention over twelve months"
 )

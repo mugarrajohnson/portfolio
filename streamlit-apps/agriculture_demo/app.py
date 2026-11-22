@@ -10,11 +10,6 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from _shared.ask_ai import ask_ai
-
 st.set_page_config(
     page_title="Vanilla Value Chain",
     page_icon="🌱",
@@ -126,7 +121,6 @@ def chart_layout(fig):
 df = build_data()
 
 st.title("Vanilla value chain")
-ask_ai()
 st.write(
     "A public demonstration of the kind of dashboard built for agricultural data. "
 )

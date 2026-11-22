@@ -15,11 +15,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from _shared.ask_ai import ask_ai
-
 st.set_page_config(
     page_title="RCT Demonstration ",
     page_icon="🧪",
@@ -113,7 +108,6 @@ def chart_layout(fig):
 df = build_data()
 
 st.title("Randomised trial ")
-ask_ai()
 st.write(
     "A public demonstration of a two-arm randomised evaluation: baseline balance, "
     "difference-in-differences, uncertainty and attrition. "
