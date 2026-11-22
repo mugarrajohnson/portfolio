@@ -61,7 +61,7 @@ RED = "#FF4D2E"
 VIOLET = "#9B30FF"
 SERIES = [BLUE, GREEN, RED, VIOLET]
 
-PERIODS = {"1M": 1, "3M": 3, "6M": 6, "12M": 12, "All": 120}
+PERIODS = {"1M": 1, "3M": 3, "6M": 6, "12M": 12, "24M": 24, "All": 120}
 REGIONS = ["West", "Central", "East", "Northern"]
 SEGMENTS = ["Smallholder", "Cooperative", "Aggregator", "Institution"]
 CHANNELS = ["Direct", "Partner", "Digital"]
@@ -121,20 +121,34 @@ def chart_layout(fig, height=380):
 
 df = build_data()
 
-st.title("Advanced analytics — public demo")
-st.write(
-    "A URL-driven dashboard: change the filters and share the link. "
-    "Every figure is **synthetic** — no client or data subject information is used."
-)
+initial_period = st.query_params.get("period", "3M")
+initial_region = st.query_params.get("region", "All")
+initial_segment = st.query_params.get("segment", "All")
 
 with st.sidebar:
     st.header("View controls")
-    period = st.selectbox("Period", list(PERIODS), index=list(PERIODS).index(st.query_params.get("period", "3M")) if st.query_params.get("period", "3M") in PERIODS else 1)
-    region = st.selectbox("Region", ["All"] + REGIONS, index=(["All"] + REGIONS).index(st.query_params.get("region", "All")) if st.query_params.get("region", "All") in ["All"] + REGIONS else 0)
-    segment = st.selectbox("Segment", ["All"] + SEGMENTS, index=(["All"] + SEGMENTS).index(st.query_params.get("segment", "All")) if st.query_params.get("segment", "All") in ["All"] + SEGMENTS else 0)
+    region = st.selectbox("Region", ["All"] + REGIONS,
+                          index=(["All"] + REGIONS).index(initial_region) if initial_region in ["All"] + REGIONS else 0)
+    segment = st.selectbox("Segment", ["All"] + SEGMENTS,
+                           index=(["All"] + SEGMENTS).index(initial_segment) if initial_segment in ["All"] + SEGMENTS else 0)
     st.markdown("---")
     scenario = st.slider("What-if price change (%)", -20, 30, 0, 5)
     st.markdown("Applies to the projection on the Trends tab only.")
+
+st.title("Advanced analytics — public demo")
+bar = st.columns([4, 3, 1])
+with bar[0]:
+    st.markdown(f"**{region} region · {segment} segment · last {initial_period}**")
+with bar[1]:
+    period = st.segmented_control(
+        "Period", list(PERIODS),
+        default=initial_period if initial_period in PERIODS else "3M",
+        key="period_pill", label_visibility="collapsed",
+    )
+with bar[2]:
+    if st.button("Reset"):
+        st.query_params.clear()
+        st.rerun()
 
 sync_param("period", period)
 sync_param("region", region)
