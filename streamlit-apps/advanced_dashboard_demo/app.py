@@ -15,7 +15,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 st.set_page_config(
-    page_title="Advanced Analytics — Public Demo",
+    page_title="Advanced Analytics",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -135,7 +135,7 @@ with st.sidebar:
     scenario = st.slider("What-if price change (%)", -20, 30, 0, 5)
     st.markdown("Applies to the projection on the Trends tab only.")
 
-st.title("Advanced analytics — public demo")
+st.title("Advanced analytics")
 bar = st.columns([4, 3, 1])
 with bar[0]:
     st.markdown(f"**{region} region · {segment} segment · last {initial_period}**")
