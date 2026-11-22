@@ -174,11 +174,16 @@ if view.empty:
     st.stop()
 
 
-def delta(current, prior, fmt="int"):
-    if not prior or prior == 0:
+# Only compare when the preceding window is actually covered by the data.
+# For long periods (e.g. 24M or All) the earlier window falls partly or wholly
+# outside the dataset, so a delta would be a misleading number.
+comparable = len(previous) >= 0.8 * len(view)
+
+
+def delta(current, prior):
+    if not comparable or not prior or prior == 0:
         return None
-    pct = 100 * (current - prior) / prior
-    return f"{pct:+.1f}% vs previous period"
+    return f"{100 * (current - prior) / prior:+.1f}% vs previous period"
 
 
 rev, prev_rev = view["revenue"].sum(), previous["revenue"].sum()
@@ -191,9 +196,17 @@ k1.metric("Revenue", f"UGX {rev / 1e9:,.2f}B", delta(rev, prev_rev))
 k2.metric("Volume", f"{vol / 1000:,.1f} t", delta(vol, prev_vol))
 k3.metric("People reached", f"{people:,}", delta(people, prev_people))
 k4.metric("Satisfaction", f"{sat:.2f} / 5", delta(sat, prev_sat))
+if not comparable:
+    st.markdown("Previous-period comparison is unavailable for this window — the data does not cover a full preceding period.")
 
-st.markdown(f'<p style="font-size:0.85rem;">Showing {len(view):,} records from {start:%d %b %Y} to {last:%d %b %Y}. '
-            f'Deep link: <code>?period={period}&amp;region={region}&amp;segment={segment}</code></p>', unsafe_allow_html=True)
+query_raw = f"?period={period}&region={region}&segment={segment}"
+query_html = query_raw.replace("&", "&amp;")
+st.markdown(
+    f'<p style="font-size:0.85rem;">Showing {len(view):,} records from {start:%d %b %Y} to {last:%d %b %Y}. '
+    f'Deep link: <a href="{query_html}"><code>{query_html}</code></a> '
+    f'<button type="button" onclick="navigator.clipboard.writeText(location.href.split(\'?\')[0] + \'{query_raw}\')">Copy full link</button></p>',
+    unsafe_allow_html=True,
+)
 
 tabs = st.tabs(["Overview", "Segments", "Trends", "Data & method"])
 
