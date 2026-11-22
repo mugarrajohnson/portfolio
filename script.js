@@ -446,7 +446,7 @@
   if (tablist) {
     const tabs = $$('[role="tab"]', tablist);
 
-    function selectTab(tab, { focus = false } = {}) {
+    function selectTab(tab, { focus = false, track = true } = {}) {
       tabs.forEach((t) => {
         const selected = t === tab;
         t.setAttribute('aria-selected', String(selected));
@@ -455,7 +455,7 @@
         if (panel) panel.hidden = !selected;
       });
       if (focus) tab.focus();
-      trackEvent('analytics_tab', { tab: tab.id });
+      if (track) trackEvent('analytics_tab', { tab: tab.id });
     }
 
     tablist.addEventListener('click', (event) => {

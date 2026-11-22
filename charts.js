@@ -965,7 +965,7 @@
   })();
 
 /* ============================================================
-     Thematic codebook
+     Qualitative Research
      ------------------------------------------------------------
      Rebuilt from the Radial tidy tree notebook in the D3 gallery by
      Mike Bostock, which draws a software class hierarchy as a radial
@@ -1139,7 +1139,7 @@
         .attr('role', 'img')
         .attr(
           'aria-label',
-          'Radial tidy tree of a thematic codebook. Five themes branch into sub-themes and then into individual codes. Distance from the centre is the level in the code hierarchy, and the width of a branch is the number of coded excerpts filed under it.'
+          'Radial tidy tree of a qualitative research codebook. Five themes branch into sub-themes and then into individual codes. Distance from the centre is the level in the code hierarchy, and the width of a branch is the number of coded excerpts filed under it.'
         )
         .style('width', '100%')
         .style('height', '100%')

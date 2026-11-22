@@ -767,7 +767,7 @@
 .dot-bacteria { background: var(--s-suspicious); }
 .dot-archaea { background: var(--s-east); }
 
-/* Thematic codebook. Same five series tokens as the tree of life above, so
+/* Qualitative Research codebook. Same five series tokens as the tree of life above, so
    the two radial charts stay in step and no third colour set exists. */
 .dot-records { background: var(--s-pollination); }
 .dot-paperless { background: var(--s-suspicious); }

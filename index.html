@@ -173,6 +173,7 @@
 <li><a class="text-sm font-medium text-ink/70 hover:text-ink transition-colors" href="#experience">Experience</a></li>
 <li><a class="text-sm font-medium text-ink/70 hover:text-ink transition-colors" href="#now">Now</a></li>
 <li><a class="text-sm font-medium text-ink/70 hover:text-ink transition-colors" href="#projects">Projects</a></li>
+<li><a class="text-sm font-medium text-ink hover:text-primary transition-colors" href="#dashboards">Dashboards</a></li>
 <li><a class="text-sm font-medium text-ink/70 hover:text-ink transition-colors" href="#skills">Skills</a></li>
 <li><a class="text-sm font-medium text-ink/70 hover:text-ink transition-colors" href="#publications">Research</a></li>
 <li><a class="text-sm font-medium text-ink/70 hover:text-ink transition-colors" href="#education">Education</a></li>
@@ -202,6 +203,7 @@
 <a class="text-ink hover:text-primary transition-colors" href="#experience">Experience</a>
 <a class="text-ink hover:text-primary transition-colors" href="#now">Now</a>
 <a class="text-ink hover:text-primary transition-colors" href="#projects">Projects</a>
+<a class="text-ink hover:text-primary transition-colors" href="#dashboards">Dashboards</a>
 <a class="text-ink hover:text-primary transition-colors" href="#skills">Skills</a>
 <a class="text-ink hover:text-primary transition-colors" href="#publications">Research</a>
 <a class="text-ink hover:text-primary transition-colors" href="#education">Education</a>
@@ -670,21 +672,91 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 
 <h2 class="text-4xl text-ink mb-6" id="analytics-title">Live visualisations</h2>
 <div aria-label="Visualisation demos" class="inline-flex flex-wrap justify-center rounded-full border border-line/10 p-1 bg-ink/5" id="analytics-tabs" role="tablist">
-<button aria-controls="vanilla-harvest" aria-selected="true" class="seg-tab" id="tab-vanilla" role="tab" tabindex="0" type="button">Vanilla harvest</button>
+<button aria-controls="cloud-analytics" aria-selected="true" class="seg-tab" id="tab-cloud" role="tab" tabindex="0" type="button">Word cloud</button>
+<button aria-controls="codebook-analytics" aria-selected="false" class="seg-tab" id="tab-codebook" role="tab" tabindex="-1" type="button">Qualitative Research</button>  
+<button aria-controls="vanilla-harvest" aria-selected="false" class="seg-tab" id="tab-vanilla" role="tab" tabindex="-1" type="button">Vanilla Phenology</button>
 <button aria-controls="fraud-analytics" aria-selected="false" class="seg-tab" id="tab-fraud" role="tab" tabindex="-1" type="button">Fraud detection</button>
 <button aria-controls="tree-analytics" aria-selected="false" class="seg-tab" id="tab-tree" role="tab" tabindex="-1" type="button">Tree of life</button>
-<button aria-controls="codebook-analytics" aria-selected="false" class="seg-tab" id="tab-codebook" role="tab" tabindex="-1" type="button">Thematic codebook</button>
-<button aria-controls="cloud-analytics" aria-selected="false" class="seg-tab" id="tab-cloud" role="tab" tabindex="-1" type="button">Word cloud</button>
+
 <button aria-controls="map-analytics" aria-selected="false" class="seg-tab" id="tab-map" role="tab" tabindex="-1" type="button">Map tiles</button>
 </div>
 <noscript><p class="mt-6 text-sm text-muted max-w-xl mx-auto">These visualisations are drawn in the browser with D3, so they need JavaScript. Everything else on this page works without it.</p></noscript>
 </div>
-
-<!-- Vanilla harvest -->
-<div aria-labelledby="tab-vanilla" id="vanilla-harvest" role="tabpanel" tabindex="0">
+<!-- Word cloud -->
+<div aria-labelledby="tab-cloud" id="cloud-analytics" role="tabpanel" tabindex="0">
 <div class="plate p-8 lg:p-12">
 <div class="mb-8">
-<p class="eyebrow mb-2">Agricultural analytics · illustrative simulation</p>
+<h3 class="text-3xl lg:text-4xl text-ink mb-6">Word cloud</h3>
+<p class="text-ink/75 leading-[1.78]">The 120 most frequent words in Martin Luther King Jr's 1963 <em>I Have a Dream</em> speech, after stopwords and punctuation are stripped. Each word is placed at the first position where it does not overlap one already down, and sized by the square root of its count so frequency reads honestly. Hover a word for its exact total.</p>
+</div>
+
+<p aria-live="polite" class="text-sm text-ink/65 mb-6" id="cloud-stats"></p>
+
+<figure class="m-0">
+<div class="bg-background/60 border border-line/5 rounded-xl p-4 mb-6 relative instrument-tray chart-surface">
+<div class="w-full h-[420px]" id="cloud-chart"></div>
+</div>
+<figcaption class="sr-only">Word cloud of the 120 most frequent words in the I Have a Dream speech. The largest and most frequent words are shown in blue and the rest in grey. Word size is proportional to the square root of how often the word appears.</figcaption>
+</figure>
+
+<ul class="flex flex-wrap gap-6 text-sm text-ink/65 justify-center">
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-pollination"></span>Most frequent words</li>
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-harvest"></span>Remaining words</li>
+</ul>
+
+<p class="mt-8 text-center text-sm text-faint">Original notebook: <em>Word cloud</em>, D3 gallery, Observable, ISC licensed. Text: Martin Luther King Jr, <em>I Have a Dream</em>, 1963.</p>
+</div>
+</div>
+
+<!-- Qualitative Research -->
+<div aria-labelledby="tab-codebook" hidden="" id="codebook-analytics" role="tabpanel" tabindex="0">
+<div class="plate p-8 lg:p-12">
+<div class="mb-8">
+<h3 class="text-3xl lg:text-4xl text-ink mb-6">Qualitative Research</h3>
+<p class="text-ink/75 leading-[1.78]">Qualitative Research. Distance from the centre is the level in the code structure.  Themes and codes are labelled; sub-theme names are left to hover.</p>
+</div>
+
+<div class="flex flex-wrap items-center gap-3 mb-8" data-chart-controls="codebook" role="group" aria-label="Filter by theme">
+<span class="text-sm text-faint mr-1">Theme:</span>
+<button aria-pressed="true" class="filt" data-theme="All" type="button">All themes</button>
+<button aria-pressed="false" class="filt" data-theme="Record availability" type="button"><span aria-hidden="true" class="legend-dot dot-records"></span>Record availability</button>
+<button aria-pressed="false" class="filt" data-theme="Paperless readiness" type="button"><span aria-hidden="true" class="legend-dot dot-paperless"></span>Paperless readiness</button>
+<button aria-pressed="false" class="filt" data-theme="Workflow and workload" type="button"><span aria-hidden="true" class="legend-dot dot-workflow"></span>Workflow and workload</button>
+<button aria-pressed="false" class="filt" data-theme="Data quality and reconciliation" type="button"><span aria-hidden="true" class="legend-dot dot-reconciliation"></span>Data quality</button>
+<button aria-pressed="false" class="filt" data-theme="Facilitators and barriers" type="button"><span aria-hidden="true" class="legend-dot dot-facilitators"></span>Facilitators and barriers</button>
+</div>
+
+<div class="flex flex-wrap items-center gap-3 mb-8" data-chart-controls="codebook-display" role="group" aria-label="Display options">
+<span class="text-sm text-faint mr-1">Display:</span>
+<label class="toggle-line"><input checked="" id="codebook-weight" type="checkbox"/>Weight branches by excerpt count</label>
+</div>
+
+<p aria-live="polite" class="text-sm text-ink/65 mb-6" id="codebook-stats"></p>
+
+<figure class="m-0">
+<div class="bg-background/60 border border-line/5 rounded-xl p-4 mb-6 relative instrument-tray chart-surface">
+<div class="w-full max-w-[920px] mx-auto aspect-square" id="codebook-chart"></div>
+</div>
+<figcaption class="sr-only">Radial tidy tree of a qualitative research codebook. Five themes branch into sub-themes and then individual codes. Distance from the centre is the level in the code hierarchy; the width of a branch is the number of coded excerpts filed under it. Record availability is blue, Paperless readiness amber, Workflow and workload green, Data quality grey and Facilitators and barriers red. Every node is focusable and reports its own name, its level and its excerpt count.</figcaption>
+</figure>
+
+<ul class="flex flex-wrap gap-6 text-sm text-ink/65 justify-center">
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-records"></span>Record availability</li>
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-paperless"></span>Paperless readiness</li>
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-workflow"></span>Workflow and workload</li>
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-reconciliation"></span>Data quality</li>
+<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-facilitators"></span>Facilitators and barriers</li>
+</ul>
+
+<p class="mt-8 text-center text-sm text-faint leading-relaxed">The codebook is illustrative. Its themes follow the field research on facility readiness for Health Information Exchange and paperless viral load requests; the excerpt counts are a plausible corpus, not a record of one study.<br>Original notebook: <em>Radial tidy tree</em>, D3 gallery, Observable, ISC licensed.</p>
+</div>
+</div>
+
+
+<!-- Vanilla harvest -->
+<div aria-labelledby="tab-vanilla" hidden="" id="vanilla-harvest" role="tabpanel" tabindex="0">
+<div class="plate p-8 lg:p-12">
+<div class="mb-8">
 <h3 class="text-3xl lg:text-4xl text-ink mb-6">Vanilla harvest season model</h3>
 <p class="text-ink/75 leading-[1.78]">A simulated cohort of <strong class="text-ink font-semibold">1,000 vanilla farmers</strong>, calibrated to Uganda's real pollination and harvest calendar (January 2024 to June 2026). Vanilla beans take roughly <strong class="text-ink font-semibold">9 months</strong> to mature after hand-pollination, so the harvest line is the pollination curve shifted forward by 9 months. The main pollination season (September to November) drives the June and July main harvest; the secondary season (February to May) drives the December and January harvest.</p>
 </div>
@@ -717,7 +789,6 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <div aria-labelledby="tab-fraud" hidden="" id="fraud-analytics" role="tabpanel" tabindex="0">
 <div class="plate p-8 lg:p-12">
 <div class="mb-8">
-<p class="eyebrow mb-2">Financial analytics · synthetic data</p>
 <h3 class="text-3xl lg:text-4xl text-ink mb-6">Transaction fraud detection model</h3>
 <p class="text-ink/75 leading-[1.78]">Gradient-boosted risk scores across <strong class="text-ink font-semibold">2,000 synthetic bank transactions</strong>. Each point sits at its predicted risk score against transaction amount on a log scale, and the clustering shows how the model separates ordinary behavior from suspicious and confirmed fraud. The dashed vertical line marks the 0.50 classification threshold.</p>
 </div>
@@ -753,7 +824,6 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <div aria-labelledby="tab-tree" hidden="" id="tree-analytics" role="tabpanel" tabindex="0">
 <div class="plate p-8 lg:p-12">
 <div class="mb-8">
-<p class="eyebrow mb-2">Phylogenetics · hierarchical layout</p>
 <h3 class="text-3xl lg:text-4xl text-ink mb-6">Tree of life</h3>
 <p class="text-ink/75 leading-[1.78]">The three domains of life, parsed from a <strong class="text-ink font-semibold">Newick string</strong> into a hierarchy and laid out radially. Every branch is a clade, and its length is the evolutionary distance back to its parent. Hover a tip to read its full lineage.</p>
 </div>
@@ -781,83 +851,10 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 </div>
 
-<!-- Thematic codebook -->
-<div aria-labelledby="tab-codebook" hidden="" id="codebook-analytics" role="tabpanel" tabindex="0">
-<div class="plate p-8 lg:p-12">
-<div class="mb-8">
-<p class="eyebrow mb-2">Qualitative analysis &middot; hierarchical layout</p>
-<h3 class="text-3xl lg:text-4xl text-ink mb-6">Thematic codebook</h3>
-<p class="text-ink/75 leading-[1.78]">Qualitative Research. Distance from the centre is the level in the code structure.  Themes and codes are labelled; sub-theme names are left to hover.</p>
-</div>
-
-<div class="flex flex-wrap items-center gap-3 mb-8" data-chart-controls="codebook" role="group" aria-label="Filter by theme">
-<span class="text-sm text-faint mr-1">Theme:</span>
-<button aria-pressed="true" class="filt" data-theme="All" type="button">All themes</button>
-<button aria-pressed="false" class="filt" data-theme="Record availability" type="button"><span aria-hidden="true" class="legend-dot dot-records"></span>Record availability</button>
-<button aria-pressed="false" class="filt" data-theme="Paperless readiness" type="button"><span aria-hidden="true" class="legend-dot dot-paperless"></span>Paperless readiness</button>
-<button aria-pressed="false" class="filt" data-theme="Workflow and workload" type="button"><span aria-hidden="true" class="legend-dot dot-workflow"></span>Workflow and workload</button>
-<button aria-pressed="false" class="filt" data-theme="Data quality and reconciliation" type="button"><span aria-hidden="true" class="legend-dot dot-reconciliation"></span>Data quality</button>
-<button aria-pressed="false" class="filt" data-theme="Facilitators and barriers" type="button"><span aria-hidden="true" class="legend-dot dot-facilitators"></span>Facilitators and barriers</button>
-</div>
-
-<div class="flex flex-wrap items-center gap-3 mb-8" data-chart-controls="codebook-display" role="group" aria-label="Display options">
-<span class="text-sm text-faint mr-1">Display:</span>
-<label class="toggle-line"><input checked="" id="codebook-weight" type="checkbox"/>Weight branches by excerpt count</label>
-</div>
-
-<p aria-live="polite" class="text-sm text-ink/65 mb-6" id="codebook-stats"></p>
-
-<figure class="m-0">
-<div class="bg-background/60 border border-line/5 rounded-xl p-4 mb-6 relative instrument-tray chart-surface">
-<div class="w-full max-w-[920px] mx-auto aspect-square" id="codebook-chart"></div>
-</div>
-<figcaption class="sr-only">Radial tidy tree of a thematic codebook. Five themes branch into sub-themes and then individual codes. Distance from the centre is the level in the code hierarchy; the width of a branch is the number of coded excerpts filed under it. Record availability is blue, Paperless readiness amber, Workflow and workload green, Data quality grey and Facilitators and barriers red. Every node is focusable and reports its own name, its level and its excerpt count.</figcaption>
-</figure>
-
-<ul class="flex flex-wrap gap-6 text-sm text-ink/65 justify-center">
-<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-records"></span>Record availability</li>
-<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-paperless"></span>Paperless readiness</li>
-<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-workflow"></span>Workflow and workload</li>
-<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-reconciliation"></span>Data quality</li>
-<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-facilitators"></span>Facilitators and barriers</li>
-</ul>
-
-<p class="mt-8 text-center text-sm text-faint leading-relaxed">The codebook is illustrative. Its themes follow the field research on facility readiness for Health Information Exchange and paperless viral load requests; the excerpt counts are a plausible corpus, not a record of one study.<br>Original notebook: <em>Radial tidy tree</em>, D3 gallery, Observable, ISC licensed.</p>
-</div>
-</div>
-
-<!-- Word cloud -->
-<div aria-labelledby="tab-cloud" hidden="" id="cloud-analytics" role="tabpanel" tabindex="0">
-<div class="plate p-8 lg:p-12">
-<div class="mb-8">
-<p class="eyebrow mb-2">Natural language processing (NLP) - text analysis: frequency and packing</p>
-<h3 class="text-3xl lg:text-4xl text-ink mb-6">Word cloud</h3>
-<p class="text-ink/75 leading-[1.78]">The 120 most frequent words in Martin Luther King Jr's 1963 <em>I Have a Dream</em> speech, after stopwords and punctuation are stripped. Each word is placed at the first position where it does not overlap one already down, and sized by the square root of its count so frequency reads honestly. Hover a word for its exact total.</p>
-</div>
-
-<p aria-live="polite" class="text-sm text-ink/65 mb-6" id="cloud-stats"></p>
-
-<figure class="m-0">
-<div class="bg-background/60 border border-line/5 rounded-xl p-4 mb-6 relative instrument-tray chart-surface">
-<div class="w-full h-[420px]" id="cloud-chart"></div>
-</div>
-<figcaption class="sr-only">Word cloud of the 120 most frequent words in the I Have a Dream speech. The largest and most frequent words are shown in blue and the rest in grey. Word size is proportional to the square root of how often the word appears.</figcaption>
-</figure>
-
-<ul class="flex flex-wrap gap-6 text-sm text-ink/65 justify-center">
-<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-pollination"></span>Most frequent words</li>
-<li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-harvest"></span>Remaining words</li>
-</ul>
-
-<p class="mt-8 text-center text-sm text-faint">Original notebook: <em>Word cloud</em>, D3 gallery, Observable, ISC licensed. Text: Martin Luther King Jr, <em>I Have a Dream</em>, 1963.</p>
-</div>
-</div>
-
 <!-- Map tiles -->
 <div aria-labelledby="tab-map" hidden="" id="map-analytics" role="tabpanel" tabindex="0">
 <div class="plate p-8 lg:p-12">
 <div class="mb-8">
-<p class="eyebrow mb-2">Geospatial · Web Mercator and quadtree tiling</p>
 <h3 class="text-3xl lg:text-4xl text-ink mb-6">Seamless zoomable map tiles</h3>
 <p class="text-ink/75 leading-[1.78]"> Scroll to zoom, drag to pan.</p>
 </div>
@@ -880,6 +877,34 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 </div>
 
+</div>
+</section>
+
+<!-- ══════════════════════════════════ PUBLIC DASHBOARDS ══════════════════════════════════ -->
+<section aria-labelledby="dashboards-title" class="py-20 px-6" id="dashboards">
+<div class="max-w-7xl mx-auto">
+<div class="mb-10 text-center">
+<h2 class="text-4xl text-ink mb-4" id="dashboards-title">Public dashboards</h2>
+<p class="text-ink max-w-2xl mx-auto">Two live Streamlit demos built for a public audience. Both run on synthetic data generated in memory, so nothing about clients, farmers, donors or beneficiaries is ever shown.</p>
+</div>
+
+<div class="grid md:grid-cols-2 gap-8">
+<article class="plate p-8">
+<ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Streamlit</li><li class="chip">Plotly</li><li class="chip">Synthetic data</li></ul>
+<h3 class="text-2xl text-ink mb-4">Vanilla value chain</h3>
+<p class="text-ink mb-6">A public version of the kind of monitoring dashboard built for agricultural programmes: filtered receipts, delivery volumes by month and grade, value by season, and district-level cuts. Every figure is synthetic.</p>
+<!-- PLACEHOLDER LINK: replace with the live Streamlit Cloud URL after deployment (see streamlit-apps/README.md). -->
+<a class="btn-primary group pr-2" href="https://jm-agriculture-demo.streamlit.app" rel="noopener noreferrer" target="_blank">Open live demo<span aria-hidden="true" class="ml-3 inline-flex">&rarr;</span></a>
+</article>
+
+<article class="plate p-8">
+<ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Streamlit</li><li class="chip">Plotly</li><li class="chip">Synthetic data</li></ul>
+<h3 class="text-2xl text-ink mb-4">Contributions analytics</h3>
+<p class="text-ink mb-6">A public financial-monitoring demo: pledged versus paid over time, payment rates, sector breakdowns and donor-level views. The donors and amounts are invented for the demonstration.</p>
+<!-- PLACEHOLDER LINK: replace with the live Streamlit Cloud URL after deployment (see streamlit-apps/README.md). -->
+<a class="btn-primary group pr-2" href="https://jm-contributions-demo.streamlit.app" rel="noopener noreferrer" target="_blank">Open live demo<span aria-hidden="true" class="ml-3 inline-flex">&rarr;</span></a>
+</article>
+</div>
 </div>
 </section>
 
