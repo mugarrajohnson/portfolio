@@ -1,0 +1,166 @@
+"""
+Randomised trial — public Streamlit demo.
+
+A synthetic two-arm randomised evaluation: baseline balance, endline means,
+difference-in-differences with a confidence interval, and attrition. All
+participants and outcomes are invented; no client or beneficiary data is used.
+"""
+from __future__ import annotations
+
+import math
+
+import numpy as np
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+import streamlit as st
+
+st.set_page_config(
+    page_title="RCT Demonstration — Public Demo",
+    page_icon="🧪",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+st.markdown(
+    """
+    <style>
+      .stApp { background: #FFFFFF; color: #000000; }
+      h1, h2, h3, h4, p, li, label, span, div { color: #000000; }
+      [data-testid="stSidebar"] { background: #FFFFFF; border-right: 2px solid #000000; }
+      [data-testid="stMetric"] { border: 2px solid #000000; border-radius: 0; padding: 14px; }
+      [data-testid="stMetricLabel"], [data-testid="stMetricValue"] { color: #000000; }
+      hr { border-color: #000000; }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+BLUE = "#0057D9"
+GREEN = "#008F3D"
+RED = "#D11A00"
+INK = "#000000"
+DISTRICTS = ["Gulu", "Kitgum", "Pader", "Amuru"]
+
+
+@st.cache_data(show_spinner=False)
+def build_data() -> pd.DataFrame:
+    rng = np.random.default_rng(20250614)
+    n = 1800
+    arm = rng.choice(["Treatment", "Control"], size=n, p=[0.5, 0.5])
+    district = rng.choice(DISTRICTS, size=n)
+    female = rng.choice(["Female", "Male"], size=n, p=[0.52, 0.48])
+    age = np.round(rng.normal(31, 9, size=n), 0)
+    baseline = np.clip(rng.normal(35, 9, size=n), 0, 100)
+    effect = np.where(arm == "Treatment", 11.5, 0.0)
+    d_effect = np.where(np.isin(district, ["Gulu", "Kitgum"]), 1.5, -0.5)
+    endline = np.clip(baseline + effect + d_effect + rng.normal(0, 7, size=n), 0, 100)
+    retained = rng.random(size=n) > np.where(arm == "Treatment", 0.07, 0.09)
+    return pd.DataFrame({
+        "id": [f"P-{i:05d}" for i in range(1, n + 1)],
+        "arm": arm, "district": district, "sex": female, "age": age,
+        "baseline": np.round(baseline, 1), "endline": np.round(endline, 1),
+        "retained": retained,
+    })
+
+
+def chart_layout(fig):
+    fig.update_layout(
+        paper_bgcolor="#FFFFFF", plot_bgcolor="#FFFFFF",
+        font={"color": INK, "family": "Arial, sans-serif", "size": 12},
+        margin={"l": 10, "r": 10, "t": 10, "b": 10},
+        hoverlabel={"bgcolor": INK, "font": {"color": "#FFFFFF"}},
+    )
+    fig.update_xaxes(gridcolor="#000000", zeroline=False, linecolor=INK)
+    fig.update_yaxes(gridcolor="#000000", zeroline=False, linecolor=INK)
+    return fig
+
+
+df = build_data()
+
+st.title("Randomised trial — public demo")
+st.write(
+    "A public demonstration of a two-arm randomised evaluation: baseline balance, "
+    "difference-in-differences, uncertainty and attrition. "
+    "**All participants and results are synthetic.**"
+)
+
+with st.sidebar:
+    st.header("Filters")
+    district = st.selectbox("District", ["All districts"] + DISTRICTS)
+    retained_only = st.checkbox("Analyse retained participants only", value=True)
+
+view = df if district == "All districts" else df[df["district"] == district]
+if retained_only:
+    view = view[view["retained"]]
+
+if view.empty or view["arm"].nunique() < 2:
+    st.warning("No comparison available for this selection.")
+    st.stop()
+
+analysis = view.copy()
+analysis["change"] = analysis["endline"] - analysis["baseline"]
+t = analysis[analysis["arm"] == "Treatment"]["change"]
+c = analysis[analysis["arm"] == "Control"]["change"]
+did = float(t.mean() - c.mean())
+se = math.sqrt(t.var(ddof=1) / len(t) + c.var(ddof=1) / len(c))
+lo, hi = did - 1.96 * se, did + 1.96 * se
+pvalue = math.erfc(abs(did / se) / math.sqrt(2)) if se > 0 else 1.0
+attrition = 100.0 * (1 - df["retained"].mean()) if district == "All districts" else 100.0 * (1 - df[df["district"] == district]["retained"].mean())
+
+c1, c2, c3, c4 = st.columns(4)
+c1.metric("Participants analysed", f"{len(view):,}")
+c2.metric("Treatment effect (DiD)", f"{did:+.1f} pts")
+c3.metric("p-value", f"{pvalue:.3f}")
+c4.metric("Attrition", f"{attrition:.1f}%")
+
+if pvalue < 0.05 and did > 0:
+    st.markdown('<p style="color:#008F3D;font-weight:700;">Result: a statistically significant positive effect.</p>', unsafe_allow_html=True)
+elif pvalue < 0.05 and did < 0:
+    st.markdown('<p style="color:#D11A00;font-weight:700;">Result: a statistically significant negative effect.</p>', unsafe_allow_html=True)
+else:
+    st.markdown('<p style="color:#0057D9;font-weight:700;">Result: no statistically significant effect detected.</p>', unsafe_allow_html=True)
+
+st.markdown("---")
+left, right = st.columns(2)
+
+long = analysis.melt(id_vars="arm", value_vars=["baseline", "endline"], var_name="Phase", value_name="Outcome")
+with left:
+    st.subheader("Outcome by arm, baseline and endline")
+    fig = px.bar(long, x="Phase", y="Outcome", color="arm", barmode="group",
+                 color_discrete_sequence=[BLUE, GREEN],
+                 labels={"Outcome": "Outcome score (0-100)", "Phase": "Round"})
+    st.plotly_chart(chart_layout(fig), width="stretch")
+
+with right:
+    st.subheader("Difference-in-differences")
+    fig = go.Figure(go.Bar(
+        x=["Treatment minus control"], y=[did],
+        error_y={"type": "data", "array": [1.96 * se], "visible": True},
+        marker_color=GREEN if did > 0 else RED,
+    ))
+    fig.update_layout(paper_bgcolor="#FFFFFF", plot_bgcolor="#FFFFFF",
+                      font={"color": INK}, yaxis_title="Change in outcome (points)",
+                      margin={"l": 10, "r": 10, "t": 10, "b": 10})
+    fig.update_yaxes(gridcolor="#000000", zeroline=False, linecolor=INK)
+    st.plotly_chart(fig, width="stretch")
+    st.markdown(f'<p style="color:#000000;">95% confidence interval: {lo:+.1f} to {hi:+.1f} points.</p>', unsafe_allow_html=True)
+
+left, right = st.columns(2)
+with left:
+    st.subheader("Outcome distribution by arm")
+    fig = px.histogram(analysis, x="endline", color="arm", barmode="overlay", opacity=0.6,
+                       color_discrete_sequence=[BLUE, GREEN],
+                       labels={"endline": "Endline outcome"})
+    st.plotly_chart(chart_layout(fig), width="stretch")
+
+with right:
+    st.subheader("Baseline balance")
+    balance = analysis.groupby("arm", as_index=False).agg(
+        Age=("age", "mean"), Female_pct=("sex", lambda s: 100 * (s == "Female").mean()),
+        Baseline=("baseline", "mean")).round(1)
+    st.dataframe(balance, hide_index=True, width="stretch")
+    st.markdown('<p style="color:#000000;">Baseline characteristics should be close across arms in a well-randomised trial.</p>', unsafe_allow_html=True)
+
+st.markdown("---")
+st.markdown('<p style="color:#000000;font-size:0.85rem;">Public demo · synthetic data only · built with Streamlit and Plotly</p>', unsafe_allow_html=True)

@@ -125,14 +125,14 @@ with left:
     st.subheader("Pledged versus paid, by month")
     fig = px.line(monthly, x="month", y="USD", color="Series",
                   color_discrete_sequence=[BLUE, GREEN], labels={"month": "Month"})
-    st.plotly_chart(chart_layout(fig), use_container_width=True)
+    st.plotly_chart(chart_layout(fig), width="stretch")
 
 by_sector = view.groupby("sector", as_index=False)["paid_usd"].sum().sort_values("paid_usd", ascending=False)
 with right:
     st.subheader("Paid by sector")
     fig = px.bar(by_sector, x="sector", y="paid_usd", color_discrete_sequence=[BLUE],
                  labels={"paid_usd": "USD paid", "sector": "Sector"})
-    st.plotly_chart(chart_layout(fig), use_container_width=True)
+    st.plotly_chart(chart_layout(fig), width="stretch")
 
 left, right = st.columns(2)
 by_status = view.groupby("status", as_index=False)["pledge_usd"].sum()
@@ -140,14 +140,14 @@ with left:
     st.subheader("Pledged by status")
     fig = px.pie(by_status, names="status", values="pledge_usd", hole=0.55,
                  color_discrete_sequence=[GREEN, BLUE, RED])
-    st.plotly_chart(chart_layout(fig), use_container_width=True)
+    st.plotly_chart(chart_layout(fig), width="stretch")
 
 by_donor = view.groupby("donor", as_index=False)["paid_usd"].sum().sort_values("paid_usd", ascending=False)
 with right:
     st.subheader("Paid by donor")
     fig = px.bar(by_donor, x="donor", y="paid_usd", color_discrete_sequence=[INK],
                  labels={"paid_usd": "USD paid", "donor": "Donor"})
-    st.plotly_chart(chart_layout(fig), use_container_width=True)
+    st.plotly_chart(chart_layout(fig), width="stretch")
 
 st.markdown("---")
 st.markdown(

@@ -123,14 +123,14 @@ with left:
     st.subheader("Volume delivered by month and grade")
     fig = px.bar(monthly, x="month", y="kg", color="grade", barmode="stack",
                  color_discrete_sequence=PALETTE, labels={"kg": "kg delivered", "month": "Month"})
-    st.plotly_chart(chart_layout(fig), use_container_width=True)
+    st.plotly_chart(chart_layout(fig), width="stretch")
 
 season = view.groupby("season", as_index=False)["ugx"].sum()
 with right:
     st.subheader("Purchase value by season")
     fig = px.bar(season, x="season", y="ugx", color_discrete_sequence=[BLUE],
                  labels={"ugx": "UGX", "season": "Season"})
-    st.plotly_chart(chart_layout(fig), use_container_width=True)
+    st.plotly_chart(chart_layout(fig), width="stretch")
 
 left, right = st.columns(2)
 districts = view.groupby("district", as_index=False)["kg"].sum().sort_values("kg", ascending=False)
@@ -138,14 +138,14 @@ with left:
     st.subheader("Deliveries by district")
     fig = px.bar(districts, x="kg", y="district", orientation="h", color_discrete_sequence=[GREEN],
                  labels={"kg": "kg delivered", "district": "District"})
-    st.plotly_chart(chart_layout(fig), use_container_width=True)
+    st.plotly_chart(chart_layout(fig), width="stretch")
 
 grade_mix = view.groupby("grade", as_index=False)["kg"].sum()
 with right:
     st.subheader("Grade mix")
     fig = px.pie(grade_mix, names="grade", values="kg", hole=0.55,
                  color_discrete_sequence=PALETTE)
-    st.plotly_chart(chart_layout(fig), use_container_width=True)
+    st.plotly_chart(chart_layout(fig), width="stretch")
 
 st.markdown("---")
 st.markdown(
