@@ -24,7 +24,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from _shared.ask_ai import ask_ai
 
 st.set_page_config(
-    page_title="Supervised Learning — Public Demo",
+    page_title="Supervised Learning",
     page_icon="🤖",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -117,7 +117,7 @@ def chart_layout(fig, height=340):
     return fig
 
 
-st.title("Supervised learning — public demo")
+st.title("Supervised learning")
 ask_ai()
 
 st.write(
