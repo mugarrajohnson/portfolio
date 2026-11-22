@@ -14,7 +14,7 @@ no file upload, and no client, farmer, donor or beneficiary information in any a
 | Traceability study | `streamlit-apps/traceability_study/app.py` | `https://jm-traceability-demo.streamlit.app` (placeholder) |
 | Randomised trial | `streamlit-apps/rct_demonstration/app.py` | `https://jm-rct-demo.streamlit.app` (placeholder) |
 | Cohort analysis | `streamlit-apps/cohort_analysis/app.py` | `https://jm-cohort-analysis-demo.streamlit.app` (placeholder) |
-| Advanced analytics (period pills, deep links) | `streamlit-apps/advanced_dashboard_demo/app.py` | `https://jm-advanced-analytics-demo.streamlit.app` (placeholder) |
+| Advanced analytics (period pills) | `streamlit-apps/advanced_dashboard_demo/app.py` | `https://jm-advanced-analytics-demo.streamlit.app` (placeholder) |
 | Supervised learning (train + feature contributions) | `streamlit-apps/ml_supervised_demo/app.py` | `https://jm-supervised-learning-demo.streamlit.app` (placeholder) |
 
 ## Run locally

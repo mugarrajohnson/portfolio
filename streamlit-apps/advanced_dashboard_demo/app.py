@@ -199,14 +199,7 @@ k4.metric("Satisfaction", f"{sat:.2f} / 5", delta(sat, prev_sat))
 if not comparable:
     st.markdown("Previous-period comparison is unavailable for this window — the data does not cover a full preceding period.")
 
-query_raw = f"?period={period}&region={region}&segment={segment}"
-query_html = query_raw.replace("&", "&amp;")
-st.markdown(
-    f'<p style="font-size:0.85rem;">Showing {len(view):,} records from {start:%d %b %Y} to {last:%d %b %Y}. '
-    f'Deep link: <a href="{query_html}"><code>{query_html}</code></a> '
-    f'<button type="button" onclick="navigator.clipboard.writeText(location.href.split(\'?\')[0] + \'{query_raw}\')">Copy full link</button></p>',
-    unsafe_allow_html=True,
-)
+st.markdown(f"Showing {len(view):,} records from {start:%d %b %Y} to {last:%d %b %Y}.")
 
 tabs = st.tabs(["Overview", "Segments", "Trends", "Data & method"])
 
@@ -276,4 +269,4 @@ with tabs[3]:
                 "There is no database, upload or client data. Revenue and volume are synthetic.")
 
 st.markdown("---")
-st.markdown("Public demo · synthetic data only · built with Streamlit and Plotly")
+st.markdown("Public demo built with Streamlit and Plotly")
