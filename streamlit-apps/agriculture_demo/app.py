@@ -52,7 +52,7 @@ PALETTE = [BLUE, GREEN, RED, VIOLET]
 
 MONTHS = pd.date_range("2023-01-01", "2025-12-31", freq="D")
 REGIONS = {
-    "West": ["Masindi", "Kikuube", "Hoima", "Kibaale"],
+    "West": ["Masindi", "Bunyangabu", "Hoima", "Kibaale"],
     "Central": ["Kayunga", "Luuka", "Iganga", "Buyende"],
     "East": ["Mbale", "Sironko", "Kapchorwa", "Bududa"],
 }
