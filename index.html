@@ -144,6 +144,9 @@
   ]
 }
 </script>
+<style>
+@media (min-width: 768px) { #dashboards article { min-height: 360px; } }
+</style>
 </head>
 
 <body>
@@ -168,7 +171,7 @@
 <span class="sr-only sm:hidden">Johnson Mugarra, home</span>
 </a>
 
-<ul class="hidden md:flex gap-8 items-center nav-links">
+<ul class="hidden md:flex gap-4 items-center nav-links">
 <li><a class="text-sm font-medium text-ink/70 hover:text-ink transition-colors" href="#about">About</a></li>
 <li><a class="text-sm font-medium text-ink/70 hover:text-ink transition-colors" href="#experience">Experience</a></li>
 <li><a class="text-sm font-medium text-ink/70 hover:text-ink transition-colors" href="#now">Now</a></li>
@@ -198,7 +201,7 @@
 <button aria-label="Close menu" class="absolute top-6 right-6 text-ink p-2" id="mob-close" type="button">
 <svg aria-hidden="true" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
 </button>
-<nav aria-label="Mobile" class="mob-links flex flex-col gap-6 text-center text-2xl font-headline">
+<nav aria-label="Mobile" class="mob-links flex flex-col gap-4 text-center text-2xl font-headline">
 <a class="text-ink hover:text-primary transition-colors" href="#about">About</a>
 <a class="text-ink hover:text-primary transition-colors" href="#experience">Experience</a>
 <a class="text-ink hover:text-primary transition-colors" href="#now">Now</a>
@@ -233,12 +236,12 @@
 
 <div class="relative z-10 w-full px-6 pb-16 lg:pb-24 pt-44">
 <div class="max-w-7xl mx-auto">
-<div class="hero-copy space-y-7 max-w-3xl">
+<div class="hero-copy space-y-5 max-w-3xl">
 <p class="flex items-center gap-3 font-mono text-[11px] sm:text-xs uppercase tracking-[0.22em] text-primary"><span aria-hidden="true" class="w-8 h-px bg-brand"></span>Data scientist and ML engineer</p>
 
 <h1 class="font-bold text-ink text-display" id="hero-title">Johnson <span class="hero-accent">Mugarra</span></h1>
 
-<p class="text-lg lg:text-xl text-ink/80 leading-relaxed max-w-2xl">Six years turning field data into evidence across East Africa and the Horn of Africa. Today that means evaluation research for private companies, UN agencies and international NGOs, and the data systems behind the vanilla and coffee value chains. Earlier in my career I ran evaluations of health programs for USAID SITES, and built the vanilla harvest forecasting model for Uganda's Ministry of Agriculture (MAAIF).</p>
+<p class="text-lg lg:text-xl text-ink/80 leading-relaxed max-w-2xl">Six years turning field data into evidence across East Africa and the Horn of Africa. Today that means evaluation research for private companies, UN agencies and international NGOs, and the data systems behind agricultural value chains. Earlier in my career I ran evaluations of health programs for USAID SITES, and built a harvest forecasting model for Uganda's Ministry of Agriculture (MAAIF).</p>
 
 <div class="flex flex-wrap items-center gap-x-5 gap-y-4 pt-1">
 <a class="btn-primary group pr-2" href="#contact">Start a conversation<span aria-hidden="true" class="ml-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/15 transition-transform duration-300 ease-out group-hover:translate-x-0.5">&rarr;</span></a>
@@ -248,7 +251,7 @@
 Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 
-<dl class="grid grid-cols-3 gap-6 max-w-xl pt-7 border-t border-line/[0.14]">
+<dl class="grid grid-cols-3 gap-4 max-w-xl pt-7 border-t border-line/[0.14]">
 <div class="reveal"><dt class="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">In the field</dt><dd class="stat-value text-2xl lg:text-3xl font-headline text-ink mt-1.5">6+ yrs</dd></div>
 <div class="reveal"><dt class="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">Organizations served</dt><dd class="stat-value text-2xl lg:text-3xl font-headline text-ink mt-1.5">15+</dd></div>
 <div class="reveal"><dt class="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">Peer-reviewed papers</dt><dd class="stat-value text-2xl lg:text-3xl font-headline text-ink mt-1.5">2</dd></div>
@@ -265,7 +268,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 
 <!-- ══════════════════════════════════ METRICS ══════════════════════════════════ -->
 <section aria-label="Headline results" class="py-12 plate mx-6 max-w-7xl lg:mx-auto" id="metrics">
-<dl class="grid grid-cols-2 lg:grid-cols-4 gap-8 divide-y sm:divide-y-0 lg:divide-x divide-line/5">
+<dl class="grid grid-cols-2 lg:grid-cols-4 gap-4 divide-y sm:divide-y-0 lg:divide-x divide-line/5">
 <div class="text-center px-4 metric">
 <dd class="metric-value text-4xl font-headline text-secondary mb-2">Predictive Modeling</dd>
 <dt class="text-sm text-ink/65">Harvest timing research, field and climate data</dt>
@@ -289,7 +292,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <section aria-labelledby="clients-title" class="py-20 px-6" id="clients">
 <div class="max-w-7xl mx-auto">
 <h2 class="sr-only" id="clients-title">Organizations I have worked with</h2>
-<ul class="flex flex-wrap justify-center gap-8 lg:gap-12 items-center opacity-70 hover:opacity-100 transition-opacity duration-500 grayscale hover:grayscale-0">
+<ul class="flex flex-wrap justify-center gap-4 lg:gap-4 items-center opacity-70 hover:opacity-100 transition-opacity duration-500 grayscale hover:grayscale-0">
 <li><a href="https://agriculture.go.ug/" rel="noopener noreferrer" target="_blank"><img alt="MAAIF, Ministry of Agriculture, Animal Industry and Fisheries" class="h-12 w-auto object-contain" decoding="async" height="144" loading="lazy" src="img/MAAIF.png" width="412"/></a></li>
 <li><a href="https://statehouse.go.ug/" rel="noopener noreferrer" target="_blank"><img alt="Flag of Uganda" class="h-10 w-auto object-contain" decoding="async" height="120" loading="lazy" src="img/Uganda_Flag.png" width="174"/></a></li>
 <li><a href="https://mak.ac.ug" rel="noopener noreferrer" target="_blank"><img alt="Makerere University" class="h-12 w-auto object-contain" decoding="async" height="128" loading="lazy" src="img/Mak-Logo.png" width="128"/></a></li>
@@ -308,22 +311,22 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <section aria-labelledby="about-title" class="py-20 px-6" id="about">
 <div class="max-w-7xl mx-auto">
 
-<div class="grid lg:grid-cols-12 gap-16">
-<div class="lg:col-span-7 space-y-6 text-lg text-ink/75 leading-[1.78]">
+<div class="grid lg:grid-cols-12 gap-4">
+<div class="lg:col-span-7 space-y-4 text-lg text-ink/75 leading-[1.78]">
 <h2 class="text-4xl text-ink mb-8" id="about-title">Background</h2>
 
 <p>I began in management consulting at <strong class="text-ink font-semibold">Bronkar Uganda</strong>, conducting impact evaluations, developing workplans, research designs, survey tools, field research, and analysis for client studies. From there I moved into evaluation research for non-profits, working on field assessments and survey work in Uganda.</p>
 
 <p>The questions that mattered most in that work were causal ones: whether a program changed an outcome, or whether the outcome would have moved anyway. Answering that properly needs more than descriptive statistics, which is what took me to the M.Sc. in Data Science: machine learning, natural language processing, computer vision and Bayesian inference, with enough time on each to understand what the standard implementations are doing underneath.</p>
 
-<p>At <a class="text-primary hover:underline" href="https://www.usaid.gov" rel="noopener noreferrer" target="_blank">USAID SITES</a> I supported qualitative field research for health system studies, with deployments concentrated in Eastern and Northern Uganda, including facility readiness work for Health Information Exchange and review of electronic medical records against ART registers. Over the same period, with <a class="text-primary hover:underline" href="https://agriculture.go.ug/" rel="noopener noreferrer" target="_blank">MAAIF</a> and Makerere, I researched vanilla maturity and harvest timing using field measurements and climate data.</p>
+<p>At <a class="text-primary hover:underline" href="https://www.usaid.gov" rel="noopener noreferrer" target="_blank">USAID SITES</a> I supported qualitative field research for health system studies, with deployments concentrated in Eastern and Northern Uganda, including facility readiness work for Health Information Exchange and review of electronic medical records against ART registers. Over the same period, with <a class="text-primary hover:underline" href="https://agriculture.go.ug/" rel="noopener noreferrer" target="_blank">MAAIF</a> and Makerere, I researched crop maturity and harvest timing using field measurements and climate data.</p>
 
 <p>I maintain the farmer data system, pipelines, and dashboards. Earlier, at the <strong class="text-ink font-semibold">Center for Research and Communication</strong>, I coordinated proposals and provided technical input for evaluations covering design, sampling, tools, analysis, and reporting. Certified in Power BI, SAS, Tableau and Google project management.</p>
 
 <p class="pt-6"><a class="btn-primary group pr-2" href="#contact">Let's connect<span aria-hidden="true" class="ml-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-black/15 transition-transform duration-300 ease-out group-hover:translate-x-0.5">&rarr;</span></a></p>
 </div>
 
-<div class="lg:col-span-5 space-y-6">
+<div class="lg:col-span-5 space-y-4">
 <div class="plate ticked lift p-6 reveal"><h3 class="text-xl text-ink mb-2">Methods</h3><p class="text-ink/65">Machine learning, NLP, computer vision and Bayesian inference, from the statistics underneath to a model running in production.</p></div>
 <div class="plate ticked lift p-6 reveal"><h3 class="text-xl text-ink mb-2">Recent work</h3><p class="text-ink/65">Harvest forecasting, evaluation cycles cut from six weeks to ten days, and data-quality checks built into daily collection.</p></div>
 <div class="plate ticked lift p-6 reveal"><h3 class="text-xl text-ink mb-2">Certification standards</h3><p class="text-ink/65">Exporters answer to certification bodies like Control Union and Rainforest Alliance. Their standards call for records an auditor can trace from plot to shipment.</p></div>
@@ -340,7 +343,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 
 <h2 class="text-4xl text-ink" id="experience-title">Experience</h2>
 </div>
-<ol class="relative border-l border-line/10 ml-3 space-y-10">
+<ol class="relative border-l border-line/10 ml-3 space-y-4">
 
 <li class="ml-8 relative reveal">
 <span aria-hidden="true" class="absolute -left-[41px] top-1 w-3.5 h-3.5 rounded-full bg-brand ring-4 ring-background"></span>
@@ -361,7 +364,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <li class="ml-8 relative reveal">
 <span aria-hidden="true" class="absolute -left-[41px] top-1 w-3.5 h-3.5 rounded-full bg-secondary-fill ring-4 ring-background"></span>
 <p class="font-mono text-xs uppercase tracking-widest text-secondary mb-1">January 2024 to June 2025</p>
-<h3 class="text-xl text-ink">Researcher and Data Scientist, Vanilla Research</h3>
+<h3 class="text-xl text-ink">Researcher</h3>
 <p class="text-muted text-sm mb-3">Makerere University with MAAIF, CRS, and private partners, Uganda</p>
 <p class="text-ink/70">Researched vanilla maturity and harvest timing with supervisors in horticulture and statistics. Combined field measurements with satellite climate data and time-series models, applied thermal-time analysis, and helped establish the Kabanyolo demonstration plot. Work concluded with program funding closure.</p>
 </li>
@@ -406,7 +409,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <h2 class="text-4xl text-ink" id="now-title">Now</h2>
 </div>
 
-<ol class="relative border-l border-line/10 ml-3 space-y-10">
+<ol class="relative border-l border-line/10 ml-3 space-y-4">
 
 <li class="ml-8 relative reveal">
 <span aria-hidden="true" class="absolute -left-[41px] top-1 w-3.5 h-3.5 rounded-full bg-brand ring-4 ring-background"></span>
@@ -446,7 +449,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24" width="22"><polyline points="15 18 9 12 15 6"/></svg>
 </button>
 
-<ul aria-label="Projects. Use the arrow buttons or swipe to move between them." class="scroller proj-scroller flex gap-6 overflow-x-auto pb-4" id="proj-grid" tabindex="0">
+<ul aria-label="Projects. Use the arrow buttons or swipe to move between them." class="scroller proj-scroller flex gap-4 overflow-x-auto pb-4" id="proj-grid" tabindex="0">
 
 <!-- Vanilla supply chain -->
 <li class="plate overflow-hidden group proj-card" data-cat="ml forecasting">
@@ -456,7 +459,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 <div class="proj-body p-8">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Python</li><li class="chip">Prophet</li><li class="chip">NASA POWER API</li></ul>
-<h3 class="text-2xl text-ink mb-4">Vanilla supply chain predictive analytics</h3>
+<h3 class="text-xl text-ink mb-4">Agricultural supply chain predictive analytics</h3>
 <dl class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-line/10">
 <div><dd class="stat-value text-lg font-bold text-secondary">Field and climate</dd><dt class="text-xs text-faint">Data combined</dt></div>
 <div><dd class="stat-value text-lg font-bold text-primary">Policy input</dd><dt class="text-xs text-faint">Harvest timing</dt></div>
@@ -476,7 +479,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 <div class="proj-body p-8">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Python</li><li class="chip">Airflow</li><li class="chip">PostgreSQL</li></ul>
-<h3 class="text-2xl text-ink mb-4">Automated impact evaluation pipeline</h3>
+<h3 class="text-xl text-ink mb-4">Automated impact evaluation pipeline</h3>
 <dl class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-line/10">
 <div><dd class="stat-value text-lg font-bold text-secondary">Shorter cycles</dd><dt class="text-xs text-faint">Structured reporting</dt></div>
 <div><dd class="stat-value text-lg font-bold text-primary">Quality checks</dd><dt class="text-xs text-faint">Built into collection</dt></div>
@@ -492,8 +495,8 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 <div class="proj-body p-8">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Prophet</li><li class="chip">ARIMA</li><li class="chip">R</li></ul>
-<h3 class="text-2xl text-ink mb-4">Hierarchical time-series forecasting</h3>
-<p class="text-ink/65 mb-6">Hierarchical forecasting with Prophet and ARIMA for Ugandan vanilla yields. This is the method underneath the MAAIF harvest model, and what I presented at the national forum.</p>
+<h3 class="text-xl text-ink mb-4">Hierarchical time-series forecasting</h3>
+<p class="text-ink/65 mb-6">Hierarchical forecasting with Prophet and ARIMA for Ugandan agricultural yields. This is the method underneath the MAAIF harvest model, and what I presented at the national forum.</p>
 <p><a class="link-action text-primary hover:underline" href="#vanilla-harvest">Interactive harvest model <span aria-hidden="true" class="ml-1">&rarr;</span></a></p>
 </div>
 </li>
@@ -506,7 +509,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 <div class="proj-body p-8">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">SurveyCTO</li><li class="chip">R</li><li class="chip">Power BI</li></ul>
-<h3 class="text-2xl text-ink mb-4">Program evaluations for humanitarian clients</h3>
+<h3 class="text-xl text-ink mb-4">Program evaluations for humanitarian clients</h3>
 <dl class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-line/10">
 <div><dd class="stat-value text-lg font-bold text-secondary">Selected studies</dd><dt class="text-xs text-faint">Across sectors</dt></div>
 <div><dd class="text-lg font-bold text-primary">Inception to reporting</dd><dt class="text-xs text-faint">Scope of each study</dt></div>
@@ -523,7 +526,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 <div class="proj-body p-8">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">SurveyCTO</li><li class="chip">SQL</li><li class="chip">Power BI</li></ul>
-<h3 class="text-2xl text-ink mb-4">Malaria and HIV program evaluation</h3>
+<h3 class="text-xl text-ink mb-4">Malaria and HIV program evaluation</h3>
 <dl class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-line/10">
 <div><dd class="stat-value text-lg font-bold text-secondary">Field research</dd><dt class="text-xs text-faint">Eastern and Northern Uganda</dt></div>
 <div><dd class="stat-value text-lg font-bold text-primary">Health systems</dd><dt class="text-xs text-faint">Facility assessments</dt></div>
@@ -541,7 +544,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 <div class="proj-body p-8">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Python</li><li class="chip">NLP</li><li class="chip">Network analysis</li></ul>
-<h3 class="text-2xl text-ink mb-4">Social-media sentiment and information flow</h3>
+<h3 class="text-xl text-ink mb-4">Social-media sentiment and information flow</h3>
 <p class="text-ink/65 mb-6">MSc Data Science capstone at MAHE. Sentiment analysis of social-media posts, plus a network model with users as nodes and their interactions as edges, to study how information spreads across the graph.</p>
 <p><a class="link-action text-faint hover:text-ink transition-colors" href="#contact">Ask about this work <span aria-hidden="true" class="ml-1">&rarr;</span></a></p>
 </div>
@@ -555,7 +558,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 <div class="proj-body p-8">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Python</li><li class="chip">Computer vision</li><li class="chip">Deep learning</li></ul>
-<h3 class="text-2xl text-ink mb-4">Gesture and object recognition</h3>
+<h3 class="text-xl text-ink mb-4">Gesture and object recognition</h3>
 <p class="text-ink/65 mb-6">MSc Data Science capstone at MAHE. Machine perception for robotics: reading hand gestures such as a thumbs-up and recognizing objects from a camera feed, so a machine can work out what's in front of it.</p>
 <p><a class="link-action text-faint hover:text-ink transition-colors" href="#contact">Ask about this work <span aria-hidden="true" class="ml-1">&rarr;</span></a></p>
 </div>
@@ -569,7 +572,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 <div class="proj-body p-8">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Python</li><li class="chip">scikit-learn</li><li class="chip">Random forest</li></ul>
-<h3 class="text-2xl text-ink mb-4">Vanilla yield estimation model</h3>
+<h3 class="text-xl text-ink mb-4">Yield estimation model</h3>
 <dl class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-line/10">
 <div><dd class="stat-value text-lg font-bold text-secondary">101 kg</dd><dt class="text-xs text-faint">MAE, against a 158 kg baseline</dt></div>
 <div><dd class="stat-value text-lg font-bold text-primary">14</dd><dt class="text-xs text-faint">Farm features</dt></div>
@@ -587,7 +590,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 <div class="proj-body p-8">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Python</li><li class="chip">PostgreSQL</li><li class="chip">Prophet</li></ul>
-<h3 class="text-2xl text-ink mb-4">Farm data and analytics platform</h3>
+<h3 class="text-xl text-ink mb-4">Farm data and analytics platform</h3>
 <dl class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-line/10">
 <div><dd class="stat-value text-lg font-bold text-secondary">7</dd><dt class="text-xs text-faint">Automated pipelines</dt></div>
 <div><dd class="text-lg font-bold text-primary">Python + R</dd><dt class="text-xs text-faint">Orchestrated</dt></div>
@@ -605,7 +608,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 <div class="proj-body p-8">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">GeoPandas</li><li class="chip">Folium</li><li class="chip">GeoJSON</li></ul>
-<h3 class="text-2xl text-ink mb-4">Farmer plot geomapping</h3>
+<h3 class="text-xl text-ink mb-4">Farmer plot geomapping</h3>
 <p class="text-ink/65 mb-6">Turned GPS plot boundaries into interactive district maps for agrohub planning in Kayunga, Rubirizi and other districts: static grids for print, and browsable HTML maps of farmer plots for the field teams.</p>
 <p><a class="link-action text-faint hover:text-ink transition-colors" href="#contact">Ask about this work <span aria-hidden="true" class="ml-1">&rarr;</span></a></p>
 </div>
@@ -619,12 +622,12 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 <div class="proj-body p-8">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Python</li><li class="chip">R</li><li class="chip">Anker method</li></ul>
-<h3 class="text-2xl text-ink mb-4">Vanilla farmer living income study</h3>
+<h3 class="text-xl text-ink mb-4">Farmer living income study</h3>
 <dl class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-line/10">
 <div><dd class="stat-value text-lg font-bold text-secondary">212</dd><dt class="text-xs text-faint">Farmers surveyed</dt></div>
 <div><dd class="stat-value text-lg font-bold text-primary">485</dd><dt class="text-xs text-faint">Variables cleaned</dt></div>
 </dl>
-<p class="text-ink/65 mb-6">Measured the gap between what vanilla farmers earn and a living-income benchmark, using Anker and Fairtrade reference values. A modular Python and R pipeline cleaned 485 survey columns into an analysis-ready dataset and a written study.</p>
+<p class="text-ink/65 mb-6">Measured the gap between what farmers earn and a living-income benchmark, using Anker and Fairtrade reference values. A modular Python and R pipeline cleaned 485 survey columns into an analysis-ready dataset and a written study.</p>
 <p><a class="link-action text-faint hover:text-ink transition-colors" href="#contact">Ask about this work <span aria-hidden="true" class="ml-1">&rarr;</span></a></p>
 </div>
 </li>
@@ -637,8 +640,8 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 <div class="proj-body p-8">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Survey design</li><li class="chip">Python</li><li class="chip">Reporting</li></ul>
-<h3 class="text-2xl text-ink mb-4">Kayunga agrohub needs assessment</h3>
-<p class="text-ink/65 mb-6">Designed and analyzed a farmer needs assessment for a planned agrohub in Kayunga, covering who was surveyed, vanilla production, income and the challenges farmers named, written up as a report for management.</p>
+<h3 class="text-xl text-ink mb-4">Kayunga agrohub needs assessment</h3>
+<p class="text-ink/65 mb-6">Designed and analyzed a farmer needs assessment for a planned agrohub in Kayunga, covering who was surveyed, crop production, income and the challenges farmers named, written up as a report for management.</p>
 <p><a class="link-action text-faint hover:text-ink transition-colors" href="#contact">Ask about this work <span aria-hidden="true" class="ml-1">&rarr;</span></a></p>
 </div>
 </li>
@@ -699,7 +702,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <figcaption class="sr-only">Word cloud of the 120 most frequent words in the I Have a Dream speech. The largest and most frequent words are shown in blue and the rest in grey. Word size is proportional to the square root of how often the word appears.</figcaption>
 </figure>
 
-<ul class="flex flex-wrap gap-6 text-sm text-ink/65 justify-center">
+<ul class="flex flex-wrap gap-4 text-sm text-ink/65 justify-center">
 <li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-pollination"></span>Most frequent words</li>
 <li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-harvest"></span>Remaining words</li>
 </ul>
@@ -740,7 +743,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <figcaption class="sr-only">Radial tidy tree of a qualitative research codebook. Five themes branch into sub-themes and then individual codes. Distance from the centre is the level in the code hierarchy; the width of a branch is the number of coded excerpts filed under it. Record availability is blue, Paperless readiness amber, Workflow and workload green, Data quality grey and Facilitators and barriers red. Every node is focusable and reports its own name, its level and its excerpt count.</figcaption>
 </figure>
 
-<ul class="flex flex-wrap gap-6 text-sm text-ink/65 justify-center">
+<ul class="flex flex-wrap gap-4 text-sm text-ink/65 justify-center">
 <li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-records"></span>Record availability</li>
 <li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-paperless"></span>Paperless readiness</li>
 <li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-workflow"></span>Workflow and workload</li>
@@ -776,7 +779,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <figcaption class="sr-only">Time series of simulated pollination activity and projected harvest output from January 2024 to June 2026. Harvest peaks follow pollination peaks by 9 months, with main harvests in June and July and a secondary harvest in December and January.</figcaption>
 </figure>
 
-<ul class="flex flex-wrap gap-6 text-sm text-ink/65 justify-center">
+<ul class="flex flex-wrap gap-4 text-sm text-ink/65 justify-center">
 <li class="flex items-center"><span aria-hidden="true" class="legend-band band-main"></span>Main harvest window (Jun to Jul)</li>
 <li class="flex items-center"><span aria-hidden="true" class="legend-band band-second"></span>Secondary harvest (Dec to Jan)</li>
 <li class="flex items-center"><span aria-hidden="true" class="legend-rule rule-pollination"></span>Pollination activity</li>
@@ -811,7 +814,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <figcaption class="sr-only">Scatter plot of 2,000 synthetic transactions by predicted risk score and amount. Legitimate transactions cluster at low risk scores; confirmed fraud clusters above the 0.5 threshold at higher amounts.</figcaption>
 </figure>
 
-<ul class="flex flex-wrap gap-6 text-sm text-ink/65 justify-center">
+<ul class="flex flex-wrap gap-4 text-sm text-ink/65 justify-center">
 <li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-legit"></span>Legitimate</li>
 <li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-suspicious"></span>Suspicious</li>
 <li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-fraud"></span>Confirmed fraud</li>
@@ -841,7 +844,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <figcaption class="sr-only">Radial cluster tree of life. Every branch is a clade. The three domains are Eukaryota in blue, Bacteria in amber and Archaea in green. Angular position encodes ancestry only; with branch lengths shown, distance from the centre encodes evolutionary distance.</figcaption>
 </figure>
 
-<ul class="flex flex-wrap gap-6 text-sm text-ink/65 justify-center">
+<ul class="flex flex-wrap gap-4 text-sm text-ink/65 justify-center">
 <li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-eukaryota"></span>Eukaryota</li>
 <li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-bacteria"></span>Bacteria</li>
 <li class="flex items-center"><span aria-hidden="true" class="legend-dot dot-archaea"></span>Archaea</li>
@@ -887,69 +890,69 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <h2 class="text-4xl text-ink mb-4" id="dashboards-title">Public demonstration dashboards</h2>
 </div>
 
-<div class="grid md:grid-cols-2 gap-8">
-<article class="plate p-8">
+<div class="grid md:grid-cols-2 gap-3">
+<article class="plate p-6 flex flex-col">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Streamlit</li><li class="chip">Plotly</li><li class="chip">Synthetic data</li></ul>
-<h3 class="text-2xl text-ink mb-4">Vanilla value chain</h3>
-<p class="text-ink mb-6">A public version of the kind of monitoring dashboard built for agricultural programmes: filtered receipts, delivery volumes by month and grade, value by season, and district-level cuts. Every figure is synthetic.</p>
-<!-- PLACEHOLDER LINK: replace with the live Streamlit Cloud URL after deployment (see streamlit-apps/README.md). -->
-<a class="btn-primary group pr-2" href="https://vanila.streamlit.app" rel="noopener noreferrer" target="_blank">Open live demo<span aria-hidden="true" class="ml-3 inline-flex">&rarr;</span></a>
-</article>
-
-<article class="plate p-8">
-<ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Streamlit</li><li class="chip">Plotly</li><li class="chip">Synthetic data</li></ul>
-<h3 class="text-2xl text-ink mb-4">Contributions analytics</h3>
-<p class="text-ink mb-6">A public financial-monitoring demo: pledged versus paid over time, payment rates, sector breakdowns and donor-level views. The donors and amounts are invented for the demonstration.</p>
+<h3 class="text-xl text-ink mb-4">Contributions analytics</h3>
+<p class="text-ink mb-6 flex-1">A public financial-monitoring demo: pledged versus paid over time, payment rates, sector breakdowns and donor-level views. The donors and amounts are invented for the demonstration.</p>
 <!-- PLACEHOLDER LINK: replace with the live Streamlit Cloud URL after deployment (see streamlit-apps/README.md). -->
 <a class="btn-primary group pr-2" href="https://contributionanalysis.streamlit.app" rel="noopener noreferrer" target="_blank">Open live demo<span aria-hidden="true" class="ml-3 inline-flex">&rarr;</span></a>
 </article>
 
-<article class="plate p-8">
+<article class="plate p-6 flex flex-col">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Streamlit</li><li class="chip">OECD-DAC</li><li class="chip">Synthetic data</li></ul>
-<h3 class="text-2xl text-ink mb-4">Endline evaluation</h3>
-<p class="text-ink mb-6">Baseline, midline and endline results for livelihood indicators, scored against all six OECD-DAC criteria and disaggregated by sex, age and disability. See at a glance whether a project met its targets.</p>
+<h3 class="text-xl text-ink mb-4">Endline evaluation</h3>
+<p class="text-ink mb-6 flex-1">Baseline, midline and endline results for livelihood indicators, scored against all six OECD-DAC criteria and disaggregated by sex, age and disability. See at a glance whether a project met its targets.</p>
 <!-- PLACEHOLDER LINK: replace with the live Streamlit Cloud URL after deployment (see streamlit-apps/README.md). -->
 <a class="btn-primary group pr-2" href="https://endline.streamlit.app" rel="noopener noreferrer" target="_blank">Open live demo<span aria-hidden="true" class="ml-3 inline-flex">&rarr;</span></a>
 </article>
 
-<article class="plate p-8">
+<article class="plate p-6 flex flex-col">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Streamlit</li><li class="chip">Traceability</li><li class="chip">Synthetic data</li></ul>
-<h3 class="text-2xl text-ink mb-4">Traceability study</h3>
-<p class="text-ink mb-6">How completely a supply chain can be traced from farm to exporter: where records break, why gaps happen, and how long a query takes to resolve — by district, commodity and quarter.</p>
+<h3 class="text-xl text-ink mb-4">Traceability study</h3>
+<p class="text-ink mb-6 flex-1">How completely a supply chain can be traced from farm to exporter: where records break, why gaps happen, and how long a query takes to resolve — by district, commodity and quarter.</p>
 <!-- PLACEHOLDER LINK: replace with the live Streamlit Cloud URL after deployment (see streamlit-apps/README.md). -->
 <a class="btn-primary group pr-2" href="https://traceability-study.streamlit.app" rel="noopener noreferrer" target="_blank">Open live demo<span aria-hidden="true" class="ml-3 inline-flex">&rarr;</span></a>
 </article>
 
-<article class="plate p-8">
+<article class="plate p-6 flex flex-col">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Streamlit</li><li class="chip">RCT</li><li class="chip">Synthetic data</li></ul>
-<h3 class="text-2xl text-ink mb-4">Randomised trial demo</h3>
-<p class="text-ink mb-6">A two-arm trial walked through baseline balance, difference-in-differences with a confidence interval, p-value and attrition — the logic of an impact evaluation without any real participants.</p>
+<h3 class="text-xl text-ink mb-4">Randomised trial demo</h3>
+<p class="text-ink mb-6 flex-1">A two-arm trial walked through baseline balance, difference-in-differences with a confidence interval, p-value and attrition — the logic of an impact evaluation without any real participants.</p>
 <!-- PLACEHOLDER LINK: replace with the live Streamlit Cloud URL after deployment (see streamlit-apps/README.md). -->
 <a class="btn-primary group pr-2" href="https://rctrials.streamlit.app" rel="noopener noreferrer" target="_blank">Open live demo<span aria-hidden="true" class="ml-3 inline-flex">&rarr;</span></a>
 </article>
 
-<article class="plate p-8">
+<article class="plate p-6 flex flex-col">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Streamlit</li><li class="chip">Cohorts</li><li class="chip">Synthetic data</li></ul>
-<h3 class="text-2xl text-ink mb-4">Cohort analysis</h3>
-<p class="text-ink mb-6">Twelve months of programme cohorts: retention curves, a cohort-by-month heatmap, completion rates and outcomes by intake. Built to show how participation changes over time.</p>
+<h3 class="text-xl text-ink mb-4">Cohort analysis</h3>
+<p class="text-ink mb-6 flex-1">Twelve months of programme cohorts: retention curves, a cohort-by-month heatmap, completion rates and outcomes by intake. Built to show how participation changes over time.</p>
 <!-- PLACEHOLDER LINK: replace with the live Streamlit Cloud URL after deployment (see streamlit-apps/README.md). -->
 <a class="btn-primary group pr-2" href="https://cohort-analysi.streamlit.app" rel="noopener noreferrer" target="_blank">Open live demo<span aria-hidden="true" class="ml-3 inline-flex">&rarr;</span></a>
 </article>
 
-<article class="plate p-8 md:col-span-2">
+<article class="plate p-6 flex flex-col">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Streamlit</li><li class="chip">Plotly</li><li class="chip">Synthetic data</li></ul>
-<h3 class="text-2xl text-ink mb-4">Advanced analytics dashboard</h3>
-<p class="text-ink mb-6">A shareable analytical app: period presets, region and segment filters, KPI deltas against the previous period, four interchangeable views, dual-axis and heatmap charts, a what-if price scenario and CSV export of the filtered records.</p>
+<h3 class="text-xl text-ink mb-4">Advanced analytics dashboard</h3>
+<p class="text-ink mb-6 flex-1">A shareable analytical app: period presets, region and segment filters, KPI deltas against the previous period, four interchangeable views, dual-axis and heatmap charts, a what-if price scenario and CSV export of the filtered records.</p>
 <!-- PLACEHOLDER LINK: replace with the live Streamlit Cloud URL after deployment (see streamlit-apps/README.md). -->
 <a class="btn-primary group pr-2" href="https://advanceddashboarddemo.streamlit.app" rel="noopener noreferrer" target="_blank">Open live demo<span aria-hidden="true" class="ml-3 inline-flex">&rarr;</span></a>
 </article>
 
-<article class="plate p-8">
+<article class="plate p-6 flex flex-col">
 <ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Streamlit</li><li class="chip">scikit-learn</li><li class="chip">Synthetic data</li></ul>
-<h3 class="text-2xl text-ink mb-4">Supervised learning demo</h3>
-<p class="text-ink mb-6">Train a regression model on synthetic vanilla-farm data, read the fitted equation, inspect each feature's contribution, then change the inputs and watch the prediction and its contribution waterfall adjust in real time.</p>
+<h3 class="text-xl text-ink mb-4">Supervised learning demo</h3>
+<p class="text-ink mb-6 flex-1">Train a regression model on synthetic farm data, read the fitted equation, inspect each feature's contribution, then change the inputs and watch the prediction and its contribution waterfall adjust in real time.</p>
 <!-- PLACEHOLDER LINK: replace with the live Streamlit Cloud URL after deployment (see streamlit-apps/README.md). -->
 <a class="btn-primary group pr-2" href="https://ml-predictive-analytics.streamlit.app" rel="noopener noreferrer" target="_blank">Open live demo<span aria-hidden="true" class="ml-3 inline-flex">&rarr;</span></a>
+</article>
+
+<article class="plate p-6 flex flex-col">
+<ul aria-label="Stack" class="flex flex-wrap gap-2 mb-4"><li class="chip">Streamlit</li><li class="chip">Plotly</li><li class="chip">Synthetic data</li></ul>
+<h3 class="text-xl text-ink mb-4">Agricultural value chain</h3>
+<p class="text-ink mb-6 flex-1">A public version of the kind of monitoring dashboard built for agricultural programmes: filtered receipts, delivery volumes by month and grade, value by season, and district-level cuts. Every figure is synthetic.</p>
+<!-- PLACEHOLDER LINK: replace with the live Streamlit Cloud URL after deployment (see streamlit-apps/README.md). -->
+<a class="btn-primary group pr-2" href="https://vanila.streamlit.app" rel="noopener noreferrer" target="_blank">Open live demo<span aria-hidden="true" class="ml-3 inline-flex">&rarr;</span></a>
 </article>
 </div>
 </div>
@@ -979,7 +982,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </ul>
 </div>
 
-<div class="grid lg:grid-cols-2 gap-12 lg:gap-16">
+<div class="grid lg:grid-cols-2 gap-4 lg:gap-4">
 
 <div class="plate p-8">
 <h3 class="text-xl text-ink mb-6">Tools and where they were used</h3>
@@ -1023,7 +1026,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </dl>
 </div>
 
-<div class="plate p-8 space-y-6">
+<div class="plate p-8 space-y-4">
 <h3 class="text-xl text-ink">Other tools</h3>
 <div><p class="text-sm text-faint mb-3">From the MSc, applied in capstone projects</p><ul class="flex flex-wrap gap-2"><li class="chip">Machine learning</li><li class="chip">NLP</li><li class="chip">Computer vision</li><li class="chip">Bayesian inference</li></ul></div>
 <div><p class="text-sm text-faint mb-3">Visualisation</p><ul class="flex flex-wrap gap-2"><li class="chip">D3.js (the live visualisations on this page)</li><li class="chip">Tableau (certified)</li><li class="chip">Looker Studio</li></ul></div>
@@ -1042,8 +1045,8 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <h2 class="text-4xl text-ink" id="contact-title">Let's talk about a project</h2>
 </div>
 
-<div class="grid lg:grid-cols-2 gap-12 lg:gap-16">
-<div class="space-y-6">
+<div class="grid lg:grid-cols-2 gap-4 lg:gap-4">
+<div class="space-y-4">
 <ul class="space-y-4">
 <li class="flex items-center gap-2 p-4 plate">
 <a class="flex items-center flex-1 min-w-0 group" href="mailto:johnsonmugarra@yahoo.com">
@@ -1074,8 +1077,8 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 </div>
 
-<form class="plate p-8 space-y-6 self-start" id="contact-form" novalidate="">
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<form class="plate p-8 space-y-4 self-start" id="contact-form" novalidate="">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 <div><label class="field-label" for="fname">Name <span aria-hidden="true">*</span></label><input aria-required="true" autocomplete="name" class="field" id="fname" name="name" placeholder="Your name" required="" type="text"/></div>
 <div><label class="field-label" for="femail">Email <span aria-hidden="true">*</span></label><input aria-required="true" autocomplete="email" class="field" id="femail" name="email" placeholder="your@email.com" required="" type="email"/></div>
 </div>
@@ -1099,7 +1102,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 
 <h2 class="text-4xl text-ink mb-4" id="testimonials-title">Testimonials</h2>
 </div>
-<ul class="grid lg:grid-cols-3 gap-8">
+<ul class="grid lg:grid-cols-3 gap-4">
 <li class="plate ticked p-8 reveal">
 <blockquote class="text-ink/75 leading-[1.78] mb-6 italic">"Johnson's forecasts changed how we plan. He combined satellite data with our field measurements, and the results went straight into briefings at the highest levels of government."</blockquote>
 <div class="flex items-center">
@@ -1136,9 +1139,9 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <div class="pub-carousel relative">
 <button aria-controls="pub-grid" aria-label="Previous publication" class="carousel-nav carousel-nav-prev" data-carousel-prev="" type="button"><svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24" width="22"><polyline points="15 18 9 12 15 6"/></svg></button>
 
-<ul aria-label="Publications and presentations. Use the arrow buttons or swipe." class="scroller pub-scroller flex gap-6 overflow-x-auto pb-4" id="pub-grid" tabindex="0">
+<ul aria-label="Publications and presentations. Use the arrow buttons or swipe." class="scroller pub-scroller flex gap-4 overflow-x-auto pb-4" id="pub-grid" tabindex="0">
 
-<li class="plate ticked p-8 flex gap-6 pub-item">
+<li class="plate ticked p-8 flex gap-4 pub-item">
 <span aria-hidden="true" class="w-14 h-14 rounded-xl bg-tertiary/20 flex items-center justify-center text-tertiary shrink-0"><svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="28"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
 <div>
 <h3 class="text-xl text-ink mb-2">Unravelling Yield and Yield-Related Traits in Soybean Using GGE Biplot and Path Analysis</h3>
@@ -1149,7 +1152,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 </li>
 
-<li class="plate ticked p-8 flex gap-6 pub-item">
+<li class="plate ticked p-8 flex gap-4 pub-item">
 <span aria-hidden="true" class="w-14 h-14 rounded-xl bg-tertiary/20 flex items-center justify-center text-tertiary shrink-0"><svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="28"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
 <div>
 <h3 class="text-xl text-ink mb-2">Identifying Optimal Lines for Enhanced Symbiotic Performance in a Mini-Core Collection of Cowpea</h3>
@@ -1160,17 +1163,17 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 </li>
 
-<li class="plate ticked p-8 flex gap-6 pub-item">
+<li class="plate ticked p-8 flex gap-4 pub-item">
 <span aria-hidden="true" class="w-14 h-14 rounded-xl bg-brand/20 flex items-center justify-center text-primary shrink-0"><svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="28"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span>
 <div>
 <h3 class="text-xl text-ink mb-2">National forum presentation on agricultural analytics</h3>
 <p class="text-sm text-primary mb-3">Makerere University</p>
-<p class="text-ink/65 mb-4">Presented vanilla supply-chain research combining satellite and ground data with recommendations for agricultural policy.</p>
+<p class="text-ink/65 mb-4">Presented agricultural supply-chain research combining satellite and ground data with recommendations for agricultural policy.</p>
 <ul class="flex flex-wrap gap-2"><li class="px-2 py-1 rounded bg-brand/10 border border-brand/20 text-xs text-primary">ML / AI</li><li class="px-2 py-1 rounded bg-brand/10 border border-brand/20 text-xs text-primary">Policy input</li><li class="px-2 py-1 rounded bg-brand/10 border border-brand/20 text-xs text-primary">Agriculture</li></ul>
 </div>
 </li>
 
-<li class="plate ticked p-8 flex gap-6 pub-item">
+<li class="plate ticked p-8 flex gap-4 pub-item">
 <span aria-hidden="true" class="w-14 h-14 rounded-xl bg-secondary-fill/20 flex items-center justify-center text-secondary shrink-0"><svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="28"><path d="M2 3h20v13H2z"/><path d="M8 21l4-5 4 5"/><path d="M12 16v2"/><path d="M7 8h10M7 11h6"/></svg></span>
 <div>
 <h3 class="text-xl text-ink mb-2">Impact evaluation workshop</h3>
@@ -1201,8 +1204,8 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 <h2 class="text-4xl text-ink" id="education-title">Education and certifications</h2>
 </div>
 
-<div class="grid lg:grid-cols-2 gap-12">
-<div class="space-y-6">
+<div class="grid lg:grid-cols-2 gap-4">
+<div class="space-y-4">
 <h3 class="text-sm font-mono text-faint uppercase tracking-widest font-normal">Education</h3>
 <div class="plate ticked lift p-6 flex items-start gap-4 reveal">
 <img alt="" class="h-12 w-12 object-contain rounded shrink-0" decoding="async" height="144" loading="lazy" src="img/mahe-logo.png" width="230"/>
@@ -1222,7 +1225,7 @@ Request CV <span class="sr-only">(opens your email app)</span></a>
 </div>
 </div>
 
-<div class="space-y-6">
+<div class="space-y-4">
 <h3 class="text-sm font-mono text-faint uppercase tracking-widest font-normal">Certifications</h3>
 <ul class="grid grid-cols-2 gap-4">
 <li class="plate p-5 reveal">
