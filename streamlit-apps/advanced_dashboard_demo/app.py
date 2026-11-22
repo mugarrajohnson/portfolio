@@ -173,6 +173,13 @@ if view.empty:
     st.warning("No records match these filters.")
     st.stop()
 
+# Apply the price scenario across the whole dashboard, not just the Trends tab.
+factor = 1 + scenario / 100
+view = view.copy()
+previous = previous.copy()
+view["revenue_base"] = view["revenue"]
+previous["revenue"] = previous["revenue"] * factor
+view["revenue"] = view["revenue"] * factor
 
 # Only compare when the preceding window is actually covered by the data.
 # For long periods (e.g. 24M or All) the earlier window falls partly or wholly
@@ -191,11 +198,15 @@ vol, prev_vol = view["volume"].sum(), previous["volume"].sum()
 people, prev_people = view["people"].sum(), previous["people"].sum()
 sat, prev_sat = view["satisfaction"].mean(), previous["satisfaction"].mean() if len(previous) else 0
 
+revenue_delta = f"{scenario:+d}% price scenario" if scenario != 0 else delta(rev, prev_rev)
 k1, k2, k3, k4 = st.columns(4)
-k1.metric("Revenue", f"UGX {rev / 1e9:,.2f}B", delta(rev, prev_rev))
+k1.metric("Revenue", f"UGX {rev / 1e9:,.2f}B", revenue_delta)
 k2.metric("Volume", f"{vol / 1000:,.1f} t", delta(vol, prev_vol))
 k3.metric("People reached", f"{people:,}", delta(people, prev_people))
 k4.metric("Satisfaction", f"{sat:.2f} / 5", delta(sat, prev_sat))
+if scenario != 0:
+    st.markdown(f"Price scenario **{scenario:+d}%** is applied to every revenue figure and chart below. "
+                "Volume and people reached are unchanged.")
 if not comparable:
     st.markdown("Previous-period comparison is unavailable for this window — the data does not cover a full preceding period.")
 
@@ -248,20 +259,28 @@ with tabs[1]:
 
 with tabs[2]:
     st.subheader("Trend and scenario")
-    trend = view.groupby("month", as_index=False)["revenue"].sum().sort_values("month")
+    trend = view.groupby("month", as_index=False).agg(
+        revenue=("revenue", "sum"), revenue_base=("revenue_base", "sum")).sort_values("month")
     trend["ma3"] = trend["revenue"].rolling(3, min_periods=1).mean()
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=trend["month"], y=trend["revenue"] / 1e6, name="Monthly", line={"color": BLUE}))
     fig.add_trace(go.Scatter(x=trend["month"], y=trend["ma3"] / 1e6, name="3-month average", line={"color": GREEN, "dash": "dash"}))
+    if scenario != 0:
+        fig.add_trace(go.Scatter(x=trend["month"], y=trend["revenue_base"] / 1e6,
+                                 name="Base (0% scenario)", line={"color": VIOLET, "dash": "dot"}))
     st.plotly_chart(chart_layout(fig, 380), width="stretch")
 
-    projected = trend["ma3"].iloc[-1] * (1 + scenario / 100)
-    st.markdown(f"**Scenario at {scenario:+d}% price change:** next month ≈ UGX {projected / 1e6:,.1f}M")
+    projected = trend["ma3"].iloc[-1]
+    base_projected = projected / factor
+    st.markdown(f"**Next month ≈ UGX {projected / 1e6:,.1f}M** at {scenario:+d}% price "
+                f"(base scenario: UGX {base_projected / 1e6:,.1f}M).")
     st.progress(min(1.0, max(0.0, (scenario + 20) / 50)))
 
 with tabs[3]:
     st.subheader("Filtered records")
-    st.dataframe(view[["date", "region", "segment", "channel", "product", "volume", "revenue"]].head(300),
+    st.dataframe(view[["date", "region", "segment", "channel", "product", "volume",
+                       "revenue_base", "revenue"]].rename(columns={
+                           "revenue_base": "Revenue (base)", "revenue": "Revenue (scenario)"}).head(300),
                  hide_index=True, width="stretch")
     st.download_button("Download filtered CSV", data=view.to_csv(index=False).encode("utf-8"),
                        file_name="advanced_demo_filtered.csv", mime="text/csv")
