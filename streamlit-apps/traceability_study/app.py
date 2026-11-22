@@ -95,7 +95,6 @@ st.title("Traceability study ")
 st.write(
     "A public demonstration of supply-chain traceability findings — where records "
     "break down, and how quickly a lot can be traced end to end. "
-    "**All lots and figures are synthetic.**"
 )
 
 with st.sidebar:
@@ -170,8 +169,8 @@ st.subheader("Findings")
 top_reason = reason_df.iloc[0]["reason"] if len(reason_df) else "none"
 worst = by_district.iloc[-1]["district"]
 for text in [
-    f"The most common gap is **{top_reason}**.",
-    f"**{worst}** has the lowest share of fully traceable lots in this selection.",
+    f"The most common gap is {top_reason}.",
+    f"{worst} has the lowest share of fully traceable lots in this selection.",
     "Lots with a missing record take substantially longer to resolve than complete lots.",
 ]:
     st.markdown(f'<p style="color:#000000;">• {text}</p>', unsafe_allow_html=True)

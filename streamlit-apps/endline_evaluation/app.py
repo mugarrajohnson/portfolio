@@ -14,7 +14,7 @@ import plotly.express as px
 import streamlit as st
 
 st.set_page_config(
-    page_title="Endline Evaluation — Public Demo",
+    page_title="Endline Evaluation ",
     page_icon="📈",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -107,7 +107,7 @@ def chart_layout(fig):
 
 df = build_data()
 
-st.title("Endline evaluation — public demo")
+st.title("Endline evaluation ")
 st.write(
     "A public demonstration of baseline, midline and endline reporting against the "
     "**six OECD-DAC criteria**, with sex, age and disability disaggregations. "
