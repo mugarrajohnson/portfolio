@@ -1,0 +1,13 @@
+# Vercel deploys this repository as a plain static site (index.html + assets).
+#
+# The Streamlit demos in streamlit-apps/ are hosted separately on Streamlit
+# Cloud, and each one is a script-style app with no `app` / `application` /
+# `handler` object. If they are uploaded, Vercel's Python runtime detects
+# app.py and fails the build with PYTHON_ENTRYPOINT_NOT_FOUND.
+#
+# Keep this file: it stops Vercel from finding Python code in a static site.
+streamlit-apps/
+/requirements.txt
+
+# Local virtualenv, if a CLI deploy is ever run from this machine.
+.venv/
