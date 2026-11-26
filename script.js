@@ -377,7 +377,7 @@
     const slides = $$('img', stage);
     if (slides.length < 2) return;
 
-    const DWELL_MS = 3000;
+    const DWELL_MS = 9000;
     /** Resolves once a photograph is decoded and safe to fade in. */
     function whenReady(img) {
       if (img.complete) return Promise.resolve();
